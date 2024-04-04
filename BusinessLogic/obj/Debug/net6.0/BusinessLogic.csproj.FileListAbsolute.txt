@@ -1,0 +1,15 @@
+c:\Users\mathi\Desktop\284934\BusinessLogic\bin\Debug\net6.0\BusinessLogic.exe
+c:\Users\mathi\Desktop\284934\BusinessLogic\bin\Debug\net6.0\BusinessLogic.deps.json
+c:\Users\mathi\Desktop\284934\BusinessLogic\bin\Debug\net6.0\BusinessLogic.runtimeconfig.json
+c:\Users\mathi\Desktop\284934\BusinessLogic\bin\Debug\net6.0\BusinessLogic.dll
+c:\Users\mathi\Desktop\284934\BusinessLogic\bin\Debug\net6.0\BusinessLogic.pdb
+c:\Users\mathi\Desktop\284934\BusinessLogic\obj\Debug\net6.0\BusinessLogic.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\mathi\Desktop\284934\BusinessLogic\obj\Debug\net6.0\BusinessLogic.AssemblyInfoInputs.cache
+c:\Users\mathi\Desktop\284934\BusinessLogic\obj\Debug\net6.0\BusinessLogic.AssemblyInfo.cs
+c:\Users\mathi\Desktop\284934\BusinessLogic\obj\Debug\net6.0\BusinessLogic.csproj.CoreCompileInputs.cache
+c:\Users\mathi\Desktop\284934\BusinessLogic\obj\Debug\net6.0\BusinessLogic.sourcelink.json
+c:\Users\mathi\Desktop\284934\BusinessLogic\obj\Debug\net6.0\BusinessLogic.dll
+c:\Users\mathi\Desktop\284934\BusinessLogic\obj\Debug\net6.0\refint\BusinessLogic.dll
+c:\Users\mathi\Desktop\284934\BusinessLogic\obj\Debug\net6.0\BusinessLogic.pdb
+c:\Users\mathi\Desktop\284934\BusinessLogic\obj\Debug\net6.0\BusinessLogic.genruntimeconfig.cache
+c:\Users\mathi\Desktop\284934\BusinessLogic\obj\Debug\net6.0\ref\BusinessLogic.dll
