@@ -1,4 +1,4 @@
-﻿namespace Excepcion
+namespace Excepcion
 {
 	public class DominioUsuarioExcepcion : Exception
 	{
