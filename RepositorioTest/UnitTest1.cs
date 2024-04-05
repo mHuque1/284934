@@ -1,4 +1,4 @@
-namespace BusinessLogicTest;
+namespace RepositorioTest;
 
 [TestClass]
 public class UnitTest1

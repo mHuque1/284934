@@ -1,5 +1,5 @@
 namespace BusinessLogic;
 
-public class weirdClass
+public class UsuarioLogic
 {
 }

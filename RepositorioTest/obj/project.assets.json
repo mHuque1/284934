@@ -389,39 +389,6 @@
             "related": ".xml"
           }
         }
-      },
-      "BusinessLogic/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "compile": {
-          "bin/placeholder/BusinessLogic.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/BusinessLogic.dll": {}
-        }
-      },
-      "Dominio/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "dependencies": {
-          "Excepcion": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/Dominio.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Dominio.dll": {}
-        }
-      },
-      "Excepcion/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "compile": {
-          "bin/placeholder/Excepcion.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Excepcion.dll": {}
-        }
       }
     }
   },
@@ -1019,28 +986,10 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
-    },
-    "BusinessLogic/1.0.0": {
-      "type": "project",
-      "path": "../BusinessLogic/BusinessLogic.csproj",
-      "msbuildProject": "../BusinessLogic/BusinessLogic.csproj"
-    },
-    "Dominio/1.0.0": {
-      "type": "project",
-      "path": "../Dominio/Dominio.csproj",
-      "msbuildProject": "../Dominio/Dominio.csproj"
-    },
-    "Excepcion/1.0.0": {
-      "type": "project",
-      "path": "../Excepcion/Excepcion.csproj",
-      "msbuildProject": "../Excepcion/Excepcion.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "BusinessLogic >= 1.0.0",
-      "Dominio >= 1.0.0",
-      "Excepcion >= 1.0.0",
       "MSTest.TestAdapter >= 3.1.1",
       "MSTest.TestFramework >= 3.1.1",
       "Microsoft.NET.Test.Sdk >= 17.8.0",
@@ -1053,11 +1002,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogicTest\\BusinessLogicTest.csproj",
-      "projectName": "BusinessLogicTest",
-      "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogicTest\\BusinessLogicTest.csproj",
+      "projectUniqueName": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\RepositorioTest\\RepositorioTest.csproj",
+      "projectName": "RepositorioTest",
+      "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\RepositorioTest\\RepositorioTest.csproj",
       "packagesPath": "C:\\Users\\mathi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogicTest\\obj\\",
+      "outputPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\RepositorioTest\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\mathi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1073,17 +1022,7 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {
-            "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogic\\BusinessLogic.csproj": {
-              "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogic\\BusinessLogic.csproj"
-            },
-            "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\Dominio.csproj": {
-              "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\Dominio.csproj"
-            },
-            "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj": {
-              "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

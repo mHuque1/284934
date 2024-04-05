@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DominioTest", "DominioTest\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excepcion", "Excepcion\Excepcion.csproj", "{BCB219D6-ABAA-4471-A346-20751F574915}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositorio", "Repositorio\Repositorio.csproj", "{23ACE15C-E52D-4FCD-B2E9-578C6991761C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositorioTest", "RepositorioTest\RepositorioTest.csproj", "{6DF73839-0C42-4E5B-9212-DD6B40B4666F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +46,13 @@ Global
 		{BCB219D6-ABAA-4471-A346-20751F574915}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCB219D6-ABAA-4471-A346-20751F574915}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCB219D6-ABAA-4471-A346-20751F574915}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23ACE15C-E52D-4FCD-B2E9-578C6991761C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23ACE15C-E52D-4FCD-B2E9-578C6991761C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23ACE15C-E52D-4FCD-B2E9-578C6991761C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23ACE15C-E52D-4FCD-B2E9-578C6991761C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DF73839-0C42-4E5B-9212-DD6B40B4666F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DF73839-0C42-4E5B-9212-DD6B40B4666F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DF73839-0C42-4E5B-9212-DD6B40B4666F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DF73839-0C42-4E5B-9212-DD6B40B4666F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

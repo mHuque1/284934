@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6LfEwakj/uwtQe6ZyCiJWvuiu8Ayad5DvKskgYFwAIIlEAfHf+DbPBNKkqRGYQO5UVWxuAiQoYYTVD6y4NB+iA==",
+  "dgSpecHash": "GwUinPU+V+Gfz60dy8YRwMLsirUc5pj7chHIpMwWQzzRh5a+ihvnkQTZxNVt1u2but5ofIBtRbZST6uIq5NW6w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogicTest\\BusinessLogicTest.csproj",
+  "projectFilePath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\RepositorioTest\\RepositorioTest.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mathi\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",
     "C:\\Users\\mathi\\.nuget\\packages\\microsoft.codecoverage\\17.8.0\\microsoft.codecoverage.17.8.0.nupkg.sha512",
