@@ -17,5 +17,6 @@
     <ProjectReference Include="..\Dominio\Dominio.csproj" />
     <ProjectReference Include="..\Excepcion\Excepcion.csproj" />
     <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj" />
+    <ProjectReference Include="..\Repositorio\Repositorio.csproj" />
   </ItemGroup>
 </Project>

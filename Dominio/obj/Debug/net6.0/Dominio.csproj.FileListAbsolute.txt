@@ -1,0 +1,6 @@
+c:\Users\mathi\Desktop\Facultad\284934\Dominio\obj\Debug\net6.0\Dominio.csproj.AssemblyReference.cache
+c:\Users\mathi\Desktop\Facultad\284934\Dominio\obj\Debug\net6.0\Dominio.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\mathi\Desktop\Facultad\284934\Dominio\obj\Debug\net6.0\Dominio.AssemblyInfoInputs.cache
+c:\Users\mathi\Desktop\Facultad\284934\Dominio\obj\Debug\net6.0\Dominio.AssemblyInfo.cs
+c:\Users\mathi\Desktop\Facultad\284934\Dominio\obj\Debug\net6.0\Dominio.csproj.CoreCompileInputs.cache
+c:\Users\mathi\Desktop\Facultad\284934\Dominio\obj\Debug\net6.0\Dominio.sourcelink.json

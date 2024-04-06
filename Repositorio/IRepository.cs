@@ -1,8 +1,8 @@
 ﻿public interface IRepository<T>
 {
-    T Add(T item);
-    T Update(T updatedItem);
+    void Add(T item);
+    void Update(T updatedItem);
     void Delete(int id);
     T Find(Func<T, bool> filter);
-    IList<T> FindAll();
+    IList<T> GetAll();
 }

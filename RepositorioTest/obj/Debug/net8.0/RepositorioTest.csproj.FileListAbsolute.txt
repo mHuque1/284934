@@ -1,0 +1,7 @@
+C:\Users\mathi\Desktop\Facultad\284934\RepositorioTest\bin\Debug\net8.0\CoverletSourceRootsMapping_RepositorioTest
+C:\Users\mathi\Desktop\Facultad\284934\RepositorioTest\obj\Debug\net8.0\RepositorioTest.csproj.AssemblyReference.cache
+C:\Users\mathi\Desktop\Facultad\284934\RepositorioTest\obj\Debug\net8.0\RepositorioTest.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mathi\Desktop\Facultad\284934\RepositorioTest\obj\Debug\net8.0\RepositorioTest.AssemblyInfoInputs.cache
+C:\Users\mathi\Desktop\Facultad\284934\RepositorioTest\obj\Debug\net8.0\RepositorioTest.AssemblyInfo.cs
+C:\Users\mathi\Desktop\Facultad\284934\RepositorioTest\obj\Debug\net8.0\RepositorioTest.csproj.CoreCompileInputs.cache
+C:\Users\mathi\Desktop\Facultad\284934\RepositorioTest\obj\Debug\net8.0\RepositorioTest.sourcelink.json

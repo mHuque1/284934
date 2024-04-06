@@ -1,0 +1,7 @@
+C:\Users\mathi\Desktop\Facultad\284934\BusinessLogicTest\bin\Debug\net8.0\CoverletSourceRootsMapping_BusinessLogicTest
+C:\Users\mathi\Desktop\Facultad\284934\BusinessLogicTest\obj\Debug\net8.0\BusinessLogicTest.csproj.AssemblyReference.cache
+C:\Users\mathi\Desktop\Facultad\284934\BusinessLogicTest\obj\Debug\net8.0\BusinessLogicTest.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mathi\Desktop\Facultad\284934\BusinessLogicTest\obj\Debug\net8.0\BusinessLogicTest.AssemblyInfoInputs.cache
+C:\Users\mathi\Desktop\Facultad\284934\BusinessLogicTest\obj\Debug\net8.0\BusinessLogicTest.AssemblyInfo.cs
+C:\Users\mathi\Desktop\Facultad\284934\BusinessLogicTest\obj\Debug\net8.0\BusinessLogicTest.csproj.CoreCompileInputs.cache
+C:\Users\mathi\Desktop\Facultad\284934\BusinessLogicTest\obj\Debug\net8.0\BusinessLogicTest.sourcelink.json

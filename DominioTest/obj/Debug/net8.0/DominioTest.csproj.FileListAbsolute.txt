@@ -1,0 +1,7 @@
+C:\Users\mathi\Desktop\Facultad\284934\DominioTest\bin\Debug\net8.0\CoverletSourceRootsMapping_DominioTest
+C:\Users\mathi\Desktop\Facultad\284934\DominioTest\obj\Debug\net8.0\DominioTest.csproj.AssemblyReference.cache
+C:\Users\mathi\Desktop\Facultad\284934\DominioTest\obj\Debug\net8.0\DominioTest.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mathi\Desktop\Facultad\284934\DominioTest\obj\Debug\net8.0\DominioTest.AssemblyInfoInputs.cache
+C:\Users\mathi\Desktop\Facultad\284934\DominioTest\obj\Debug\net8.0\DominioTest.AssemblyInfo.cs
+C:\Users\mathi\Desktop\Facultad\284934\DominioTest\obj\Debug\net8.0\DominioTest.csproj.CoreCompileInputs.cache
+C:\Users\mathi\Desktop\Facultad\284934\DominioTest\obj\Debug\net8.0\DominioTest.sourcelink.json

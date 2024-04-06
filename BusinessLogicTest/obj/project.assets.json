@@ -393,6 +393,11 @@
       "BusinessLogic/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Dominio": "1.0.0",
+          "Excepcion": "1.0.0",
+          "Repositorio": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/BusinessLogic.dll": {}
         },
@@ -421,6 +426,20 @@
         },
         "runtime": {
           "bin/placeholder/Excepcion.dll": {}
+        }
+      },
+      "Repositorio/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Dominio": "1.0.0",
+          "Excepcion": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Repositorio.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Repositorio.dll": {}
         }
       }
     }
@@ -1034,6 +1053,11 @@
       "type": "project",
       "path": "../Excepcion/Excepcion.csproj",
       "msbuildProject": "../Excepcion/Excepcion.csproj"
+    },
+    "Repositorio/1.0.0": {
+      "type": "project",
+      "path": "../Repositorio/Repositorio.csproj",
+      "msbuildProject": "../Repositorio/Repositorio.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -1044,6 +1068,7 @@
       "MSTest.TestAdapter >= 3.1.1",
       "MSTest.TestFramework >= 3.1.1",
       "Microsoft.NET.Test.Sdk >= 17.8.0",
+      "Repositorio >= 1.0.0",
       "coverlet.collector >= 6.0.0"
     ]
   },
@@ -1082,6 +1107,9 @@
             },
             "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj": {
               "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj"
+            },
+            "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Repositorio\\Repositorio.csproj": {
+              "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Repositorio\\Repositorio.csproj"
             }
           }
         }
