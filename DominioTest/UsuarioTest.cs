@@ -6,17 +6,28 @@ namespace DominioTest
     [TestClass]
     public class UsuarioTest
     {
+        private Usuario usuario;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            usuario = new Usuario
+            (
+                nombre: "Juan Gomez",
+                email: "JuanGomez@gmail.com",
+                contrasena: "JuanGomez123!"
+            );
+        }
+
         [TestMethod]
         public void Deberia_Crear_Nuevo_Usuario()
         {
-            var usuario = new Usuario();
             Assert.IsNotNull(usuario);
         }
 
         [TestMethod]
         public void Deberia_Obtener_Nombre()
         {
-            var usuario = new Usuario { Nombre = "Juan Gomez" };
             Assert.AreEqual("Juan Gomez", usuario.Nombre);
         }
 
@@ -24,7 +35,12 @@ namespace DominioTest
         [ExpectedException(typeof(DominioUsuarioExcepcion))]
         public void Deberia_Lanzar_Excepcion_Si_Nombre_Usuario_Vacio()
         {
-            var usuario = new Usuario();
+            Usuario usuario = new Usuario
+            (
+                nombre: "Juan Gomez",
+                email: "JuanGomez@gmail.com",
+                contrasena: "JuanGomez123!"
+            );
             usuario.Nombre = "";
         }
 
@@ -32,7 +48,12 @@ namespace DominioTest
         [ExpectedException(typeof(DominioUsuarioExcepcion))]
         public void Deberia_Lanzar_Excepcion_Si_Nombre_Usuario_Excede_Limite()
         {
-            var usuario = new Usuario();
+            Usuario usuario = new Usuario
+            (
+                nombre: "Juan Gomez",
+                email: "JuanGomez@gmail.com",
+                contrasena: "JuanGomez123!"
+            );
             usuario.Nombre = "Valentina Alexandra Beatriz Carolina Daniela Estefanía Florencia Gabriela Helena Isabel Jimena Karina";
         }
 
@@ -54,7 +75,7 @@ namespace DominioTest
         [ExpectedException(typeof(DominioUsuarioExcepcion))]
         public void Deberia_Lanzar_Excepcion_Si_Formato_Email_No_Valido()
         {
-            var usuario = new Usuario { Email = "usuario@dominio.com" };
+            var usuario = new Usuario { Email = "usuario@asd" };
         }
 
         [TestMethod]
@@ -90,7 +111,6 @@ namespace DominioTest
         public void Contrasena_Deberia_Contener_Minuscula()
         {
             var usuario = new Usuario { Contrasena = "CONTRASENA1!" };
-            usuario.ValidarContrasena();
         }
 
         [TestMethod]
