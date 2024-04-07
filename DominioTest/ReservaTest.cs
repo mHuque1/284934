@@ -13,6 +13,7 @@ namespace DominioTest
             Assert.IsNotNull(reserva);
         }
 
+
         [TestMethod]
         public void Deberia_Obtener_Comienzo()
         {
@@ -82,5 +83,157 @@ namespace DominioTest
             var unaReserva = new Reserva { Mensaje = "Un mensaje" };
             Assert.AreEqual("Un mensaje", unaReserva.Mensaje);
         }
+
+        [TestMethod]
+        public void Calculo_Precio_Deposito_1()
+        {
+            Deposito deposito = new Deposito
+            {
+                id = 1,
+                Area = 'A',
+                Tamano = 'S',
+                Climatizacion = false
+            };
+
+            Reserva reserva = new Reserva
+            {
+                id = 1,
+                Comienzo = DateTime.Today,
+                Fin = DateTime.Today.AddDays(1),
+                Depo = deposito
+            };
+
+            double costoEsperado = 50.0;
+
+            Assert.AreEqual(reserva.CalcularCosto(), costoEsperado);
+
+        }
+
+        [TestMethod]
+        public void Calculo_Precio_Deposito_2()
+        {
+            Deposito deposito = new Deposito
+            {
+                id = 1,
+                Area = 'A',
+                Tamano = 'M',
+                Climatizacion = false
+            };
+
+            Reserva reserva = new Reserva
+            {
+                id = 1,
+                Comienzo = DateTime.Today,
+                Fin = DateTime.Today.AddDays(1),
+                Depo = deposito
+            };
+
+            double costoEsperado = 75.0;
+
+            Assert.AreEqual(reserva.CalcularCosto(), costoEsperado);
+
+        }
+
+        [TestMethod]
+        public void Calculo_Precio_Deposito_3()
+        {
+            Deposito deposito = new Deposito
+            {
+                id = 1,
+                Area = 'A',
+                Tamano = 'L',
+                Climatizacion = false
+            };
+
+            Reserva reserva = new Reserva
+            {
+                id = 1,
+                Comienzo = DateTime.Today,
+                Fin = DateTime.Today.AddDays(1),
+                Depo = deposito
+            };
+
+            double costoEsperado = 100.0;
+
+            Assert.AreEqual(reserva.CalcularCosto(), costoEsperado);
+
+        }
+
+        [TestMethod]
+        public void Calculo_Precio_Deposito_Climatizado_1()
+        {
+            Deposito deposito = new Deposito
+            {
+                id = 1,
+                Area = 'A',
+                Tamano = 'S',
+                Climatizacion = true
+            };
+
+            Reserva reserva = new Reserva
+            {
+                id = 1,
+                Comienzo = DateTime.Today,
+                Fin = DateTime.Today.AddDays(1),
+                Depo = deposito
+            };
+
+            double costoEsperado = 70.0;
+
+            Assert.AreEqual(reserva.CalcularCosto(), costoEsperado);
+
+        }
+
+        [TestMethod]
+        public void Calculo_Precio_Deposito_Climatizado_2()
+        {
+            Deposito deposito = new Deposito
+            {
+                id = 1,
+                Area = 'A',
+                Tamano = 'M',
+                Climatizacion = true
+            };
+
+            Reserva reserva = new Reserva
+            {
+                id = 1,
+                Comienzo = DateTime.Today,
+                Fin = DateTime.Today.AddDays(1),
+                Depo = deposito
+            };
+
+            double costoEsperado = 95.0;
+
+            Assert.AreEqual(reserva.CalcularCosto(), costoEsperado);
+
+        }
+
+        [TestMethod]
+        public void Calculo_Precio_Deposito_Climatizado_3()
+        {
+            Deposito deposito = new Deposito
+            {
+                id = 1,
+                Area = 'A',
+                Tamano = 'L',
+                Climatizacion = true
+            };
+
+            Reserva reserva = new Reserva
+            {
+                id = 1,
+                Comienzo = DateTime.Today,
+                Fin = DateTime.Today.AddDays(1),
+                Depo = deposito
+            };
+
+            double costoEsperado = 120.0;
+
+            Assert.AreEqual(reserva.CalcularCosto(), costoEsperado);
+
+        }
+
+        
     }
 }

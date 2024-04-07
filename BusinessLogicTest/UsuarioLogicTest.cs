@@ -8,11 +8,13 @@ namespace BusinessLogicTest
     public class UsuarioLogicTest
     {
         private IRepository<Usuario> _usuarios;
+        private UsuarioLogic _logica;
 
         [TestInitialize]
         public void Inicializar()
         {
             _usuarios = new UsuarioRepository();
+            _logica = new UsuarioLogic(_usuarios);
         }
 
         [TestMethod]
@@ -36,10 +38,10 @@ namespace BusinessLogicTest
                 Contrasena = "holaPedroGomez123!",
                 EsAdmin = false
             };
-            UsuarioLogic logica = new UsuarioLogic(_usuarios);
+
 
             // Act
-            logica.AgregarUsuario(usuario);
+            _logica.AddUsuario(usuario);
 
             // Assert
             Assert.IsTrue(_usuarios.GetAll().Contains(usuario));
@@ -64,11 +66,10 @@ namespace BusinessLogicTest
                 Contrasena = "holaPedroGomez123!",
                 EsAdmin = true
             };
-            UsuarioLogic logica = new UsuarioLogic(_usuarios);
 
             // Act
-            logica.AgregarUsuario(admin1);
-            logica.AgregarUsuario(admin2);
+            _logica.AddUsuario(admin1);
+            _logica.AddUsuario(admin2);
 
             // Assert
             Assert.IsFalse(_usuarios.GetAll().Contains(admin2));
@@ -85,11 +86,11 @@ namespace BusinessLogicTest
                 Contrasena = "holaPedroGomez123!",
                 EsAdmin = false
             };
-            UsuarioLogic logica = new UsuarioLogic(_usuarios);
+
 
             // Act
-            logica.AgregarUsuario(user1);
-            logica.AgregarUsuario(user1);
+            _logica.AddUsuario(user1);
+            _logica.AddUsuario(user1);
 
             // Assert
             Assert.AreEqual(1, _usuarios.GetAll().Count());
@@ -106,11 +107,11 @@ namespace BusinessLogicTest
                 Contrasena = "holaPedroGomez123!",
                 EsAdmin = false
             };
-            UsuarioLogic logica = new UsuarioLogic(_usuarios);
-            logica.AgregarUsuario(user1);
+
+            _logica.AddUsuario(user1);
 
             // Act
-            bool resultado = logica.ValidarInicioSesion("user3@user.com", "holaPedroGomez125!");
+            bool resultado = _logica.ValidarInicioSesion("user3@user.com", "holaPedroGomez125!");
 
             // Assert
             Assert.IsFalse(resultado);
@@ -127,14 +128,64 @@ namespace BusinessLogicTest
                 Contrasena = "holaPedroGomez123!",
                 EsAdmin = false
             };
-            UsuarioLogic logica = new UsuarioLogic(_usuarios);
-            logica.AgregarUsuario(user1);
+            _logica.AddUsuario(user1);
 
             // Act
-            bool resultado = logica.ValidarInicioSesion("user3@user.com", "holaPedroGomez123!");
+            bool resultado = _logica.ValidarInicioSesion("user3@user.com", "holaPedroGomez123!");
 
             // Assert
             Assert.IsTrue(resultado);
+        }
+
+        
+
+
+           
+
+    }
+
+        [TestMethod]
+        public void Alta_De_Reserva_Correcta()
+        {
+            Usuario user1 = new Usuario
+            {
+                Email = "user3@user.com",
+                Nombre = "Pedro Gomez",
+                Contrasena = "holaPedroGomez123!",
+                EsAdmin = false
+            };
+
+            Deposito deposito = new Deposito
+            {
+                id = 1,
+                Area = 'A',
+                Tamano = 'S',
+                Climatizacion = true
+            };
+
+            Reserva reserva = new Reserva {
+                id = 1,
+                Comienzo = DateTime.Today,
+                Fin = DateTime.Today.AddDays(1),
+                Depo = deposito
+            };
+
+            _logica.AddUsuario(user1);
+            _logica.AddReservaUsuario(reserva, user1);
+
+
+            IList<Reserva> Reservas = _logica.GetReservasUsuario(user1);
+
+            Assert.IsTrue(Reservas.Contains(reserva));
+
+
+
+
+
+
+
+
+
         }
     }
 }
