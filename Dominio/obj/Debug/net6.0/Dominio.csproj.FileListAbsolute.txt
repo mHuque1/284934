@@ -4,3 +4,16 @@ c:\Users\mathi\Desktop\Facultad\284934\Dominio\obj\Debug\net6.0\Dominio.Assembly
 c:\Users\mathi\Desktop\Facultad\284934\Dominio\obj\Debug\net6.0\Dominio.AssemblyInfo.cs
 c:\Users\mathi\Desktop\Facultad\284934\Dominio\obj\Debug\net6.0\Dominio.csproj.CoreCompileInputs.cache
 c:\Users\mathi\Desktop\Facultad\284934\Dominio\obj\Debug\net6.0\Dominio.sourcelink.json
+C:\Users\mathi\Desktop\Facultad\284934\Dominio\bin\Debug\net6.0\Dominio.exe
+C:\Users\mathi\Desktop\Facultad\284934\Dominio\bin\Debug\net6.0\Dominio.deps.json
+C:\Users\mathi\Desktop\Facultad\284934\Dominio\bin\Debug\net6.0\Dominio.runtimeconfig.json
+C:\Users\mathi\Desktop\Facultad\284934\Dominio\bin\Debug\net6.0\Dominio.dll
+C:\Users\mathi\Desktop\Facultad\284934\Dominio\bin\Debug\net6.0\Dominio.pdb
+C:\Users\mathi\Desktop\Facultad\284934\Dominio\bin\Debug\net6.0\Excepcion.dll
+C:\Users\mathi\Desktop\Facultad\284934\Dominio\bin\Debug\net6.0\Excepcion.pdb
+C:\Users\mathi\Desktop\Facultad\284934\Dominio\obj\Debug\net6.0\Dominio.csproj.Up2Date
+C:\Users\mathi\Desktop\Facultad\284934\Dominio\obj\Debug\net6.0\Dominio.dll
+C:\Users\mathi\Desktop\Facultad\284934\Dominio\obj\Debug\net6.0\refint\Dominio.dll
+C:\Users\mathi\Desktop\Facultad\284934\Dominio\obj\Debug\net6.0\Dominio.pdb
+C:\Users\mathi\Desktop\Facultad\284934\Dominio\obj\Debug\net6.0\Dominio.genruntimeconfig.cache
+C:\Users\mathi\Desktop\Facultad\284934\Dominio\obj\Debug\net6.0\ref\Dominio.dll

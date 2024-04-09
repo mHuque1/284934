@@ -1,105 +1,126 @@
 using Dominio;
-using Excepcion;
 
 namespace DominioTest
 {
     [TestClass]
     public class DepositoTest
     {
+        private Deposito deposito;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            // Arrange: Configuración inicial para cada prueba
+            deposito = new Deposito(id: 1, area: 'A', tamano: 'S', tieneClimatizacion: false);
+        }
+
         [TestMethod]
         public void Deberia_Crear_Un_Deposito()
         {
-            var deposito = new Deposito();
+            // Act: Ejecutar la acción que se quiere probar
+            // Assert: Verificar que se haya realizado la acción correctamente
             Assert.IsNotNull(deposito);
         }
 
         [TestMethod]
         public void Deberia_Obtener_Area()
         {
-            var deposito = new Deposito { Area = 'A' };
-            Assert.AreEqual('A', deposito.Area);
+            // Arrange
+            char areaEsperada = 'A';
+
+            // Act
+            char areaObtenida = deposito.Area;
+
+            // Assert
+            Assert.AreEqual(areaEsperada, areaObtenida);
+        }
+
+        [TestMethod]
+        public void Deberia_Aceptar_Areas_Validas()
+        {
+            // Arrange
+            char[] areasValidas = { 'A', 'B', 'C', 'D', 'E' };
+
+            // Act & Assert
+            foreach (char area in areasValidas)
+            {
+                // No hay necesidad de un Assert aquí, se verifica al final del método
+                deposito.Area = area;
+            }
+
+            Assert.IsTrue(true); // Si no se lanzó ninguna excepción hasta aquí, la prueba pasa
         }
 
         [TestMethod]
         public void Deberia_Obtener_Tamano()
         {
-            var deposito = new Deposito { Tamano = 'S' };
-            Assert.AreEqual('S', deposito.Tamano);
+            // Arrange
+            char tamanoEsperado = 'S';
+
+            // Act
+            char tamanoObtenido = deposito.Tamano;
+
+            // Assert
+            Assert.AreEqual(tamanoEsperado, tamanoObtenido);
+        }
+
+        [TestMethod]
+        public void Deberia_Aceptar_Tamanos_Validos()
+        {
+            // Arrange
+            char[] tamanosValidos = { 'S', 'M', 'L' };
+
+            // Act & Assert
+            foreach (char tamano in tamanosValidos)
+            {
+                // No hay necesidad de un Assert aquí, se verifica al final del método
+                deposito.Tamano = tamano;
+            }
+
+            Assert.IsTrue(true); // Si no se lanzó ninguna excepción hasta aquí, la prueba pasa
         }
 
         [TestMethod]
         public void Deberia_Obtener_Climatizacion()
         {
-            var deposito = new Deposito { Climatizacion = true };
-            Assert.IsTrue(deposito.Climatizacion);
+            // Arrange
+            bool esperado = true;
+
+            // Act
+            deposito.TieneClimatizacion = esperado;
+            bool obtenido = deposito.TieneClimatizacion;
+
+            // Assert
+            Assert.AreEqual(esperado, obtenido);
         }
 
         [TestMethod]
         public void Deberia_Tener_Las_Promociones_Agregadas()
         {
-            var deposito = new Deposito
-            {
-                Area = 'A',
-                Tamano = 'S',
-                Climatizacion = true
-            };
+            // Arrange
+            var promocion = new Promocion(id: 1, etiqueta: "Promo", descuento: 10, comienzo: DateTime.Today, fin: DateTime.Today.AddDays(1));
 
-            var promocion = new Promocion
-            {
-                Etiqueta = "AAA",
-                Descuento = 10,
-                Desde = DateTime.Today,
-                Hasta = DateTime.Today.AddDays(10)
-            };
-
+            // Act
             deposito.AgregarPromocion(promocion);
 
+            // Assert
             Assert.AreEqual(1, deposito.Promociones.Count);
             Assert.AreEqual(promocion, deposito.Promociones[0]);
         }
 
-        [TestMethod]
-        public void Areas_ABCDE_Validas_Para_Registro()
+        public void Deberia_Tener_Las_Promociones_Eliminadas()
         {
-            // Arrange: Configurar el entorno de prueba
-            Deposito depositoA = new Deposito { id = 1, Area = 'A', Tamano = 'S', climatizacion = true };
-            Deposito depositoB = new Deposito { id = 2, Area = 'B', Tamano = 'S', climatizacion = true };
-            Deposito depositoC = new Deposito { id = 3, Area = 'C', Tamano = 'S', climatizacion = true };
-            Deposito depositoD = new Deposito { id = 4, Area = 'D', Tamano = 'S', climatizacion = true };
-            Deposito depositoE = new Deposito { id = 5, Area = 'E', Tamano = 'S', climatizacion = true };
+            // Arrange
+            var promocion = new Promocion(id: 1, etiqueta: "Promo", descuento: 10, comienzo: DateTime.Today, fin: DateTime.Today.AddDays(1));
 
-            // Act: Ejecutar la acción que se va a probar
-            depositoLogic.addDeposito(depositoA);
-            depositoLogic.addDeposito(depositoB);
-            depositoLogic.addDeposito(depositoC);
-            depositoLogic.addDeposito(depositoD);
-            depositoLogic.addDeposito(depositoE);
 
-            // Assert: Verificar que el resultado es el esperado
-            Assert.IsTrue(_depositos.GetAll().Contains(depositoA));
-            Assert.IsTrue(_depositos.GetAll().Contains(depositoB));
-            Assert.IsTrue(_depositos.GetAll().Contains(depositoC));
-            Assert.IsTrue(_depositos.GetAll().Contains(depositoD));
-            Assert.IsTrue(_depositos.GetAll().Contains(depositoE));
-        }
+            // Act
+            deposito.AgregarPromocion(promocion);
+            deposito.EliminarPromocion(promocion);
+            int cantObtenida = deposito.Promociones.Count;
 
-        [TestMethod]
-        public void Tamanos_SML_Validas_Para_Registro()
-        {
-            // Arrange: Configurar el entorno de prueba
-            Deposito depositoS = new Deposito { id = 1, Area = 'A', Tamano = 'S', climatizacion = true };
-            Deposito depositoM = new Deposito { id = 2, Area = 'A', Tamano = 'M', climatizacion = true };
-            Deposito depositoL = new Deposito { id = 3, Area = 'A', Tamano = 'L', climatizacion = true };
-
-            // Act: Ejecutar la acción que se va a probar
-            depositoLogic.addDeposito(depositoS);
-            depositoLogic.addDeposito(depositoM);
-            depositoLogic.addDeposito(depositoL);
-
-            // Assert: Verificar que el resultado es el esperado
-            Assert.IsTrue(_depositos.GetAll().Contains(depositoS));
-            Assert.IsTrue(_depositos.GetAll().Contains(depositoM));
-            Assert.IsTrue(_depositos.GetAll().Contains(depositoL));
+            // Assert
+            Assert.AreEqual(0, cantObtenida);
         }
     }
 }
