@@ -7,10 +7,11 @@ namespace RepositorioTest
     public class UsuarioRepositoryTest
     {
         private IRepository<Usuario> _usuarios;
-
+        private Usuario usuario;
         [TestInitialize]
         public void Setup()
         {
+            usuario = new Usuario("Juan Gomez", "JuanGomez@gmail.com", "JuanGomez!1234", false);
             _usuarios = new UsuarioRepository();
         }
 
@@ -18,18 +19,9 @@ namespace RepositorioTest
         [TestMethod]
         public void Deberia_Verificar_Ingreso_De_Usuario()
         {
-            // Arrange
-            IRepository<Usuario> _usuarios = new UsuarioRepository();
-            Usuario usuario = new Usuario
-            {
-                Nombre = "Juan Gomez",
-                Email = "JuanGomez@gmail.com",
-                Contrasena = "JuanGomez!1234"
-            };
-
             // Act
             _usuarios.Add(usuario);
-            var usuarios = _usuarios.GetAll();
+            IList<Usuario> usuarios = _usuarios.GetAll();
 
             // Assert
             Assert.IsTrue(usuarios.Contains(usuario));
@@ -40,18 +32,14 @@ namespace RepositorioTest
         public void Deberia_Verificar_Baja_De_Usuario()
         {
             // Arrange
-            Usuario usuario = new Usuario
-            {
-                Nombre = "Juan Gomez",
-                Email = "JuanGomez@gmail.com",
-            };
+            _usuarios.Add(usuario);
 
             // Act
-            _usuarios.Add(usuario);
+            _usuarios.Delete(usuario);
             var usuarios = _usuarios.GetAll();
 
             // Assert
-            Assert.IsTrue(usuarios.Contains(usuario));
+            Assert.IsFalse(usuarios.Contains(usuario));
         }
 
 
@@ -60,19 +48,13 @@ namespace RepositorioTest
         public void Deberia_Actualizar_Usuario()
         {
             // Arrange
-            Usuario usuario = new Usuario
-            {
-                Nombre = "Juan Gomez",
-                Email = "JuanGomez@gmail.com",
-                Contrasena = "JuanGomez!1234"
-            };
 
             _usuarios.Add(usuario);
 
             // Act
             usuario.Nombre = "Pedro";
             _usuarios.Update(usuario);
-            var usuarioModificado = _usuarios.Find(u => u.Nombre == "Pedro");
+            Usuario usuarioModificado = _usuarios.Find(u => u.Email == "JuanGomez@gmail.com");
 
             // Assert
             Assert.IsNotNull(usuarioModificado);

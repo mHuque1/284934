@@ -31,14 +31,7 @@ namespace BusinessLogicTest
         public void Deberia_Agregar_Usuario()
         {
             // Arrange
-            Usuario usuario = new Usuario
-            {
-                Email = "Hola@user.com",
-                Nombre = "Pedro Gomez",
-                Contrasena = "holaPedroGomez123!",
-                EsAdmin = false
-            };
-
+            Usuario usuario = new Usuario("Pedro Gomez", "Hola@user.com", "holaPedroGomez123!", false);
 
             // Act
             _logica.AddUsuario(usuario);
@@ -51,22 +44,10 @@ namespace BusinessLogicTest
         public void No_Deberia_Agregar_Mas_de_Un_Admin()
         {
             // Arrange
-            Usuario admin1 = new Usuario
-            {
-                Email = "admin1@user.com",
-                Nombre = "Pedro Gomez",
-                Contrasena = "holaPedroGomez123!",
-                EsAdmin = true
-            };
+            Usuario admin1 = new Usuario("Pedro Gomez", "admin1@user.com", "holaPedroGomez123!", true);
 
-            Usuario admin2 = new Usuario
-            {
-                Email = "admin2@user.com",
-                Nombre = "Pedro Gomez",
-                Contrasena = "holaPedroGomez123!",
-                EsAdmin = true
-            };
-
+            Usuario admin2 = new Usuario("Pedro Gomez", "admin2@user.com", "holaPedroGomez123!", true);
+            
             // Act
             _logica.AddUsuario(admin1);
             _logica.AddUsuario(admin2);

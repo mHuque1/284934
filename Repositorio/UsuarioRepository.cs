@@ -3,7 +3,7 @@ namespace Repositorio;
 
 public class UsuarioRepository : IRepository<Usuario>
 {
-    private List<Usuario> _usuarios;
+    private IList<Usuario> _usuarios;
 
     public UsuarioRepository()
     {
@@ -15,18 +15,10 @@ public class UsuarioRepository : IRepository<Usuario>
         _usuarios.Add(item);
     }
 
-    public void Update(Usuario updatedItem)
-    {
-        int index = _usuarios.FindIndex(u => u.Email == updatedItem.Email);
-        if (index != -1)
-        {
-            _usuarios[index] = updatedItem;
-        }
-    }
 
-    public void Delete(int Email)
+    public void Delete(Usuario item)
     {
-        _usuarios.RemoveAll(u => u.Email == Email);
+        _usuarios.Remove(item);
     }
 
     public Usuario Find(Func<Usuario, bool> filter)
@@ -36,7 +28,18 @@ public class UsuarioRepository : IRepository<Usuario>
 
     public IList<Usuario> GetAll()
     {
-        return _usuarios.ToList();
+        return _usuarios;
+    }
+
+    public void Update(Usuario updatedItem)
+    {
+        Usuario existingItem = _usuarios.FirstOrDefault(d => d.Email == updatedItem.Email);
+        if (existingItem != null)
+        {
+            existingItem.Nombre = updatedItem.Nombre;
+            existingItem.Contrasena = updatedItem.Contrasena;
+            existingItem.Reservas = updatedItem.Reservas;
+        }
     }
 }
 
