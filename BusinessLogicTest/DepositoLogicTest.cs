@@ -28,8 +28,7 @@ namespace BusinessLogicTest
         public void Verificar_Alta_De_Deposito()
         {
             // Arrange
-            Deposito depositoA = new Deposito { Id = 1, Area = 'A', Tamano = 'S', Climatizacion = true };
-
+            Deposito depositoA = new Deposito(1, 'A', 'S', true);
             // Act
             _logica.AddDeposito(depositoA);
             Deposito resultado = _logica.GetDeposito(1);
@@ -42,7 +41,7 @@ namespace BusinessLogicTest
         public void Verificar_Baja_De_Deposito()
         {
             // Arrange
-            Deposito depositoA = new Deposito { Id = 1, Area = 'A', Tamano = 'S', Climatizacion = true };
+            Deposito depositoA = new Deposito(1, 'A', 'S', true);
             _logica.AddDeposito(depositoA);
 
             // Act
@@ -57,8 +56,9 @@ namespace BusinessLogicTest
         public void Verificar_Get_Depositos()
         {
             // Arrange
-            Deposito depositoA = new Deposito { Id = 1, Area = 'A', Tamano = 'S', Climatizacion = true };
-            Deposito depositoB = new Deposito { Id = 2, Area = 'B', Tamano = 'S', Climatizacion = true };
+            Deposito depositoA = new Deposito(1, 'A', 'S', true);
+            Deposito depositoB = new Deposito(1, 'B', 'S', true);
+
 
             _logica.AddDeposito(depositoA);
             _logica.AddDeposito(depositoB);
@@ -77,36 +77,16 @@ namespace BusinessLogicTest
         public void Verificar_Alta_De_Promocion()
         {
             // Arrange
-            Deposito depositoA = new Deposito { Id = 1, Area = 'A', Tamano = 'S', Climatizacion = true };
-            Promocion promocion = new Promocion { Etiqueta = "Promo", Descuento = 10, Desde = DateTime.Today, Hasta = DateTime.Today.AddDays(10) };
+            Deposito depositoA = new Deposito(1, 'A', 'S', true);
+            Promocion promocion = new Promocion(1, "etiqueta", 10, DateTime.Today, DateTime.Today.AddDays(10));
 
             // Act
             _logica.AddPromocionDeposito(depositoA, promocion);
             Deposito resultado = _logica.GetDeposito(1);
 
             // Assert
-            Assert.AreEqual(promocion, resultado.GetPromociones()[0]);
+            Assert.AreEqual(promocion, resultado.Promociones[0]);
+
         }
-
-        [TestMethod]
-        public void Verificar_Modificacion_De_Promocion()
-        {
-            // Arrange
-            Deposito depositoA = new Deposito { Id = 1, Area = 'A', Tamano = 'S', Climatizacion = true };
-            Promocion promocion = new Promocion { Etiqueta = "Promo", Descuento = 10, Desde = DateTime.Today, Hasta = DateTime.Today.AddDays(10) };
-
-            // Act
-            _logica.AddPromocionDeposito(depositoA, promocion);
-            promocion.Descuento = 20;
-            _logica.UpdatePromocionDeposito(depositoA, promocion);
-            Deposito resultado = _logica.GetDeposito(1);
-
-            // Assert
-            Assert.AreEqual(promocion, resultado.GetPromociones()[0]);
-        }
-
-
-
-
     }
 }

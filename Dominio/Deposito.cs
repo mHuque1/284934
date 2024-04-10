@@ -1,4 +1,5 @@
 using Excepcion;
+
 namespace Dominio
 {
     public class Deposito
@@ -85,6 +86,11 @@ namespace Dominio
         public void EliminarPromocion(Promocion promo)
         {
            _promociones.Remove(promo);
+        }
+
+        public object GetPromociones()
+        {
+            throw new NotImplementedException();
         }
 
         // Aquí podrían agregarse más métodos relacionados con la funcionalidad del depósito

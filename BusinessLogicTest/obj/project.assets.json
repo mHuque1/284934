@@ -1,7 +1,7 @@
 {
   "version": 3,
   "targets": {
-    "net8.0": {
+    "net6.0": {
       "coverlet.collector/6.0.0": {
         "type": "package",
         "build": {
@@ -1061,7 +1061,7 @@
     }
   },
   "projectFileDependencyGroups": {
-    "net8.0": [
+    "net6.0": [
       "BusinessLogic >= 1.0.0",
       "Dominio >= 1.0.0",
       "Excepcion >= 1.0.0",
@@ -1078,38 +1078,38 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogicTest\\BusinessLogicTest.csproj",
+      "projectUniqueName": "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\BusinessLogicTest\\BusinessLogicTest.csproj",
       "projectName": "BusinessLogicTest",
-      "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogicTest\\BusinessLogicTest.csproj",
+      "projectPath": "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\BusinessLogicTest\\BusinessLogicTest.csproj",
       "packagesPath": "C:\\Users\\mathi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogicTest\\obj\\",
+      "outputPath": "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\BusinessLogicTest\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\mathi\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net8.0"
+        "net6.0"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net8.0": {
-          "targetAlias": "net8.0",
+        "net6.0": {
+          "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogic\\BusinessLogic.csproj": {
-              "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogic\\BusinessLogic.csproj"
+            "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\BusinessLogic\\BusinessLogic.csproj": {
+              "projectPath": "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\BusinessLogic\\BusinessLogic.csproj"
             },
-            "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\Dominio.csproj": {
-              "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\Dominio.csproj"
+            "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\Dominio\\Dominio.csproj": {
+              "projectPath": "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\Dominio\\Dominio.csproj"
             },
-            "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj": {
-              "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj"
+            "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\Excepcion\\Excepcion.csproj": {
+              "projectPath": "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\Excepcion\\Excepcion.csproj"
             },
-            "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Repositorio\\Repositorio.csproj": {
-              "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Repositorio\\Repositorio.csproj"
+            "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\Repositorio\\Repositorio.csproj": {
+              "projectPath": "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\Repositorio\\Repositorio.csproj"
             }
           }
         }
@@ -1118,16 +1118,11 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
-      "net8.0": {
-        "targetAlias": "net8.0",
+      "net6.0": {
+        "targetAlias": "net6.0",
         "dependencies": {
           "MSTest.TestAdapter": {
             "target": "Package",
@@ -1162,7 +1157,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.203/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

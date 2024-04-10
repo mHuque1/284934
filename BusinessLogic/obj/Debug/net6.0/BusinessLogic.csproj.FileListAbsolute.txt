@@ -22,3 +22,11 @@ C:\Users\mathi\Desktop\Facultad\284934\BusinessLogic\obj\Debug\net6.0\BusinessLo
 C:\Users\mathi\Desktop\Facultad\284934\BusinessLogic\obj\Debug\net6.0\BusinessLogic.dll
 C:\Users\mathi\Desktop\Facultad\284934\BusinessLogic\obj\Debug\net6.0\refint\BusinessLogic.dll
 C:\Users\mathi\Desktop\Facultad\284934\BusinessLogic\obj\Debug\net6.0\BusinessLogic.pdb
+C:\Users\mathi\OneDrive\Escritorio\284934\BusinessLogic\obj\Debug\net6.0\BusinessLogic.csproj.AssemblyReference.cache
+C:\Users\mathi\OneDrive\Escritorio\284934\BusinessLogic\obj\Debug\net6.0\BusinessLogic.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mathi\OneDrive\Escritorio\284934\BusinessLogic\obj\Debug\net6.0\BusinessLogic.AssemblyInfoInputs.cache
+C:\Users\mathi\OneDrive\Escritorio\284934\BusinessLogic\obj\Debug\net6.0\BusinessLogic.AssemblyInfo.cs
+C:\Users\mathi\OneDrive\Escritorio\284934\BusinessLogic\obj\Debug\net6.0\BusinessLogic.csproj.CoreCompileInputs.cache
+C:\Users\mathi\OneDrive\Escritorio\284934\BusinessLogic\obj\Debug\net6.0\BusinessLogic.dll
+C:\Users\mathi\OneDrive\Escritorio\284934\BusinessLogic\obj\Debug\net6.0\refint\BusinessLogic.dll
+C:\Users\mathi\OneDrive\Escritorio\284934\BusinessLogic\obj\Debug\net6.0\BusinessLogic.pdb

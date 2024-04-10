@@ -1,7 +1,7 @@
 {
   "version": 3,
   "targets": {
-    "net8.0": {
+    "net6.0": {
       "coverlet.collector/6.0.0": {
         "type": "package",
         "build": {
@@ -1022,7 +1022,7 @@
     }
   },
   "projectFileDependencyGroups": {
-    "net8.0": [
+    "net6.0": [
       "Dominio >= 1.0.0",
       "Excepcion >= 1.0.0",
       "MSTest.TestAdapter >= 3.1.1",
@@ -1037,32 +1037,32 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\DominioTest\\DominioTest.csproj",
+      "projectUniqueName": "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\DominioTest\\DominioTest.csproj",
       "projectName": "DominioTest",
-      "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\DominioTest\\DominioTest.csproj",
+      "projectPath": "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\DominioTest\\DominioTest.csproj",
       "packagesPath": "C:\\Users\\mathi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\DominioTest\\obj\\",
+      "outputPath": "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\DominioTest\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\mathi\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
-        "net8.0"
+        "net6.0"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net8.0": {
-          "targetAlias": "net8.0",
+        "net6.0": {
+          "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\Dominio.csproj": {
-              "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\Dominio.csproj"
+            "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\Dominio\\Dominio.csproj": {
+              "projectPath": "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\Dominio\\Dominio.csproj"
             },
-            "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj": {
-              "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj"
+            "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\Excepcion\\Excepcion.csproj": {
+              "projectPath": "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\Excepcion\\Excepcion.csproj"
             }
           }
         }
@@ -1071,16 +1071,11 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
-      "net8.0": {
-        "targetAlias": "net8.0",
+      "net6.0": {
+        "targetAlias": "net6.0",
         "dependencies": {
           "MSTest.TestAdapter": {
             "target": "Package",
@@ -1115,7 +1110,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.203/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }
