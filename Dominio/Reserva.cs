@@ -11,8 +11,9 @@ public class Reserva
     private bool _enEspera = true;
     private string _mensaje = "";
     private Deposito _deposito;
-    private DateTime _fechaReserva = DateTime.Today;
-    private double _costo;
+    private Usuario _usuario;
+    private readonly DateTime _fechaReserva = DateTime.Today;
+    private readonly double _costo;
 
     public DateTime Comienzo
     {
@@ -23,6 +24,7 @@ public class Reserva
     public int ID
     {
         get => _id;
+        set => _id = value;
     }
 
     public DateTime FechaReserva
@@ -59,6 +61,12 @@ public class Reserva
         set => _mensaje = ValidarMensaje(value);
     }
 
+    public Usuario Usuario
+    {
+        get => _usuario;
+        set => _usuario = value;
+    }
+
     private static string ValidarMensaje(string mensaje)
     {
         if (string.IsNullOrWhiteSpace(mensaje))
@@ -66,7 +74,8 @@ public class Reserva
             throw new DominioReservaExcepcion("El mensaje no puede ser vacio");
         }
 
-        if(mensaje.Trim().Length > 300) {
+        if (mensaje.Trim().Length > 300)
+        {
             throw new DominioReservaExcepcion("El mensaje no puede tener mas de 300 caracteres");
         }
 
@@ -78,9 +87,10 @@ public class Reserva
         get => _deposito;
         set => _deposito = value;
     }
-    public Reserva(int id, Deposito depo,DateTime comienzo,DateTime fin) {
-        _id = id;
+    public Reserva(Deposito depo, Usuario user, DateTime comienzo, DateTime fin)
+    {
         _deposito = depo;
+        _usuario = user;
         _comienzo = comienzo;
         _fin = fin;
         _costo = CalcularCosto();
@@ -122,5 +132,32 @@ public class Reserva
         return costoTotal;
     }
 
+    public void Aprobar(Usuario usuario)
+    {
+        if (usuario.EsAdmin)
+        {
+            EnEspera = false;
+            _aprobada = true;
+        }
+        else
+        {
+            throw new DominioReservaExcepcion("Una reserva solo puede ser aprobada por un administrador");
+        }
+
+    }
+
+    public void Rechazar(Usuario usuario, string msg)
+    {
+        if (usuario.EsAdmin)
+        {
+            EnEspera = false;
+            Mensaje = msg;
+        }
+        else
+        {
+            throw new DominioReservaExcepcion("Una reserva solo puede ser rechazada por un administrador");
+        }
+
+    }
 
 }

@@ -1,4 +1,3 @@
-using System.Data.Common;
 using Dominio;
 using Repositorio;
 
@@ -7,19 +6,19 @@ namespace RepositorioTest
     [TestClass]
     public class DepositoRepositoryTest
     {
-        private IRepository<Deposito> _depositos;
-        private Deposito depo;
+        private IRepository<Deposito> _depositos = new DepositoRepository();
+        private Deposito depo = new('A', 'S', true);
 
         [TestInitialize]
         public void Setup()
         {
-            depo = new Deposito(1, 'A', 'S', true);
+            depo = new Deposito('A', 'S', true);
             _depositos = new DepositoRepository();
         }
 
 
         [TestMethod]
-        public void Deberia_Verificar_Alta_De_Deposito()
+        public void Verifico_Que_Funcione_El_Alta_De_Deposito()
         {
 
             // Act
@@ -29,19 +28,18 @@ namespace RepositorioTest
             // Assert
             Assert.IsTrue(depositos.Contains(depo));
         }
-    
+
 
         [TestMethod]
-        public void Deberia_Verificar_Baja_De_Deposito()
+        public void Verifico_Que_Funcione_La_Baja_De_Deposito()
         {
             // Arrange
             _depositos.Add(depo);
 
             // Act
-
             _depositos.Delete(depo);
             var depositos = _depositos.GetAll();
-            
+
 
             // Assert
             Assert.IsFalse(depositos.Contains(depo));
@@ -50,53 +48,20 @@ namespace RepositorioTest
 
 
         [TestMethod]
-        public void Deberia_Actualizar_Tamano_Deposito()
+        public void Verifico_Que_Funcione_La_Modificacion_De_Deposito()
         {
             // Arrange
             _depositos.Add(depo);
-
+            depo = new('B', 'M', false) { ID=0};
             // Act
-            depo.Tamano = 'M';
             _depositos.Update(depo);
-            var usuarioModificado = _depositos.Find(d => d.ID == 1);
+            var usuarioModificado = _depositos.Find(d => d.ID == 0);
 
             // Assert
             Assert.IsNotNull(usuarioModificado);
+            Assert.AreEqual('B', usuarioModificado.Area);
             Assert.AreEqual('M', usuarioModificado.Tamano);
-        }
-
-        [TestMethod]
-        public void Deberia_Actualizar_Area_Deposito()
-        {
-            // Arrange
-            _depositos.Add(depo);
-
-            // Act
-            depo.Area = 'A';
-            _depositos.Update(depo);
-            var usuarioModificado = _depositos.Find(d => d.ID == 1);
-
-            // Assert
-            Assert.IsNotNull(usuarioModificado);
-            Assert.AreEqual('A', usuarioModificado.Area);
-        }
-
-        [TestMethod]
-        public void Deberia_Actualizar_Climatizacion_Deposito()
-        {
-            // Arrange
-            _depositos.Add(depo);
-
-            // Act
-            depo.TieneClimatizacion = false;
-            _depositos.Update(depo);
-            var usuarioModificado = _depositos.Find(d => d.ID == 1);
-
-            // Assert
-            Assert.IsNotNull(usuarioModificado);
             Assert.AreEqual(false, usuarioModificado.TieneClimatizacion);
         }
-
-
     }
 }

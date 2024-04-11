@@ -12,7 +12,7 @@ namespace ExcepcionTest
             string mensaje = "Este es un mensaje de prueba";
 
             // Act
-            DominioUsuarioExcepcion excepcion = new DominioUsuarioExcepcion(mensaje);
+            DominioUsuarioExcepcion excepcion = new(mensaje);
 
             // Assert
             Assert.AreEqual(mensaje, excepcion.Message);

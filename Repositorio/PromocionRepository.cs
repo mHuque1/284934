@@ -3,7 +3,7 @@ namespace Repositorio;
 
 public class PromocionRepository : IRepository<Promocion>
 {
-    private IList<Promocion> _Promociones;
+    private readonly IList<Promocion> _Promociones;
 
     public PromocionRepository()
     {
@@ -21,7 +21,7 @@ public class PromocionRepository : IRepository<Promocion>
         _Promociones.Remove(item);
     }
 
-    public Promocion Find(Func<Promocion, bool> filter)
+    public Promocion? Find(Func<Promocion, bool> filter)
     {
         return _Promociones.FirstOrDefault(filter);
     }
@@ -33,13 +33,14 @@ public class PromocionRepository : IRepository<Promocion>
 
     public void Update(Promocion updatedItem)
     {
-        Promocion existingItem = _Promociones.FirstOrDefault(d => d.Id == updatedItem.Id);
+        Promocion? existingItem = _Promociones.FirstOrDefault(d => d.Id == updatedItem.Id);
         if (existingItem != null)
         {
             existingItem.Descuento = updatedItem.Descuento;
             existingItem.Etiqueta = updatedItem.Etiqueta;
             existingItem.Comienzo = updatedItem.Comienzo;
             existingItem.Fin = updatedItem.Fin;
+            existingItem.TipoDeposito = updatedItem.TipoDeposito;
         }
     }
 }

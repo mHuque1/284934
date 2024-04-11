@@ -6,18 +6,12 @@ namespace DominioTest
     [TestClass]
     public class UsuarioTest
     {
-        private Usuario usuario;
+        private Usuario usuario = new("Juan Gomez", "JuanGomez@gmail.com", "JuanGomez123!", false);
 
         [TestInitialize]
         public void Setup()
         {
-            usuario = new Usuario
-            (
-                nombre: "Juan Gomez",
-                email: "JuanGomez@gmail.com",
-                contrasena: "JuanGomez123!",
-                esAdmin: true
-            ) ;
+            usuario = new("Juan Gomez", "JuanGomez@gmail.com", "JuanGomez123!", true);
         }
 
         [TestMethod]
@@ -35,6 +29,9 @@ namespace DominioTest
         [TestMethod]
         public void Deberia_Obtener_Si_Es_Admin()
         {
+            usuario.EsAdmin = true;
+
+
             Assert.IsTrue(usuario.EsAdmin);
         }
 
@@ -109,16 +106,15 @@ namespace DominioTest
         [TestMethod]
         public void Deberia_Obtener_Las_Reservas_Agregadas()
         {
-            Reserva reserva = new Reserva
-            (
-                id: 1,
-                depo: new Deposito(1,'A','S',false),
-                comienzo: DateTime.Today,
-                fin: DateTime.Today.AddDays(10)
-            );
+            //Arrange
+            Deposito deposito = new('A', 'S', false);
+            Usuario usuario = new("Pedro", "pedro@gmail.com", "Pedro12345!", false);
+            Reserva reserva = new(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(10));
 
+            //Act
             usuario.AgregarReserva(reserva);
 
+            //Assert
             Assert.AreEqual(1, usuario.Reservas.Count);
             Assert.AreEqual(reserva, usuario.Reservas[0]);
         }

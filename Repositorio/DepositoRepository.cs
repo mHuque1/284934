@@ -3,7 +3,7 @@ namespace Repositorio;
 
 public class DepositoRepository : IRepository<Deposito>
 {
-    private IList<Deposito> _depositos;
+    private readonly IList<Deposito> _depositos;
 
     public DepositoRepository()
     {

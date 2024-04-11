@@ -1,4 +1,5 @@
 using Dominio;
+using Excepcion;
 
 namespace DominioTest
 {
@@ -11,7 +12,7 @@ namespace DominioTest
         public void Setup()
         {
             // Arrange: Configuración inicial para cada prueba
-            deposito = new Deposito(id: 1, area: 'A', tamano: 'S', tieneClimatizacion: false);
+            deposito = new Deposito(area: 'A', tamano: 'S', tieneClimatizacion: false);
         }
 
         [TestMethod]
@@ -73,7 +74,6 @@ namespace DominioTest
             // Act & Assert
             foreach (char tamano in tamanosValidos)
             {
-                // No hay necesidad de un Assert aquí, se verifica al final del método
                 deposito.Tamano = tamano;
             }
 
@@ -98,7 +98,7 @@ namespace DominioTest
         public void Deberia_Tener_Las_Promociones_Agregadas()
         {
             // Arrange
-            var promocion = new Promocion(id: 1, etiqueta: "Promo", descuento: 10, comienzo: DateTime.Today, fin: DateTime.Today.AddDays(1));
+            var promocion = new Promocion(etiqueta: "Promo", descuento: 10, comienzo: DateTime.Today, fin: DateTime.Today.AddDays(1), 'S');
 
             // Act
             deposito.AgregarPromocion(promocion);
@@ -108,10 +108,21 @@ namespace DominioTest
             Assert.AreEqual(promocion, deposito.Promociones[0]);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(DominioDepositoExcepcion))]
+        public void No_Deberia_Agregar_Las_Promociones_De_Diferente_Tipo()
+        {
+            // Arrange
+            var promocion = new Promocion(etiqueta: "Promo", descuento: 10, comienzo: DateTime.Today, fin: DateTime.Today.AddDays(1), 'M');
+
+            // Act
+            deposito.AgregarPromocion(promocion);
+        }
+
         public void Deberia_Tener_Las_Promociones_Eliminadas()
         {
             // Arrange
-            var promocion = new Promocion(id: 1, etiqueta: "Promo", descuento: 10, comienzo: DateTime.Today, fin: DateTime.Today.AddDays(1));
+            var promocion = new Promocion(etiqueta: "Promo", descuento: 10, comienzo: DateTime.Today, fin: DateTime.Today.AddDays(1), 'S');
 
 
             // Act

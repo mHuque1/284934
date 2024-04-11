@@ -71,11 +71,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\BusinessLogic\\BusinessLogic.csproj",
+      "projectUniqueName": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogic\\BusinessLogic.csproj",
       "projectName": "BusinessLogic",
-      "projectPath": "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\BusinessLogic\\BusinessLogic.csproj",
+      "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogic\\BusinessLogic.csproj",
       "packagesPath": "C:\\Users\\mathi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\BusinessLogic\\obj\\",
+      "outputPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogic\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\mathi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -92,14 +92,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\Dominio\\Dominio.csproj": {
-              "projectPath": "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\Dominio\\Dominio.csproj"
+            "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\Dominio.csproj": {
+              "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\Dominio.csproj"
             },
-            "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\Excepcion\\Excepcion.csproj": {
-              "projectPath": "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\Excepcion\\Excepcion.csproj"
+            "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj": {
+              "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj"
             },
-            "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\Repositorio\\Repositorio.csproj": {
-              "projectPath": "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\Repositorio\\Repositorio.csproj"
+            "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Repositorio\\Repositorio.csproj": {
+              "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Repositorio\\Repositorio.csproj"
             }
           }
         }
@@ -108,6 +108,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -129,7 +134,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

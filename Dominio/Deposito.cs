@@ -46,9 +46,8 @@ namespace Dominio
         }
 
         // Constructor de la clase Deposito
-        public Deposito(int id, char area, char tamano, bool tieneClimatizacion)
+        public Deposito(char area, char tamano, bool tieneClimatizacion)
         {
-            ID = id;
             Area = area;
             Tamano = tamano;
             TieneClimatizacion = tieneClimatizacion;
@@ -79,13 +78,22 @@ namespace Dominio
         // Método para agregar una promoción al depósito
         public void AgregarPromocion(Promocion promo)
         {
-            _promociones.Add(promo);
+            if (promo.TipoDeposito == Tamano)
+            {
+                _promociones.Add(promo);
+            }
+            else
+            {
+                string msg = $"No se puede agregar una promocion de tipo '{promo.TipoDeposito}' a un deposito de tipo '{Tamano}'";
+                throw new DominioDepositoExcepcion(msg);
+            }
+
         }
 
         // Método para Borrar una promoción del depósito
         public void EliminarPromocion(Promocion promo)
         {
-           _promociones.Remove(promo);
+            _promociones.Remove(promo);
         }
 
         public object GetPromociones()

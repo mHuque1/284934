@@ -8,4 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = BusinessLogicTest
-build_property.ProjectDir = C:\Users\mathi\OneDrive\Escritorio\284934\BusinessLogicTest\
+build_property.ProjectDir = C:\Users\mathi\Desktop\Facultad\284934\BusinessLogicTest\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

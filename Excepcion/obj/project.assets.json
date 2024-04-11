@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\Excepcion\\Excepcion.csproj",
+      "projectUniqueName": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj",
       "projectName": "Excepcion",
-      "projectPath": "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\Excepcion\\Excepcion.csproj",
+      "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj",
       "packagesPath": "C:\\Users\\mathi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mathi\\OneDrive\\Escritorio\\284934\\Excepcion\\obj\\",
+      "outputPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\mathi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,6 +40,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -61,7 +66,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   }

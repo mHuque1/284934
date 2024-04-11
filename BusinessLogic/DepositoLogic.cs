@@ -1,37 +1,45 @@
 ﻿using Dominio;
-using Repositorio;
+using Excepcion;
 
 namespace BusinessLogic
 {
     public class DepositoLogic
     {
+        private int _contadorID = 0;
+        private readonly IRepository<Deposito> _repository;
         public DepositoLogic(IRepository<Deposito> depositos)
         {
+            _repository = depositos;
         }
 
-        public void AddDeposito(Deposito depositoA)
+        public void AddDeposito(Deposito depositoA, Usuario user)
         {
-            throw new NotImplementedException();
+            if (user.EsAdmin)
+            {
+                depositoA.ID = _contadorID;
+                _contadorID++;
+                _repository.Add(depositoA);
+            }
+            else
+            {
+                throw new DepositoLogicExcepcion("El alta de depósitos solamente puede ser efectuada por el Administrador");
+            }
+
         }
 
-        public void AddPromocionDeposito(Deposito depositoA, Promocion promocion)
+        public void DeleteDeposito(Deposito depositoA, Usuario user)
         {
-            throw new NotImplementedException();
+            _repository.Delete(depositoA);
         }
 
-        public void DeleteDeposito(Deposito depositoA)
+        public Deposito GetDeposito(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public Deposito GetDeposito(int v)
-        {
-            throw new NotImplementedException();
+            return _repository.Find(d => d.ID == id);
         }
 
         public IList<Deposito> GetDepositos()
         {
-            throw new NotImplementedException();
+            return _repository.GetAll();
         }
     }
 }

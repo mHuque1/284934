@@ -5,7 +5,7 @@ namespace Dominio
 {
     public class Usuario
     {
-        
+
         private string _nombre;
         private bool _esAdmin;
         private string _email;
@@ -23,6 +23,7 @@ namespace Dominio
         public bool EsAdmin
         {
             get => _esAdmin;
+            set => _esAdmin = value;
         }
 
         // Propiedad para el correo electrónico del usuario
@@ -47,7 +48,7 @@ namespace Dominio
         }
 
         // Constructor de la clase Usuario que recibe nombre, correo electrónico y contraseña
-        public Usuario(string nombre, string email, string contrasena,bool esAdmin)
+        public Usuario(string nombre, string email, string contrasena, bool esAdmin)
         {
             _nombre = ValidarNombre(nombre);
             _email = ValidarEmail(email);

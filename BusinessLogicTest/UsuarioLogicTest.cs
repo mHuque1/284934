@@ -1,5 +1,6 @@
 using BusinessLogic;
 using Dominio;
+using Excepcion;
 using Repositorio;
 
 namespace BusinessLogicTest
@@ -7,8 +8,8 @@ namespace BusinessLogicTest
     [TestClass]
     public class UsuarioLogicTest
     {
-        private IRepository<Usuario> _usuarios;
-        private UsuarioLogic _logica;
+        private static IRepository<Usuario> _usuarios = new UsuarioRepository();
+        private UsuarioLogic _logica = new(_usuarios);
 
         [TestInitialize]
         public void Inicializar()
@@ -21,7 +22,7 @@ namespace BusinessLogicTest
         public void Deberia_Crear_Logica_Usuario()
         {
             // Act
-            UsuarioLogic logica = new UsuarioLogic(_usuarios);
+            UsuarioLogic logica = new(_usuarios);
 
             // Assert
             Assert.IsNotNull(logica);
@@ -31,7 +32,7 @@ namespace BusinessLogicTest
         public void Deberia_Agregar_Usuario()
         {
             // Arrange
-            Usuario usuario = new Usuario("Pedro Gomez", "Hola@user.com", "holaPedroGomez123!", false);
+            Usuario usuario = new("Pedro Gomez", "Hola@user.com", "holaPedroGomez123!", false);
 
             // Act
             _logica.AddUsuario(usuario);
@@ -41,39 +42,66 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
+        public void Validar_Existencia_Admin()
+        {
+
+            // Arrange
+            Usuario admin1 = new("Pedro Gomez", "admin1@user.com", "holaPedroGomez123!", true);
+            _logica.AddUsuario(admin1);
+
+            // Act
+            bool resultado = _logica.ExisteAdmin();
+
+            //Assert
+            Assert.IsTrue(resultado);
+        }
+
+        [TestMethod]
+        public void Validar_No_Existencia_Admin()
+        {
+
+            // Arrange
+            Usuario admin1 = new("Pedro Gomez", "admin1@user.com", "holaPedroGomez123!", false);
+            _logica.AddUsuario(admin1);
+
+            // Act
+            bool resultado = _logica.ExisteAdmin();
+
+            //Assert
+            Assert.IsFalse(resultado);
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(UsuarioLogicExcepcion))]
         public void No_Deberia_Agregar_Mas_de_Un_Admin()
         {
             // Arrange
-            Usuario admin1 = new Usuario("Pedro Gomez", "admin1@user.com", "holaPedroGomez123!", true);
-            Usuario admin2 = new Usuario("Pedro Gomez", "admin2@user.com", "holaPedroGomez123!", true);
+            Usuario admin1 = new("Pedro Gomez", "admin1@user.com", "holaPedroGomez123!", true);
+            Usuario admin2 = new("Pedro Gomez", "admin2@user.com", "holaPedroGomez123!", true);
 
             // Act
             _logica.AddUsuario(admin1);
             _logica.AddUsuario(admin2);
-
-            // Assert
-            Assert.IsFalse(_usuarios.GetAll().Contains(admin2));
         }
 
         [TestMethod]
+        [ExpectedException(typeof(UsuarioLogicExcepcion))]
         public void No_Deberia_Permitir_Agregar_Usuario_Con_Igual_Email()
         {
             // Arrange
-            Usuario user1 = new Usuario("Pedro Gomez", "User1@user.com", "holaPedroGomez123!", false);
+            Usuario user1 = new("Pedro Gomez", "User1@user.com", "holaPedroGomez123!", false);
 
             // Act
             _logica.AddUsuario(user1);
             _logica.AddUsuario(user1);
-
-            // Assert
-            Assert.AreEqual(1, _usuarios.GetAll().Count);
         }
 
         [TestMethod]
         public void Validar_Contrasena_incorrecta()
         {
             // Arrange
-            Usuario user1 = new Usuario("Pedro Gomez", "User1@user.com", "holaPedroGomez123!", false);
+            Usuario user1 = new("Pedro Gomez", "User1@user.com", "holaPedroGomez123!", false);
             _logica.AddUsuario(user1);
 
             // Act
@@ -87,7 +115,7 @@ namespace BusinessLogicTest
         public void Validar_Contrasena_Correcta()
         {
             // Arrange
-            Usuario user1 = new Usuario("Pedro Gomez", "User1@user.com", "holaPedroGomez123!", false);
+            Usuario user1 = new("Pedro Gomez", "User1@user.com", "holaPedroGomez123!", false);
             _logica.AddUsuario(user1);
 
             // Act
@@ -96,23 +124,31 @@ namespace BusinessLogicTest
             // Assert
             Assert.IsTrue(resultado);
         }
-
         [TestMethod]
-        public void Alta_De_Reserva_Correcta()
+        public void Validar_Get_Usuario()
         {
             // Arrange
-            Usuario user1 = new Usuario("Pedro Gomez", "User1@user.com", "holaPedroGomez123!", false);
-            Deposito deposito = new Deposito(1, 'A', 'S', false);
-            Reserva reserva = new Reserva(1, deposito, DateTime.Today, DateTime.Today.AddDays(1));
-
-            _logica.AddUsuario(user1);
-            _logica.AddReservaUsuario(reserva, user1);
+            Usuario usuario = new("Pedro Gomez", "Hola@user.com", "holaPedroGomez123!", false);
+            _logica.AddUsuario(usuario);
 
             // Act
-            IList<Reserva> reservas = _logica.GetReservasUsuario(user1);
+            Usuario Encontrado = _logica.GetUsuario(usuario.Email);
 
             // Assert
-            Assert.IsTrue(reservas.Contains(reserva));
+            Assert.IsNotNull(Encontrado);
+            Assert.AreEqual(usuario, Encontrado);
+
+        }
+
+        [TestMethod]
+        public void Retornar_Null_Cuando_No_Se_Encuentra_El_Usuario()
+        {
+            // Act
+            Usuario? Encontrado = _logica.GetUsuario("Usuario@hola.com");
+
+            // Assert
+            Assert.IsNull(Encontrado);
+
         }
     }
 }

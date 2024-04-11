@@ -1,7 +1,5 @@
 using Dominio;
 using Excepcion;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace DominioTest
 {
@@ -15,11 +13,11 @@ namespace DominioTest
         {
             // Arrange: Configuración inicial para cada prueba
             promocion = new Promocion(
-                id: 1,
                 etiqueta: "Promocion1",
                 descuento: 10,
                 comienzo: DateTime.Today,
-                fin: DateTime.Today.AddDays(3)
+                fin: DateTime.Today.AddDays(3),
+                tipoDeposito: 'S'
             );
         }
 
@@ -64,10 +62,10 @@ namespace DominioTest
 
         [TestMethod]
         public void Descuento_Puede_Ser_Cinco()
-        {   
+        {
             // Arrange
             int esperado = 5;
-           
+
             // Act
             promocion.Descuento = esperado;
             int obtenido = promocion.Descuento;
@@ -122,5 +120,35 @@ namespace DominioTest
             // Assert
             Assert.IsFalse(resultado);
         }
+
+        public void Deberia_Obtener_Tipo_Deposito()
+        {
+            // Arrange
+            char tamanoEsperado = 'S';
+
+            // Act
+            char tamanoObtenido = promocion.TipoDeposito;
+
+            // Assert
+            Assert.AreEqual(tamanoEsperado, tamanoObtenido);
+        }
+
+        [TestMethod]
+        public void Deberia_Aceptar_Tamanos_Validos()
+        {
+            // Arrange
+            char[] tamanosValidos = { 'S', 'M', 'L' };
+
+            // Act & Assert
+            foreach (char tamano in tamanosValidos)
+            {
+                // No hay necesidad de un Assert aquí, se verifica al final del método
+                promocion.TipoDeposito = tamano;
+            }
+
+            Assert.IsTrue(true); // Si no se lanzó ninguna excepción hasta aquí, la prueba pasa
+        }
+
+
     }
 }

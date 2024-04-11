@@ -1,9 +1,9 @@
 ﻿namespace Excepcion
 {
-	public class DominioPromocionExcepcion : Exception
-	{
-		public DominioPromocionExcepcion(string message) : base(message)
-		{
-		}
-	}
+    public class DominioPromocionExcepcion : Exception
+    {
+        public DominioPromocionExcepcion(string message) : base(message)
+        {
+        }
+    }
 }

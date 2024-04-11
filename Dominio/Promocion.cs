@@ -1,5 +1,4 @@
 using Excepcion;
-using System;
 
 namespace Dominio
 {
@@ -10,6 +9,7 @@ namespace Dominio
         private int _descuento;
         private DateTime _comienzo;
         private DateTime _fin;
+        private char _tipoDeposito; //A que tipo (tamaño) de depositos va dirigida la promocion. ej: 'S'
 
         // Propiedad para el ID
         public int Id { get => _id; set => _id = value; }
@@ -41,14 +41,31 @@ namespace Dominio
             get => _fin;
             set => _fin = value;
         }
-        // Constructor de la clase Usuario que recibe id, etiqueta, descuento, fecha Comienzo y fin
-        public Promocion(int id, string etiqueta, int descuento, DateTime comienzo, DateTime fin)
+        public char TipoDeposito
         {
-            _id = id;
+            get => _tipoDeposito;
+            set => _tipoDeposito = ValidarTamano(value);
+        }
+
+        private char ValidarTamano(char tamano)
+        {
+            char[] TamanosValidos = new char[] { 'S', 'M', 'L' };
+            if (!TamanosValidos.Contains(tamano))
+            {
+                throw new DominioDepositoExcepcion($"El Tamaño {tamano} no es válido");
+            }
+            return tamano;
+        }
+
+
+        // Constructor de la clase Usuario que recibe id, etiqueta, descuento, fecha Comienzo, fecha fin y tipoDeposito
+        public Promocion(string etiqueta, int descuento, DateTime comienzo, DateTime fin, char tipoDeposito)
+        {
             Etiqueta = etiqueta;
             Descuento = descuento;
             Comienzo = comienzo;
             Fin = fin;
+            TipoDeposito = tipoDeposito;
         }
 
         // Método estático para validar y limpiar la etiqueta

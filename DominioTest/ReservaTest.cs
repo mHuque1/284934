@@ -6,15 +6,17 @@ namespace DominioTest
     [TestClass]
     public class ReservaTest
     {
-        private Deposito deposito;
-        private Reserva reserva;
+        private static Deposito deposito = new('A', 'S', false);
+        private static Usuario usuario = new("Pedro", "Pedro@gmail.com", "Pedro1234!", true);
+        private static Reserva reserva = new(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(1));
 
         [TestInitialize]
         public void Setup()
         {
             // Arrange
-            deposito = new Deposito(1, 'A', 'S', false);
-            reserva = new Reserva(1,deposito, DateTime.Today, DateTime.Today.AddDays(1));
+            usuario = new Usuario("Pedro", "Pedro@gmail.com", "Pedro1234!", true);
+            deposito = new Deposito('A', 'S', false);
+            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(1));
         }
 
         [TestMethod]
@@ -55,14 +57,27 @@ namespace DominioTest
         [TestMethod]
         public void Deberia_Obtener_Confirmacion()
         {
-            // Arrange
-            bool confirmacion = true;
-
             // Act
-            reserva.Aprobada = confirmacion;
+            reserva.Aprobar(usuario);
 
             // Assert
             Assert.IsTrue(reserva.Aprobada);
+            Assert.IsFalse(reserva.EnEspera);
+        }
+
+        [TestMethod]
+        public void Deberia_Rechazar_Confirmacion()
+        {
+            // Arrange
+            string msg = "Reserva rechazada";
+
+            // Act
+            reserva.Rechazar(usuario, msg);
+
+            // Assert
+            Assert.IsFalse(reserva.Aprobada);
+            Assert.IsFalse(reserva.EnEspera);
+            Assert.AreEqual(msg, reserva.Mensaje);
         }
 
         [TestMethod]
@@ -79,23 +94,13 @@ namespace DominioTest
         }
 
         [TestMethod]
-        public void Reserva_Esta_en_espera()
-        {
-            // Arrange
-            reserva.EnEspera = true;
-
-            // Assert
-            Assert.IsTrue(reserva.EnEspera);
-        }
-
-        [TestMethod]
         public void Acepta_Maximo_Mensaje_300_Caracteres()
         {
             // Arrange
             string esperado = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lobortis nisi vitae lorem auctor tempus. Phasellus vehicula, nunc a mattis sollicitudin, sapien est varius ante, ut efficitur leo dui sodales purus. Phasellus dapibus lacinia eros nec tristique. Vestibulum ut vestibulum elit. Fusce a ex.";
+            reserva.Rechazar(usuario, esperado);
 
             // Act
-            reserva.Mensaje = esperado;
             string obtenido = reserva.Mensaje;
 
             // Assert
@@ -108,17 +113,36 @@ namespace DominioTest
         {
             // Arrange
             string msg = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus massa diam, pharetra et tempor id, elementum eu est. Maecenas eget ex a lorem auctor aliquam. Nunc fringilla suscipit quam ut tristique. Proin vel orci a augue bibendum pulvinar. Proin eget facilisis lorem, vitae vulputate purus biam.";
+            reserva.Rechazar(usuario, msg);
 
             // Act
-            reserva.Mensaje = msg;
+            reserva.Rechazar(usuario, msg);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DominioReservaExcepcion))]
+        public void Solo_Admin_Puede_Rechazar()
+        {
+            Usuario user = new("Juan", "Juan@gmail.com", "Juan12345!", false);
+
+            reserva.Rechazar(user, "rechazado");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DominioReservaExcepcion))]
+        public void Solo_Admin_Puede_Aprobar()
+        {
+            Usuario user = new("Juan", "Juan@gmail.com", "Juan12345!", false);
+
+            reserva.Aprobar(user);
         }
 
         [TestMethod]
         public void Calculo_Precio_Deposito_1()
         {
             // Arrange
-            deposito = new Deposito(1, 'A', 'S', false);
-            reserva = new Reserva(1, deposito, DateTime.Today, DateTime.Today.AddDays(1));
+            deposito = new Deposito('A', 'S', false);
+            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(1));
             double costoEsperado = 50.0;
 
             // Act & Assert
@@ -130,8 +154,8 @@ namespace DominioTest
         public void Calculo_Precio_Deposito_2()
         {
             // Arrange
-            deposito = new Deposito(1, 'A', 'M', false);
-            reserva = new Reserva(1,deposito, DateTime.Today, DateTime.Today.AddDays(1));
+            deposito = new Deposito('A', 'M', false);
+            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(1));
             double costoEsperado = 75.0;
 
             // Act & Assert
@@ -143,12 +167,12 @@ namespace DominioTest
         public void Calculo_Precio_Deposito_3()
         {
             // Arrange
-            deposito = new Deposito(1, 'A', 'L', false);
-            reserva = new Reserva(1, deposito, DateTime.Today, DateTime.Today.AddDays(1));
+            deposito = new Deposito('A', 'L', false);
+            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(1));
             double costoEsperado = 100.0;
 
             // Act & Assert
-            Assert.AreEqual(costoEsperado,reserva.Costo);
+            Assert.AreEqual(costoEsperado, reserva.Costo);
 
         }
 
@@ -156,12 +180,12 @@ namespace DominioTest
         public void Calculo_Precio_Deposito_Climatizado_1()
         {
             // Arrange
-            deposito = new Deposito(1, 'A', 'S', true);
-            reserva = new Reserva(1, deposito, DateTime.Today, DateTime.Today.AddDays(5));
+            deposito = new Deposito('A', 'S', true);
+            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(5));
             double costoEsperado = 70.0;
 
             // Act & Assert
-            Assert.AreEqual(costoEsperado,reserva.Costo);
+            Assert.AreEqual(costoEsperado, reserva.Costo);
 
         }
 
@@ -169,8 +193,8 @@ namespace DominioTest
         public void Calculo_Precio_Deposito_Climatizado_2()
         {
             // Arrange
-            deposito = new Deposito(1, 'A', 'M', true);
-            reserva = new Reserva(1, deposito, DateTime.Today, DateTime.Today.AddDays(5));
+            deposito = new Deposito('A', 'M', true);
+            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(5));
             double costoEsperado = 95.0;
 
             // Act & Assert
@@ -182,8 +206,8 @@ namespace DominioTest
         public void Calculo_Precio_Deposito_Climatizado_3()
         {
             // Arrange
-            deposito = new Deposito(1, 'A', 'L', true);
-            reserva = new Reserva(1, deposito, DateTime.Today, DateTime.Today.AddDays(5));
+            deposito = new Deposito('A', 'L', true);
+            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(5));
             double costoEsperado = 120.0;
 
             // Act & Assert
@@ -195,8 +219,8 @@ namespace DominioTest
         public void Calculo_Precio_Deposito_Sin_Climatizacion_Una_Semana_1()
         {
             // Arrange
-            deposito = new Deposito(1, 'A', 'S', false);
-            reserva = new Reserva(1,deposito, DateTime.Today, DateTime.Today.AddDays(6));
+            deposito = new Deposito('A', 'S', false);
+            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(6));
             double costoEsperado = 47.5;
 
             // Act & Assert
@@ -207,8 +231,8 @@ namespace DominioTest
         public void Calculo_Precio_Deposito_Sin_Climatizacion_Una_Semana_2()
         {
             // Arrange
-            deposito = new Deposito(1, 'A', 'M', false);
-            reserva = new Reserva(1, deposito, DateTime.Today, DateTime.Today.AddDays(6));
+            deposito = new Deposito('A', 'M', false);
+            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(6));
             double costoEsperado = 71.25;
 
             // Act & Assert
@@ -219,8 +243,8 @@ namespace DominioTest
         public void Calculo_Precio_Deposito_Sin_Climatizacion_Una_Semana_3()
         {
             // Arrange
-            deposito = new Deposito(1, 'A', 'L', false);
-            reserva = new Reserva(1, deposito, DateTime.Today, DateTime.Today.AddDays(6));
+            deposito = new Deposito('A', 'L', false);
+            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(6));
             double costoEsperado = 95.0;
 
             // Act & Assert
@@ -231,8 +255,8 @@ namespace DominioTest
         public void Calculo_Precio_Deposito_Con_Climatizacion_Una_Semana_1()
         {
             // Arrange
-            deposito = new Deposito(1, 'A', 'S', true);
-            reserva = new Reserva(1, deposito, DateTime.Today, DateTime.Today.AddDays(6));
+            deposito = new Deposito('A', 'S', true);
+            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(6));
             double costoEsperado = 66.5;
 
             // Act & Assert
@@ -243,8 +267,8 @@ namespace DominioTest
         public void Calculo_Precio_Deposito_Con_Climatizacion_Una_Semana_2()
         {
             // Arrange
-            deposito = new Deposito(1, 'A', 'M', true);
-            reserva = new Reserva(1, deposito, DateTime.Today, DateTime.Today.AddDays(6));
+            deposito = new Deposito('A', 'M', true);
+            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(6));
             double costoEsperado = 90.25;
 
             // Act & Assert
@@ -255,8 +279,8 @@ namespace DominioTest
         public void Calculo_Precio_Deposito_Con_Climatizacion_Una_Semana_3()
         {
             // Arrange
-            deposito = new Deposito(1, 'A', 'L', true);
-            reserva = new Reserva(1, deposito, DateTime.Today, DateTime.Today.AddDays(6));
+            deposito = new Deposito('A', 'L', true);
+            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(6));
             double costoEsperado = 114.0;
 
             // Act & Assert
@@ -267,8 +291,8 @@ namespace DominioTest
         public void Calculo_Precio_Deposito_Sin_Climatizacion_Tres_Semanas_1()
         {
             // Arrange
-            deposito = new Deposito(1, 'A', 'S', false);
-            reserva = new Reserva(1, deposito, DateTime.Today, DateTime.Today.AddDays(20));
+            deposito = new Deposito('A', 'S', false);
+            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(20));
             double costoEsperado = 45;
 
             // Act & Assert
@@ -279,8 +303,8 @@ namespace DominioTest
         public void Calculo_Precio_Deposito_Sin_Climatizacion_Tres_Semanas_2()
         {
             // Arrange
-            deposito = new Deposito(1, 'A', 'M', false);
-            reserva = new Reserva(1, deposito, DateTime.Today, DateTime.Today.AddDays(20));
+            deposito = new Deposito('A', 'M', false);
+            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(20));
             double costoEsperado = 67.5;
 
             // Act & Assert
@@ -291,8 +315,8 @@ namespace DominioTest
         public void Calculo_Precio_Deposito_Sin_Climatizacion_Tres_Semanas_3()
         {
             // Arrange
-            deposito = new Deposito(1, 'A', 'L', false);
-            reserva = new Reserva(1, deposito, DateTime.Today, DateTime.Today.AddDays(20));
+            deposito = new Deposito('A', 'L', false);
+            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(20));
             double costoEsperado = 90.0;
 
             // Act & Assert
@@ -303,8 +327,8 @@ namespace DominioTest
         public void Calculo_Precio_Deposito_Con_Climatizacion_Tres_Semanas_1()
         {
             // Arrange
-            deposito = new Deposito(1, 'A', 'S', true);
-            reserva = new Reserva(1, deposito, DateTime.Today, DateTime.Today.AddDays(20));
+            deposito = new Deposito('A', 'S', true);
+            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(20));
             double costoEsperado = 63.0;
 
             // Act & Assert
@@ -316,8 +340,8 @@ namespace DominioTest
         public void Calculo_Precio_Deposito_Con_Climatizacion_Tres_Semanas_2()
         {
             // Arrange
-            deposito = new Deposito(1, 'A', 'M', true);
-            reserva = new Reserva(1, deposito, DateTime.Today, DateTime.Today.AddDays(20));
+            deposito = new Deposito('A', 'M', true);
+            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(20));
             double costoEsperado = 85.5;
 
             // Act & Assert
@@ -328,8 +352,8 @@ namespace DominioTest
         public void Calculo_Precio_Deposito_Con_Climatizacion_Tres_Semanas_3()
         {
             // Arrange
-            deposito = new Deposito(1, 'A', 'L', true);
-            reserva = new Reserva(1, deposito, DateTime.Today, DateTime.Today.AddDays(20));
+            deposito = new Deposito('A', 'L', true);
+            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(20));
             double costoEsperado = 108.0;
 
             // Act & Assert
@@ -340,10 +364,10 @@ namespace DominioTest
         public void Calculo_Precio_Deposito_Con_Promocion()
         {
             // Arrange
-            Promocion promo = new Promocion(1,"promo",20,DateTime.Today,DateTime.Today.AddDays(5));
-            deposito = new Deposito(1, 'A', 'S', false);
+            Promocion promo = new("promo", 20, DateTime.Today, DateTime.Today.AddDays(5), 'S');
+            deposito = new Deposito('A', 'S', false);
             deposito.AgregarPromocion(promo);
-            reserva = new Reserva(1, deposito, DateTime.Today, DateTime.Today.AddDays(5));
+            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(5));
             double costoEsperado = 40.0;
 
             // Act & Assert

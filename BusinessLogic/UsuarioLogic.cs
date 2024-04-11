@@ -1,31 +1,54 @@
 using Dominio;
-using Repositorio;
-
+using Excepcion;
 namespace BusinessLogic;
 
 public class UsuarioLogic
 {
-    public UsuarioLogic(IRepository<Usuario> _repositorio) {
-
-    }
-
-    public void AddReservaUsuario(Reserva reserva, Usuario user1)
+    private readonly IRepository<Usuario> _repository;
+    public UsuarioLogic(IRepository<Usuario> usuarios)
     {
-        throw new NotImplementedException();
+        _repository = usuarios;
     }
+
+    public bool ExisteAdmin()
+    {
+        Usuario admin = _repository.Find(u => u.EsAdmin);
+        return admin != null;
+    }
+
+    private bool EmailYaRegistrado(string email)
+    {
+        Usuario user = GetUsuario(email);
+        return user != null;
+    }
+
 
     public void AddUsuario(Usuario usuario)
     {
-        throw new NotImplementedException();
+        if (usuario.EsAdmin && ExisteAdmin())
+        {
+            throw new UsuarioLogicExcepcion("No se permite agregar un administrador cuando ya existe uno");
+        }
+
+        if (EmailYaRegistrado(usuario.Email))
+        {
+            throw new UsuarioLogicExcepcion("Ya existe un usuario con el email ingresado");
+        }
+        else
+        {
+            _repository.Add(usuario);
+        }
+
     }
 
-    public IList<Reserva> GetReservasUsuario(Usuario user1)
+    public Usuario GetUsuario(string Email)
     {
-        throw new NotImplementedException();
+        return _repository.Find(u => u.Email == Email);
     }
 
-    public bool ValidarInicioSesion(string v1, string v2)
+    public bool ValidarInicioSesion(string email, string contrasena)
     {
-        throw new NotImplementedException();
+        Usuario user = GetUsuario(email);
+        return user != null && user.Contrasena == contrasena;
     }
 }
