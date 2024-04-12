@@ -1,5 +1,6 @@
 ﻿using Dominio;
 using Excepcion;
+using Repositorio;
 
 namespace BusinessLogic
 {
@@ -14,6 +15,19 @@ namespace BusinessLogic
 
         public void AddDeposito(Deposito depositoA, Usuario user)
         {
+
+            if (depositoA == null)
+            {
+                throw new DepositoLogicExcepcion("El deposito ingresado fue null");
+
+            }
+
+            if (user == null)
+            {
+                throw new DepositoLogicExcepcion("El user ingresado fue null");
+            }
+
+
             if (user.EsAdmin)
             {
                 depositoA.ID = _contadorID;
@@ -29,7 +43,24 @@ namespace BusinessLogic
 
         public void DeleteDeposito(Deposito depositoA, Usuario user)
         {
-            _repository.Delete(depositoA);
+            if (depositoA == null)
+            {
+                throw new DepositoLogicExcepcion("El deposito en DeleteDeposito no puede ser null");
+            }
+
+            if (user == null)
+            {
+                throw new DepositoLogicExcepcion("El user en DeleteDeposito no puede ser null");
+            }
+
+            if (user.EsAdmin) {
+                _repository.Delete(depositoA);
+            }
+            else
+            {
+                throw new DepositoLogicExcepcion("La baja de depósitos solamente puede ser efectuada por el Administrador");
+            }
+
         }
 
         public Deposito GetDeposito(int id)

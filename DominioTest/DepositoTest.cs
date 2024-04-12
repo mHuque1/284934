@@ -45,7 +45,6 @@ namespace DominioTest
             // Act & Assert
             foreach (char area in areasValidas)
             {
-                // No hay necesidad de un Assert aquí, se verifica al final del método
                 deposito.Area = area;
             }
 

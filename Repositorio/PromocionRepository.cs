@@ -21,7 +21,7 @@ public class PromocionRepository : IRepository<Promocion>
         _Promociones.Remove(item);
     }
 
-    public Promocion? Find(Func<Promocion, bool> filter)
+    public Promocion Find(Func<Promocion, bool> filter)
     {
         return _Promociones.FirstOrDefault(filter);
     }

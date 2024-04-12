@@ -125,7 +125,7 @@ public class Reserva
         {
             if (promo.EstaVigente())
             {
-                costoTotal *= (1.0 - (promo.Descuento * 0.01));
+                costoTotal *= 1.0 - (promo.Descuento * 0.01);
             }
         }
 

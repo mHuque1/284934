@@ -52,7 +52,7 @@ namespace RepositorioTest
         {
             // Arrange
             _depositos.Add(depo);
-            depo = new('B', 'M', false) { ID=0};
+            depo = new('B', 'M', false) { ID = 0 };
             // Act
             _depositos.Update(depo);
             var usuarioModificado = _depositos.Find(d => d.ID == 0);

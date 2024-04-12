@@ -21,7 +21,7 @@ public class UsuarioRepository : IRepository<Usuario>
         _usuarios.Remove(item);
     }
 
-    public Usuario? Find(Func<Usuario, bool> filter)
+    public Usuario Find(Func<Usuario, bool> filter)
     {
         return _usuarios.FirstOrDefault(filter);
     }

@@ -33,7 +33,7 @@ public class DepositoRepository : IRepository<Deposito>
 
     public void Update(Deposito updatedItem)
     {
-        Deposito existingItem = _depositos.FirstOrDefault(d => d.ID == updatedItem.ID);
+        Deposito? existingItem = _depositos.FirstOrDefault(d => d.ID == updatedItem.ID);
         if (existingItem != null)
         {
             existingItem.Area = updatedItem.Area;

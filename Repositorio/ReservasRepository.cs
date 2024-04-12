@@ -20,7 +20,7 @@ public class ReservasRepository : IRepository<Reserva>
         _reservas.Remove(depo);
     }
 
-    public Reserva? Find(Func<Reserva, bool> filter)
+    public Reserva Find(Func<Reserva, bool> filter)
     {
         return _reservas.FirstOrDefault(filter);
     }

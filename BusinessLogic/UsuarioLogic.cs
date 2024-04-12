@@ -1,5 +1,6 @@
 using Dominio;
 using Excepcion;
+using Repositorio;
 namespace BusinessLogic;
 
 public class UsuarioLogic
@@ -25,6 +26,10 @@ public class UsuarioLogic
 
     public void AddUsuario(Usuario usuario)
     {
+       if (usuario == null)
+        {
+            throw new UsuarioLogicExcepcion("El usuario no puede ser null");
+        }
         if (usuario.EsAdmin && ExisteAdmin())
         {
             throw new UsuarioLogicExcepcion("No se permite agregar un administrador cuando ya existe uno");
@@ -43,12 +48,36 @@ public class UsuarioLogic
 
     public Usuario GetUsuario(string Email)
     {
-        return _repository.Find(u => u.Email == Email);
+        if (!string.IsNullOrEmpty(Email))
+        {
+            return _repository.Find(u => u.Email == Email);
+        }
+        else
+        {
+            throw new UsuarioLogicExcepcion("Se necesita el email para el getUsuario");
+        }
+        
     }
 
     public bool ValidarInicioSesion(string email, string contrasena)
     {
-        Usuario user = GetUsuario(email);
-        return user != null && user.Contrasena == contrasena;
+        if (!string.IsNullOrEmpty(email))
+        {
+            if (!string.IsNullOrEmpty(contrasena))
+            {
+                Usuario user = GetUsuario(email);
+                return user != null && user.Contrasena == contrasena;
+            }
+            else
+            {
+                throw new UsuarioLogicExcepcion("La contraseña no puede ser null");
+            }
+
+        }
+        else
+        {
+            throw new UsuarioLogicExcepcion("El email no puede ser null");
+        }
+       
     }
 }

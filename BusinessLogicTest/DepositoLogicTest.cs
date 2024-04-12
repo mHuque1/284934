@@ -11,7 +11,7 @@ namespace BusinessLogicTest
 
         private static IRepository<Deposito> _depositos = new DepositoRepository();
         private DepositoLogic _logica = new(_depositos);
-
+         
         [TestInitialize]
         public void Inicializar()
         {
@@ -25,6 +25,7 @@ namespace BusinessLogicTest
             // Assert
             Assert.IsNotNull(_logica);
         }
+
 
         [TestMethod]
         public void Verificar_Alta_De_Deposito()
@@ -42,6 +43,33 @@ namespace BusinessLogicTest
 
         [TestMethod]
         [ExpectedException(typeof(DepositoLogicExcepcion))]
+        public void Verificar_Alta_De_Deposito_Null()
+        {
+            // Arrange
+            Usuario user = new("Pedro", "pedro@gmail.com", "Pedro1234!", true);
+            // Act
+            #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            _logica.AddDeposito(null, user);
+            #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DepositoLogicExcepcion))]
+        public void Verificar_Alta_De_Deposito_Usuario_Null()
+        {
+            // Arrange
+            Deposito depositoA = new('A', 'S', true);
+
+            // Act
+            #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            _logica.AddDeposito(depositoA, null);
+            #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DepositoLogicExcepcion))]
         public void Solo_Admin_Alta_De_Deposito()
         {
             // Arrange
@@ -50,7 +78,6 @@ namespace BusinessLogicTest
             // Act
             _logica.AddDeposito(depositoA, user);
         }
-
         [TestMethod]
         public void Verificar_Baja_De_Deposito()
         {
@@ -66,6 +93,35 @@ namespace BusinessLogicTest
             // Assert
             Assert.AreEqual(0, depositos.Count);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(DepositoLogicExcepcion))]
+        public void Verificar_Baja_De_Deposito_Null()
+        {
+            // Arrange
+            Usuario user = new("Pedro", "pedro@gmail.com", "Pedro1234!", true);
+
+            // Act
+            #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            _logica.DeleteDeposito(null, user);
+            #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DepositoLogicExcepcion))]
+        public void Verificar_Baja_De_Deposito_Usuario_Null()
+        {
+            // Arrange
+            Deposito depositoA = new('A', 'S', true);
+            Usuario user = new("Pedro", "pedro@gmail.com", "Pedro1234!", true);
+            _logica.AddDeposito(depositoA, user);
+
+            // Act
+            #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            _logica.DeleteDeposito(depositoA, null);
+            #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
 
         [TestMethod]
         public void Verificar_Get_Depositos()

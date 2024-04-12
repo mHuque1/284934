@@ -1,4 +1,6 @@
-﻿public interface IRepository<T>
+﻿namespace Repositorio;
+
+public interface IRepository<T>
 {
     void Add(T item);
     void Update(T updatedItem);

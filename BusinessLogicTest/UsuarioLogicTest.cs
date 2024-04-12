@@ -2,6 +2,7 @@ using BusinessLogic;
 using Dominio;
 using Excepcion;
 using Repositorio;
+using System.Runtime.Intrinsics.X86;
 
 namespace BusinessLogicTest
 {
@@ -27,6 +28,7 @@ namespace BusinessLogicTest
             // Assert
             Assert.IsNotNull(logica);
         }
+
 
         [TestMethod]
         public void Deberia_Agregar_Usuario()
@@ -98,6 +100,19 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(UsuarioLogicExcepcion))]
+        public void No_Deberia_Permitir_Agregar_Usuario_Null()
+        {
+            // Arrange
+            Usuario? user1 = null;
+            
+            //Act
+            #pragma warning disable CS8604 // Possible null reference argument.
+            _logica.AddUsuario(user1);
+            #pragma warning restore CS8604 // Possible null reference argument.
+        }
+
+        [TestMethod]
         public void Validar_Contrasena_incorrecta()
         {
             // Arrange
@@ -109,6 +124,36 @@ namespace BusinessLogicTest
 
             // Assert
             Assert.IsFalse(resultado);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UsuarioLogicExcepcion))]
+        public void Validar_Email_Null()
+        {
+            // Arrange
+            Usuario user1 = new("Pedro Gomez", "User1@user.com", "holaPedroGomez123!", false);
+            _logica.AddUsuario(user1);
+
+            // Act
+            #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            _logica.ValidarInicioSesion(null, "holaPedroGomez125!");
+            #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UsuarioLogicExcepcion))]
+        public void Validar_Contrasena_Null()
+        {
+            // Arrange
+            Usuario user1 = new("Pedro Gomez", "User1@user.com", "holaPedroGomez123!", false);
+            _logica.AddUsuario(user1);
+
+            // Act
+            #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            _logica.ValidarInicioSesion("User1@user.com", null);
+            #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+
         }
 
         [TestMethod]
@@ -137,6 +182,22 @@ namespace BusinessLogicTest
             // Assert
             Assert.IsNotNull(Encontrado);
             Assert.AreEqual(usuario, Encontrado);
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(UsuarioLogicExcepcion))]
+        public void Validar_Get_Usuario_Null()
+        {
+            // Arrange
+            Usuario usuario = new("Pedro Gomez", "Hola@user.com", "holaPedroGomez123!", false);
+            _logica.AddUsuario(usuario);
+
+            // Act
+            #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            _logica.GetUsuario(null);
+            #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+
 
         }
 
