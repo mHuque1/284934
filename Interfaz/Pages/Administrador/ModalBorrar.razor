@@ -1,0 +1,32 @@
+﻿@using Data;
+@using Dominio;
+@inject Promociones promocionesServicio;
+
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="text-center">
+        <h3>¿Estás seguro de que deseas borrar?</h3>
+        <p>@promo.Etiqueta</p>
+        <p>Esta acción no se puede deshacer.</p>
+        <button class="btn btn-success" @onclick="Confirmar">Confirmar</button>
+        <button class="btn btn-danger" @onclick="Cancelar">Cancelar</button>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+    [Parameter] public Promocion promo { get; set; }
+
+    private async Task Cancelar()
+    {
+        await BlazoredModal.CancelAsync();
+    }
+
+    private async Task Confirmar()
+    {
+        await Task.Run(() =>
+        {
+            promocionesServicio.Logica.DeletePromocion(promo.Id, promo);
+        });
+        await BlazoredModal.CloseAsync(ModalResult.Ok());
+    }
+}

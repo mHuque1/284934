@@ -1,11 +1,10 @@
-﻿@using Interfaz.Data
-@using Microsoft.AspNetCore.Components.Web
-@using Dominio
-@inject Promociones promociones // Inyectar el servicio Promociones
+﻿@using Data;
+@using Dominio;
+@inject Promociones promocionesServicio // Inyectar el servicio Promociones
 <div class="container">
     <div class="form-group">
         <label for="nombreEtiqueta">Nombre de la etiqueta de la promoción:</label>
-        <input type="text" class="form-control" id="nombreEtiqueta" @bind="nombreEtiqueta"/>
+        <input type="text" class="form-control" id="nombreEtiqueta" @bind="nombreEtiqueta" />
     </div>
 
     <div class="form-group">
@@ -39,15 +38,27 @@
     <div style="color: red;" id="ErrorMessage">@errorMessage</div>
 </div>
 
-
 @code {
-    private int porcentajeDescuento = 0;
-    private string nombreEtiqueta = "";
-    private DateTime fechaInicio = DateTime.Today; // Variable para almacenar la fecha de inicio
-    private DateTime fechaFin = DateTime.Today;// Variable para almacenar la fecha de fin
-    private char tipoDeposito = 'S'; // Variable para almacenar el tipo de depósito
 
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+    [Parameter] public Promocion promo { get; set; }
+
+    private int porcentajeDescuento;
+    private string nombreEtiqueta;
+    private DateTime fechaInicio;
+    private DateTime fechaFin;
+    private char tipoDeposito;
     private string errorMessage = ""; // Variable para almacenar el mensaje de error
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        porcentajeDescuento = promo.Descuento;
+        nombreEtiqueta = promo.Etiqueta;
+        fechaInicio = promo.Comienzo;
+        fechaFin = promo.Fin;
+        tipoDeposito = promo.TipoDeposito;
+    }
 
     private void MostrarError(string mensaje)
     {
@@ -67,7 +78,6 @@
             return false;
         }
 
-        // Limpiar el mensaje de error si la validación es exitosa
         LimpiarError();
         return true;
     }
@@ -86,7 +96,6 @@
             return false;
         }
 
-        // Limpiar el mensaje de error si la validación es exitosa
         LimpiarError();
         return true;
     }
@@ -105,7 +114,6 @@
             return false;
         }
 
-        // Limpiar el mensaje de error si la validación es exitosa
         LimpiarError();
         return true;
     }
@@ -118,7 +126,6 @@
             return false;
         }
 
-        // Limpiar el mensaje de error si la validación es exitosa
         LimpiarError();
         return true;
     }
@@ -127,17 +134,15 @@
     {
         if (ValidarEtiqueta() && ValidarDescuento() && ValidarFechas() && ValidarTipoDeposito())
         {
-            Promocion promocion = new(nombreEtiqueta, porcentajeDescuento, fechaInicio, fechaFin, tipoDeposito);
-            promociones.Logica.AddPromocion(promocion);
-            await SubmitForm();
+            await Task.Run(() =>
+            {
+                Promocion promocion = new(nombreEtiqueta, porcentajeDescuento, fechaInicio, fechaFin, tipoDeposito);
+                promocionesServicio.Logica.ModificarPromocion(promo.Id, promocion);
+            });
+
+            await Aceptar();
         }
-
     }
-   
 
-    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
-
-    private async Task SubmitForm() => await BlazoredModal.CloseAsync(ModalResult.Ok());
-    private async Task Cancel() => await BlazoredModal.CancelAsync();
-
+    private async Task Aceptar() => await BlazoredModal.CloseAsync(ModalResult.Ok());
 }

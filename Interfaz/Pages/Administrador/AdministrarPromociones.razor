@@ -1,0 +1,83 @@
+﻿@page "/Administrar/Promociones"
+
+<PageTitle>Promociones</PageTitle>
+
+@using Data;
+@using Dominio
+@inject Promociones promocionesServicio;
+
+<div class="container">
+    <h1>Administrar Promociones</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Etiqueta</th>
+                <th>Descuento</th>
+                <th>Comienzo</th>
+                <th>Fin</th>
+                <th>Tipo Deposito</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Promocion promo in promociones)
+            {
+                <tr>
+                    <td>@promo.Id</td>
+                    <td>@promo.Etiqueta</td>
+                    <td>@string.Concat(promo.Descuento, "%")</td>
+                    <td>@promo.Comienzo</td>
+                    <td>@promo.Fin</td>
+                    <td>@promo.TipoDeposito</td>
+                    <td>
+                        <button @onclick="() => Modificar(promo)" class="btn btn-warning">Editar</button>
+                        <button @onclick="() => Borrar(promo)" class="btn btn-danger">Eliminar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button @onclick="Agregar" class="btn btn-success btn-lg">Agregar</button>
+</div>
+
+@code {
+    [CascadingParameter] public IModalService Modal { get; set; } = default!;
+    private IList<Promocion> promociones;
+
+    private async Task CargarPromociones()
+    {
+        promociones = await Task.Run(() => promocionesServicio.Logica.GetPromociones());
+        StateHasChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(() => promociones = promocionesServicio.Logica.GetPromociones());
+    }
+
+    private async Task Agregar()
+    {
+        var messageForm = Modal.Show<ModalAgregarPromocion>("Agregar Promocion");
+        var result = await messageForm.Result;
+        await CargarPromociones();
+    }
+
+    private async Task Borrar(Promocion promo)
+    {
+        var parameters = new ModalParameters().Add(nameof(ModalBorrar.promo), promo);
+        var messageForm = Modal.Show<ModalBorrar>("Borrar Promocion", parameters);
+        var result = await messageForm.Result;
+        await CargarPromociones();
+    }
+
+    private async Task Modificar(Promocion promo)
+    {
+        var parameters = new ModalParameters().Add(nameof(ModalEditarPromocion.promo), promo);
+        var messageForm = Modal.Show<ModalEditarPromocion>("Editar Promocion", parameters);
+        var result = await messageForm.Result;
+        await CargarPromociones();
+    }
+}
