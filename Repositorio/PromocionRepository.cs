@@ -10,7 +10,7 @@ public class PromocionRepository : IRepository<Promocion>
         _Promociones = new List<Promocion>();
     }
 
-    public void Add(Promocion item)
+    public  void Add(Promocion item)
     {
         _Promociones.Add(item);
     }

@@ -1,0 +1,143 @@
+﻿@using Interfaz.Data
+@using Microsoft.AspNetCore.Components.Web
+@using Dominio
+@inject Promociones promociones // Inyectar el servicio Promociones
+<div class="container">
+    <div class="form-group">
+        <label for="nombreEtiqueta">Nombre de la etiqueta de la promoción:</label>
+        <input type="text" class="form-control" id="nombreEtiqueta" @bind="nombreEtiqueta"/>
+    </div>
+
+    <div class="form-group">
+        <label for="porcentajeDescuento">Porcentaje de descuento:</label>
+        <input type="number" class="form-control" id="porcentajeDescuento" @bind="porcentajeDescuento" />
+    </div>
+
+    <div class="form-group">
+        <label for="fechaInicio">Fecha de inicio de la promoción:</label>
+        <input type="date" class="form-control" id="fechaInicio" @bind="fechaInicio" />
+    </div>
+
+    <div class="form-group">
+        <label for="fechaFin">Fecha de fin de la promoción:</label>
+        <input type="date" class="form-control" id="fechaFin" @bind="fechaFin" />
+    </div>
+
+    <div class="form-group">
+        <label for="tipoDeposito">Tipo de depósito:</label>
+        <select class="form-control" id="tipoDeposito" @bind="tipoDeposito">
+            <option value="S">Pequeño</option>
+            <option value="M">Mediano</option>
+            <option value="L">Grande</option>
+        </select>
+    </div>
+
+    <br />
+    <div class="form-group">
+        <button type="button" class="btn btn-primary" @onclick="Confirmar">Confirmar</button>
+    </div>
+    <div style="color: red;" id="ErrorMessage">@errorMessage</div>
+</div>
+
+
+@code {
+    private int porcentajeDescuento = 0;
+    private string nombreEtiqueta = "";
+    private DateTime fechaInicio = DateTime.Today; // Variable para almacenar la fecha de inicio
+    private DateTime fechaFin = DateTime.Today;// Variable para almacenar la fecha de fin
+    private char tipoDeposito = 'S'; // Variable para almacenar el tipo de depósito
+
+    private string errorMessage = ""; // Variable para almacenar el mensaje de error
+
+    private void MostrarError(string mensaje)
+    {
+        errorMessage = mensaje; // Asignar el mensaje de error a la variable
+    }
+
+    private void LimpiarError()
+    {
+        errorMessage = ""; // Limpiar el mensaje de error
+    }
+
+    private bool ValidarDescuento()
+    {
+        if (porcentajeDescuento < 5 || porcentajeDescuento > 75)
+        {
+            MostrarError("El porcentaje de descuento debe estar entre 5 y 75.");
+            return false;
+        }
+
+        // Limpiar el mensaje de error si la validación es exitosa
+        LimpiarError();
+        return true;
+    }
+
+    private bool ValidarEtiqueta()
+    {
+        if (string.IsNullOrWhiteSpace(nombreEtiqueta))
+        {
+            MostrarError("El nombre de la etiqueta no puede estar vacío.");
+            return false;
+        }
+
+        if (nombreEtiqueta.Length > 20)
+        {
+            MostrarError("El nombre de la etiqueta no puede tener más de 20 caracteres.");
+            return false;
+        }
+
+        // Limpiar el mensaje de error si la validación es exitosa
+        LimpiarError();
+        return true;
+    }
+
+    private bool ValidarFechas()
+    {
+        if (fechaInicio == DateTime.MinValue || fechaFin == DateTime.MinValue)
+        {
+            MostrarError("Las fechas de inicio y fin deben estar completas.");
+            return false;
+        }
+
+        if (fechaInicio > fechaFin)
+        {
+            MostrarError("La fecha de inicio no puede ser mayor que la fecha de fin.");
+            return false;
+        }
+
+        // Limpiar el mensaje de error si la validación es exitosa
+        LimpiarError();
+        return true;
+    }
+
+    private bool ValidarTipoDeposito()
+    {
+        if (tipoDeposito != 'S' && tipoDeposito != 'M' && tipoDeposito != 'L')
+        {
+            MostrarError("El tipo de depósito debe ser S,M o L");
+            return false;
+        }
+
+        // Limpiar el mensaje de error si la validación es exitosa
+        LimpiarError();
+        return true;
+    }
+
+    private async void Confirmar()
+    {
+        if (ValidarEtiqueta() && ValidarDescuento() && ValidarFechas() && ValidarTipoDeposito())
+        {
+            Promocion promocion = new(nombreEtiqueta, porcentajeDescuento, fechaInicio, fechaFin, tipoDeposito);
+            promociones.Logica.AddPromocion(promocion);
+            await SubmitForm();
+        }
+
+    }
+   
+
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
+    private async Task SubmitForm() => await BlazoredModal.CloseAsync(ModalResult.Ok());
+    private async Task Cancel() => await BlazoredModal.CancelAsync();
+
+}
