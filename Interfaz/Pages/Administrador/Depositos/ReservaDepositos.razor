@@ -1,0 +1,57 @@
+﻿@page "/Depositos"
+
+<PageTitle>Depositos</PageTitle>
+
+@using Data;
+@using Dominio;
+@inject Depositos depositosServicio;
+
+<div class="container">
+    <h1>Depositos</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Area</th>
+                <th>Tamaño</th>
+                <th>Tiene Climatizacion</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Deposito depo in depositos)
+            {
+                <tr>
+                    <td>@depo.ID</td>
+                    <td>@depo.Area</td
+                    <td>@depo.Tamano</td>
+                    <td>@depo.TieneClimatizacion</td>
+                    <td>
+                        <button class="btn btn-warning">Editar</button>
+                        <button  class="btn btn-danger">Eliminar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button  class="btn btn-success btn-lg">Agregar</button>
+</div>
+
+@code {
+    [CascadingParameter] public IModalService Modal { get; set; } = default!;
+    private IList<Deposito> depositos;
+
+    private async Task CargarPromociones()
+    {
+        depositos = await Task.Run(() => depositosServicio.Logica.GetDepositos());
+        StateHasChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Run(() => depositos = depositosServicio.Logica.GetDepositos());
+    }
+
+    
+}

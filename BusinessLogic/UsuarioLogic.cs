@@ -26,7 +26,7 @@ public class UsuarioLogic
 
     public void AddUsuario(Usuario usuario)
     {
-       if (usuario == null)
+        if (usuario == null)
         {
             throw new UsuarioLogicExcepcion("El usuario no puede ser null");
         }
@@ -56,7 +56,7 @@ public class UsuarioLogic
         {
             throw new UsuarioLogicExcepcion("Se necesita el email para el getUsuario");
         }
-        
+
     }
 
     public bool ValidarInicioSesion(string email, string contrasena)
@@ -78,6 +78,6 @@ public class UsuarioLogic
         {
             throw new UsuarioLogicExcepcion("El email no puede ser null");
         }
-       
+
     }
 }

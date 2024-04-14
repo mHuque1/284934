@@ -1,5 +1,7 @@
-﻿@inherits LayoutComponentBase
-
+﻿@using BlazorServerAuthenticationAndAuthorization.Authentication
+@inject AuthenticationStateProvider authStateProvider;
+@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager;
 <PageTitle>Interfaz</PageTitle>
 
 <div class="page">
@@ -9,7 +11,14 @@
 
     <main>
         <div class="top-row px-4">
-           
+           <AuthorizeView>
+               <Authorized>
+                    <a @onclick="Logout" href="javascript:void(0)">Logout</a>
+               </Authorized>
+               <NotAuthorized>
+                    <a href="/IniciarSesion">Login</a>
+               </NotAuthorized>
+           </AuthorizeView>
         </div>
 
         <article class="content px-4">
@@ -17,3 +26,12 @@
         </article>
     </main>
 </div>
+
+@code {
+    private async Task Logout()
+    {
+        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+        await customAuthStateProvider.UpdateAuthenticationState(null);
+        NavigationManager.NavigateTo("/", true);
+    }
+}

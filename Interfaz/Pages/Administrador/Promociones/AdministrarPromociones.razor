@@ -1,9 +1,9 @@
 ﻿@page "/Administrar/Promociones"
-
+@attribute [Authorize(Roles = "Admin")]
 <PageTitle>Promociones</PageTitle>
 
 @using Data;
-@using Dominio
+@using Dominio;
 @inject Promociones promocionesServicio;
 
 <div class="container">

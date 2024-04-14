@@ -22,20 +22,32 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mathi/Desktop/Facultad/284934/Interfaz/Pages/Administrador/AdministrarPromociones.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5pc3RyYWRvclxBZG1pbmlzdHJhclByb21vY2lvbmVzLnJhem9y
+[C:/Users/mathi/Desktop/Facultad/284934/Interfaz/Pages/Account/LogIn.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxMb2dJbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mathi/Desktop/Facultad/284934/Interfaz/Pages/Administrador/ModalAgregarPromocion.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5pc3RyYWRvclxNb2RhbEFncmVnYXJQcm9tb2Npb24ucmF6b3I=
+[C:/Users/mathi/Desktop/Facultad/284934/Interfaz/Pages/Account/Registro.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxSZWdpc3Ryby5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mathi/Desktop/Facultad/284934/Interfaz/Pages/Administrador/ModalBorrar.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5pc3RyYWRvclxNb2RhbEJvcnJhci5yYXpvcg==
+[C:/Users/mathi/Desktop/Facultad/284934/Interfaz/Pages/Administrador/Depositos/ReservaDepositos.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5pc3RyYWRvclxEZXBvc2l0b3NcUmVzZXJ2YURlcG9zaXRvcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/mathi/Desktop/Facultad/284934/Interfaz/Pages/Administrador/ModalEditarPromocion.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5pc3RyYWRvclxNb2RhbEVkaXRhclByb21vY2lvbi5yYXpvcg==
+[C:/Users/mathi/Desktop/Facultad/284934/Interfaz/Pages/Administrador/Promociones/AdministrarPromociones.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5pc3RyYWRvclxQcm9tb2Npb25lc1xBZG1pbmlzdHJhclByb21vY2lvbmVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mathi/Desktop/Facultad/284934/Interfaz/Pages/Administrador/Promociones/ModalAgregarPromocion.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5pc3RyYWRvclxQcm9tb2Npb25lc1xNb2RhbEFncmVnYXJQcm9tb2Npb24ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mathi/Desktop/Facultad/284934/Interfaz/Pages/Administrador/Promociones/ModalBorrar.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5pc3RyYWRvclxQcm9tb2Npb25lc1xNb2RhbEJvcnJhci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mathi/Desktop/Facultad/284934/Interfaz/Pages/Administrador/Promociones/ModalEditarPromocion.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5pc3RyYWRvclxQcm9tb2Npb25lc1xNb2RhbEVkaXRhclByb21vY2lvbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/mathi/Desktop/Facultad/284934/Interfaz/Pages/Counter.razor]

@@ -1,0 +1,85 @@
+﻿@page "/Registro"
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+@using Dominio;
+@using Data;
+@inject Usuarios users;
+@inject NavigationManager NavigationManager;
+
+
+<PageTitle>Registro</PageTitle>
+
+<h1 class="text-center">Registro</h1>
+
+<EditForm Model="@model" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="container d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="username">Nombre de usuario:</label>
+                <InputText id="username" class="form-control" @bind-Value="model.Username" />
+                <ValidationMessage For="@(() => model.Username)" />
+            </div>
+
+            <div class="form-group">
+                <label for="email">Correo electrónico:</label>
+                <InputText id="email" class="form-control" @bind-Value="model.Email" />
+                <ValidationMessage For="@(() => model.Email)" />
+            </div>
+
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <InputText id="password" type="password" class="form-control" @bind-Value="model.Password" />
+                <ValidationMessage For="@(() => model.Password)" />
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirmar contraseña:</label>
+                <InputText id="confirmPassword" type="password" class="form-control" @bind-Value="model.ConfirmPassword" />
+                <ValidationMessage For="@(() => model.ConfirmPassword)" />
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
+
+            <p class="mt-3 text-center">Ya tienes un usuario? <a href="/IniciarSesion">Inicia sesión</a></p>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private RegisterModel model = new RegisterModel();
+
+    private async Task HandleValidSubmit()
+    {
+        await Task.Run(() =>
+        {
+            bool esAdmin = !users.Logica.ExisteAdmin();
+            Usuario NewUser = new(model.Username, model.Email, model.Password, esAdmin);
+            users.Logica.AddUsuario(NewUser);
+        });
+       
+
+        NavigationManager.NavigateTo("/IniciarSesion");
+    }
+
+    public class RegisterModel
+    {
+        [Required(ErrorMessage = "El nombre de usuario es obligatorio.")]
+        [MaxLength(100, ErrorMessage = "El nombre de usuario no puede tener más de 100 caracteres.")]
+        public string Username { get; set; }
+
+        [Required(ErrorMessage = "El correo electrónico es obligatorio.")]
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", 
+        ErrorMessage = "El correo electrónico no tiene un formato válido.")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "La contraseña es obligatoria.")]
+        [MinLength(8, ErrorMessage = "La contraseña debe tener al menos 8 caracteres.")]
+        [RegularExpression(@"^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$",
+        ErrorMessage = "La contraseña debe tener al menos un símbolo (!@#$%^&*), una letra minúscula, una letra mayúscula y un dígito.")]
+        public string Password { get; set; }
+
+        [Compare(nameof(Password), ErrorMessage = "La confirmación de la contraseña debe ser igual a la contraseña.")]
+        public string ConfirmPassword { get; set; }
+    }
+}
