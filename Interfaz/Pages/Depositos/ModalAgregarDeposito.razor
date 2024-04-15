@@ -1,0 +1,180 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using Dominio
+@using Data
+@using BlazorServerAuthenticationAndAuthorization.Authentication
+@using System.Security.Claims
+@inject AuthenticationStateProvider authStateProvider;
+@inject Promociones promociones
+@inject Depositos depositos
+@inject Usuarios usuarios
+<div class="container">
+    <EditForm Model="@depositoModel" OnValidSubmit="Aceptar">
+        <DataAnnotationsValidator />
+        <div class="form-group">
+            <label for="areaDeposito">Area del depósito:</label>
+            <select class="form-control" id="areaDeposito" @bind="@depositoModel.AreaDeposito">
+                <option value="">Seleccione un Area</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+            </select>
+            <ValidationMessage For="@(() => depositoModel.AreaDeposito)" />
+        </div>
+
+        <div class="form-group">
+            <label for="tamañoDeposito">Tamaño del depósito:</label>
+            <select class="form-control" id="tamañoDeposito" @onchange="ActualizarTamañoDeposito">
+                <option value="">Seleccione un tamaño</option>
+                <option value="S">Pequeño</option>
+                <option value="M">Mediano</option>
+                <option value="L">Grande</option>
+            </select>
+            <ValidationMessage For="@(() => depositoModel.TamañoDeposito)" />
+        </div>
+
+        <div class="form-group">
+            <label for="climatizacion">Climatización:</label>
+            <div>
+                <input type="checkbox" id="climatizacion" @bind="@depositoModel.TieneClimatizacion" />
+                <label for="climatizacion">Si</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Promociones:</label>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>idPromocion</th>
+                        <th>Etiqueta</th>
+                        <th>Descuento</th>
+                        <th>Seleccionar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Promocion promocion in promocionesDisponibles)
+                    {
+                        <tr>
+                            <td>@promocion.Id</td>
+                            <td>@promocion.Etiqueta</td>
+                            <td>@promocion.Descuento</td>
+                            <td><input type="checkbox" @onchange="(e) => ActualizarSeleccion(promocion, e)" /></td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+
+        <br />
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Confirmar</button>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+    private DepositoModel depositoModel = new DepositoModel();
+    private IList<Promocion> promocionesDisponibles = new List<Promocion>();
+    private IList<Promocion> promocionesElegidas = new List<Promocion>();
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
+    private async Task Aceptar()
+    {
+        var validationContext = new ValidationContext(depositoModel);
+        var validationResults = new List<ValidationResult>();
+
+        if (!Validator.TryValidateObject(depositoModel, validationContext, validationResults, true))
+        {
+            // Puedes mostrar un mensaje de error aquí si lo deseas
+            return;
+        }
+
+        await AgregarDeposito();
+
+        await BlazoredModal.CloseAsync(ModalResult.Ok());
+    }
+
+
+    private async Task Cancelar() => await BlazoredModal.CancelAsync();
+
+    public class DepositoModel
+    {
+        [Required(ErrorMessage = "El campo Área del depósito es requerido.")]
+        public String AreaDeposito { get; set; }
+
+        [Required(ErrorMessage = "El campo Tamaño del depósito es requerido.")]
+        public String TamañoDeposito { get; set; }
+
+        public bool TieneClimatizacion { get; set; }
+    }
+
+    private void ActualizarTamañoDeposito(ChangeEventArgs e)
+    {
+        depositoModel.TamañoDeposito = e.Value.ToString();
+        if (string.IsNullOrEmpty(depositoModel.TamañoDeposito))
+        {
+            promocionesDisponibles = new List<Promocion>();
+            StateHasChanged();
+        }
+        else
+        {
+            TamanoDepositoCambiado();
+        }
+
+    }
+
+    private async Task AgregarDeposito()
+    {
+        Deposito depo = new
+        (
+           Convert.ToChar(depositoModel.AreaDeposito),
+           Convert.ToChar(depositoModel.TamañoDeposito),
+           depositoModel.TieneClimatizacion
+        );
+        foreach (Promocion promo in promocionesElegidas)
+        {
+            depo.AgregarPromocion(promo);
+        }
+
+        //Consigo el Usuario actual
+        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+        var authenticationState = await customAuthStateProvider.GetAuthenticationStateAsync();
+        string userEmail = authenticationState.User.FindFirst(ClaimTypes.Email)?.Value;
+
+        await Task.Run(() =>
+        {
+            Usuario actual = usuarios.Logica.GetUsuario(userEmail);
+            depositos.Logica.AddDeposito(depo, actual);
+        });
+    }
+
+    private void TamanoDepositoCambiado()
+    {
+        char tamano = Convert.ToChar(depositoModel.TamañoDeposito);
+        promocionesDisponibles = promociones.Logica.GetPromocionesPorTipo(tamano);
+        promocionesElegidas = new List<Promocion>();
+        StateHasChanged(); // Forzar el renderizado de la tabla
+    }
+
+    private void ActualizarSeleccion(Promocion promocion, ChangeEventArgs e)
+    {
+        bool seleccionado = (bool)e.Value;
+
+        if (seleccionado)
+        {
+            promocionesElegidas.Add(promocion);
+        }
+        else
+        {
+            promocionesElegidas.Remove(promocion);
+        }
+    }
+
+
+  
+}
+
+

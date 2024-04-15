@@ -9,6 +9,7 @@ public class UsuarioLogic
     public UsuarioLogic(IRepository<Usuario> usuarios)
     {
         _repository = usuarios;
+        AddUsuario(new("Mathias", "mathiashuque2004@gmail.com", "Escuela7!", true));
     }
 
     public bool ExisteAdmin()

@@ -45,7 +45,7 @@
 
 @code {
     [CascadingParameter] public IModalService Modal { get; set; } = default!;
-    private IList<Promocion> promociones;
+    private IList<Promocion> promociones = new List<Promocion>();
 
     private async Task CargarPromociones()
     {

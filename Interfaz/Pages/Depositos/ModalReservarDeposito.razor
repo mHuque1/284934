@@ -1,0 +1,70 @@
+﻿@using BlazorServerAuthenticationAndAuthorization.Authentication
+@using Data;
+@using Dominio;
+@using System.Security.Claims
+
+@inject Depositos depositosServicio
+@inject Reservas reservasServicio
+@inject Usuarios usuariosServicio
+@inject AuthenticationStateProvider authStateProvider
+
+
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="text-center">
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="fechaInicio">Fecha de inicio de la Reserva:</label>
+                    <input type="date" class="form-control" id="fechaInicio" @bind="fechaInicio" />
+                </div>
+
+                <div class="form-group">
+                    <label for="fechaFin">Fecha de Fin de la Reserva:</label>
+                    <input type="date" class="form-control" id="fechaFin" @bind="fechaFin" />
+                </div>
+            </div>
+            <div class="card col">
+                <div class="container">
+                    <br />
+                    <button class="btn btn-primary">Calcular Costo</button>
+                    <br />
+                    <p>Costo: $</p>
+                </div>
+            </div>
+        </div>
+
+        <hr />
+        <div class="form-group">
+            <button class="btn btn-secondary" @onclick="Cancelar">Cancelar</button>
+            <button class="btn btn-primary" @onclick="Confirmar">Confirmar</button>
+        </div>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+    [Parameter] public Deposito depo { get; set; }
+    private DateTime fechaInicio = DateTime.Today;
+    private DateTime fechaFin = DateTime.Today;
+
+    private async Task Cancelar()
+    {
+        await BlazoredModal.CancelAsync();
+    }
+
+    private async Task Confirmar()
+    {
+        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+        var authenticationState = await customAuthStateProvider.GetAuthenticationStateAsync();
+        string userEmail = authenticationState.User.FindFirst(ClaimTypes.Email)?.Value;
+
+        await Task.Run(() =>
+        {
+            Usuario actual = usuariosServicio.Logica.GetUsuario(userEmail);
+            Reserva res = new Reserva(depo, actual, fechaInicio, fechaFin);
+            reservasServicio.Logica.AddReserva(res);
+        });
+
+        await BlazoredModal.CloseAsync(ModalResult.Ok());
+    }
+}

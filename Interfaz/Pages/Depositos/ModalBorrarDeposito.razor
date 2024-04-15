@@ -1,0 +1,43 @@
+﻿@using BlazorServerAuthenticationAndAuthorization.Authentication
+@using Data;
+@using Dominio;
+@using System.Security.Claims
+@inject Depositos depositos;
+@inject AuthenticationStateProvider authStateProvider;
+@inject Usuarios usuarios
+
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="text-center">
+        <h3>¿Estás seguro de que deseas borrar?</h3>
+        <p>@depo.ID</p>
+        <p>Esta acción no se puede deshacer.</p>
+        <button class="btn btn-success" @onclick="Confirmar">Confirmar</button>
+        <button class="btn btn-danger" @onclick="Cancelar">Cancelar</button>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+    [Parameter] public Deposito depo { get; set; }
+
+    private async Task Cancelar()
+    {
+        await BlazoredModal.CancelAsync();
+    }
+
+    private async Task Confirmar()
+    {
+
+        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+        var authenticationState = await customAuthStateProvider.GetAuthenticationStateAsync();
+        string userEmail = authenticationState.User.FindFirst(ClaimTypes.Email)?.Value;
+
+        await Task.Run(() =>
+        {
+            Usuario actual = usuarios.Logica.GetUsuario(userEmail);
+            depositos.Logica.DeleteDeposito(depo,actual);
+        });
+
+        await BlazoredModal.CloseAsync(ModalResult.Ok());
+    }
+}

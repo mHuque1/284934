@@ -7,5 +7,6 @@ namespace Interfaz.Data
     {
         private static UsuarioRepository Repositorio = new();
         public UsuarioLogic Logica = new (Repositorio);
+
     }
 }

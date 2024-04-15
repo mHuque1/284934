@@ -52,7 +52,6 @@
 
     private async Task HandleValidSubmit()
     {
-        Console.WriteLine(model.Email+" " +model.Password);
         InicioSesionValido = users.Logica.ValidarInicioSesion(model.Email, model.Password);
         if (InicioSesionValido)
         {
@@ -62,6 +61,7 @@
             await customAuthStateProvider.UpdateAuthenticationState(new UserSession
                 {
                     UserName = user.Nombre,
+                    Email = user.Email,
                     Role = user.EsAdmin ? "Admin" : "User"
                 });
             NavigationManager.NavigateTo("/", true);
