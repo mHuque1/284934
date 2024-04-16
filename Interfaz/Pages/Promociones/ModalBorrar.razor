@@ -1,7 +1,10 @@
-﻿@using Data;
+﻿@using BlazorServerAuthenticationAndAuthorization.Authentication
+@using Data;
 @using Dominio;
-@inject Promociones promocionesServicio;
-
+@using System.Security.Claims
+@inject Promociones PromocionesServicio
+@inject Usuarios UsuarioServicios
+@inject AuthenticationStateProvider authStateProvider
 <div class="container d-flex justify-content-center align-items-center">
     <div class="text-center">
         <h3>¿Estás seguro de que deseas borrar?</h3>
@@ -15,6 +18,20 @@
 @code {
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
     [Parameter] public Promocion promo { get; set; }
+    private static Usuario user;
+
+    private async Task CargarUsuario()
+    {
+        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+        var authenticationState = await customAuthStateProvider.GetAuthenticationStateAsync();
+        string userEmail = "";
+        await Task.Run(() => userEmail = authenticationState.User.FindFirst(ClaimTypes.Email)?.Value);
+        await Task.Run(() =>
+        {
+            user = UsuarioServicios.Logica.GetUsuario(userEmail);
+            Console.WriteLine("Usuario: " + userEmail);
+        });
+    }
 
     private async Task Cancelar()
     {
@@ -23,9 +40,10 @@
 
     private async Task Confirmar()
     {
+        await CargarUsuario();
         await Task.Run(() =>
         {
-            promocionesServicio.Logica.DeletePromocion(promo.Id, promo);
+            PromocionesServicio.Logica.DeletePromocion(promo.Id, promo,user);
         });
         await BlazoredModal.CloseAsync(ModalResult.Ok());
     }

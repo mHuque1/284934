@@ -49,9 +49,9 @@ namespace BusinessLogicTest
             ReservasLogic _reservasLogic = new(_repository);
 
             //Act
-            #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             _reservasLogic.AddReserva(null);
-            #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [TestMethod]
@@ -86,9 +86,9 @@ namespace BusinessLogicTest
         public void Verificar_Get_Reservas_Por_Usuario_Null()
         {
             ReservasLogic _reservasLogic = new(_repository);
-            #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             _reservasLogic.GetReservasUsuario(null);
-            #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
         }
 
@@ -146,9 +146,9 @@ namespace BusinessLogicTest
             ReservasLogic _reservasLogic = new(_repository);
 
             // Act
-            #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             _reservasLogic.ModificarReserva(0, null);
-            #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
         }
     }

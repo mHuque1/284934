@@ -9,7 +9,7 @@
 @inject AuthenticationStateProvider authStateProvider;
 <div class="container">
     <h1>Mis Reservas</h1>
-</div>
+
 
 <table class="table">
     <thead>
@@ -18,9 +18,9 @@
             <th>Comienzo</th>
             <th>Fin</th>
             <th>Costo</th>
-            <th>Aprobada</th>
-            <th>EnEspera</th>
-            <th>Mensaje</th>
+            <th>Deposito</th>
+            <th>Estado</th>
+            
         </tr>
     </thead>
     <tbody>
@@ -28,22 +28,18 @@
         {
             <tr>
                 <td>@reserva.ID</td>
-                <td>@reserva.Comienzo</td>
-                <td>@reserva.Fin</td>
-                <td>@reserva.Costo</td>
-                <td>@reserva.Aprobada</td>
-                <td>@reserva.EnEspera</td>
-                <td>@reserva.Mensaje</td>
-                <td>
-                    <button class="btn btn-warning">Editar</button>
-                    <button class="btn btn-danger">Eliminar</button>
-                </td>
+                <td>@reserva.Comienzo.ToString("d")</td>
+                <td>@reserva.Fin.ToString("d")</td>
+                <td>@reserva.Costo.ToString("C")</td>
+                <td><button @onclick="() => VerInfo(reserva.Deposito)" class="btn btn-info">Info deposito</button></td>
+                    <td><button @onclick="() => VerEstadoReserva(reserva)" class="btn btn-secondary">Ver Estado Solicitud</button></td>
             </tr>
         }
     </tbody>
 </table>
-
+</div>
 @code {
+
     [CascadingParameter] private Task<AuthenticationState> authenticationState { get; set; }
     private IList<Reserva> reservas = new List<Reserva>();
     private Usuario usuario;
@@ -71,5 +67,21 @@
     {
         await CargarUsuario();
         await CargarReservas();
+    }
+
+    [CascadingParameter] public IModalService Modal { get; set; } = default!;
+
+    private async Task VerInfo(Deposito depo)
+    {
+        var parameters = new ModalParameters().Add(nameof(ModalInfoDeposito.depo), depo);
+        var messageForm = Modal.Show<ModalInfoDeposito>("Datos del deposito", parameters);
+        var result = await messageForm.Result;
+    }
+
+    private async Task VerEstadoReserva(Reserva res)
+    {
+        var parameters = new ModalParameters().Add(nameof(ModalEstadoReserva.res), res);
+        var messageForm = Modal.Show<ModalEstadoReserva>("Estado de la reserva", parameters);
+        var result = await messageForm.Result;
     }
 }

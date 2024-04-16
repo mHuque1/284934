@@ -1,0 +1,55 @@
+﻿@using Dominio;
+@attribute [Authorize(Roles = "Admin, User")]
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="text-center">
+
+        <p><strong>Área del depósito:</strong> @depo.Area</p>
+        <p><strong>Tamaño del depósito:</strong> @TamanoTexto(depo.Tamano)</p>
+        <p><strong>Tiene climatización:</strong> @(depo.TieneClimatizacion ? "Si" : "No")</p>
+        <hr />
+        <h3>Promociones del Deposito</h3>
+        <table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Etiqueta</th>
+            <th>Comienzo</th>
+            <th>Fin</th>
+            <th>Descuento</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Promocion promo in depo.Promociones)
+        {
+            <tr>
+                <td>@promo.Id</td>
+                <td>@promo.Etiqueta</td>
+                <td>@promo.Comienzo.ToString("d")</td>
+                <td>@promo.Fin.ToString("d")</td>
+                <td>@promo.Descuento%</td>
+            </tr>
+        }
+    </tbody>
+</table>
+    </div>
+</div>
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+    [Parameter] public Deposito depo { get; set; }
+
+    private string TamanoTexto(char tamano)
+    {
+        switch (tamano)
+        {
+            case 'S':
+                return "Pequeño";
+            case 'M':
+                return "Mediano";
+            case 'L':
+                return "Grande";
+            default:
+                return "Desconocido";
+        }
+    }
+}

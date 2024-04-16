@@ -33,8 +33,9 @@ namespace BusinessLogicTest
         {
             // Arrange
             Promocion promo = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
+            Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", true);
             // Act
-            _logica.AddPromocion(promo);
+            _logica.AddPromocion(promo, user);
             Promocion resultado = _logica.GetPromocion(0);
 
             // Assert
@@ -46,22 +47,51 @@ namespace BusinessLogicTest
         [ExpectedException(typeof(PromocionLogicExcepcion))]
         public void No_Deberia_Permitir_Agregar_Reserva_Null()
         {
+            //Arrange
+            Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", true);
             //Act
-            #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            _logica.AddPromocion(null);
-            #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            _logica.AddPromocion(null, user);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+
+
+        [TestMethod]
+        [ExpectedException(typeof(PromocionLogicExcepcion))]
+        public void No_Deberia_Permitir_Agregar_Reserva_Usuario_Null()
+        {
+            //Arrange
+            Promocion promo1 = new("promo1", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
+            //Act
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            _logica.AddPromocion(promo1, null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(PromocionLogicExcepcion))]
+        public void No_Deberia_Permitir_Agregar_Reserva_Usuario_No_Admin()
+        {
+            //Arrange
+            Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", false);
+            //Act
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            _logica.AddPromocion(null, user);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [TestMethod]
         public void Verificar_Get_Promociones()
         {
             // Arrange
+            Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", true);
             Promocion promo1 = new("promo1", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
             Promocion promo2 = new("promo2", 10, DateTime.Today, DateTime.Today.AddDays(10), 'M');
             Promocion promo3 = new("promo2", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
-            _logica.AddPromocion(promo1);
-            _logica.AddPromocion(promo2);
-            _logica.AddPromocion(promo3);
+            _logica.AddPromocion(promo1, user);
+            _logica.AddPromocion(promo2, user);
+            _logica.AddPromocion(promo3, user);
             // Act
             IList<Promocion> resultado = _logica.GetPromociones();
 
@@ -76,12 +106,13 @@ namespace BusinessLogicTest
         public void Verificar_Get_Promociones_Por_Tipo()
         {
             // Arrange
+            Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", true);
             Promocion promo1 = new("promo1", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
             Promocion promo2 = new("promo2", 10, DateTime.Today, DateTime.Today.AddDays(10), 'M');
             Promocion promo3 = new("promo2", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
-            _logica.AddPromocion(promo1);
-            _logica.AddPromocion(promo2);
-            _logica.AddPromocion(promo3);
+            _logica.AddPromocion(promo1, user);
+            _logica.AddPromocion(promo2, user);
+            _logica.AddPromocion(promo3, user);
             // Act
             IList<Promocion> resultado = _logica.GetPromocionesPorTipo('S');
 
@@ -98,10 +129,12 @@ namespace BusinessLogicTest
         [ExpectedException(typeof(PromocionLogicExcepcion))]
         public void Verificar_Baja_Promocion_Null()
         {
+            // Arrange
+            Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", true);
             // Act
-            #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            _logica.DeletePromocion(0, null);
-            #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            _logica.DeletePromocion(0, null, user);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
         }
 
@@ -109,10 +142,11 @@ namespace BusinessLogicTest
         public void Verificar_Baja_Promocion()
         {
             // Arrange
+            Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", true);
             Promocion promo = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
-            _logica.AddPromocion(promo);
+            _logica.AddPromocion(promo, user);
             // Act
-            _logica.DeletePromocion(0, promo);
+            _logica.DeletePromocion(0, promo, user);
             IList<Promocion> promociones = _logica.GetPromociones();
 
             // Assert
@@ -121,15 +155,42 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(PromocionLogicExcepcion))]
+        public void Verificar_Baja_Promocion_User_Null()
+        {
+            // Arrange
+            Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", true);
+            Promocion promo = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
+            _logica.AddPromocion(promo, user);
+            // Act
+            _logica.DeletePromocion(0, promo, null);
+
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(PromocionLogicExcepcion))]
+        public void Verificar_Baja_Promocion_User_No_Admin()
+        {
+            // Arrange
+            Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", false);
+            Promocion promo = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
+            _logica.AddPromocion(promo, user);
+            // Act
+            _logica.DeletePromocion(0, promo, user);
+
+        }
+
+        [TestMethod]
         public void Verificar_Modificacion_Promocion()
         {
             // Arrange
+            Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", true);
             Promocion promocion = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
-            _logica.AddPromocion(promocion);
+            _logica.AddPromocion(promocion, user);
 
             // Act
             promocion = new Promocion("promooo", 15, DateTime.Today.AddDays(10), DateTime.Today.AddDays(15), 'M');
-            _logica.ModificarPromocion(0, promocion);
+            _logica.ModificarPromocion(0, promocion, user);
             Promocion resultado = _logica.GetPromocion(0);
 
             // Assert
@@ -144,9 +205,36 @@ namespace BusinessLogicTest
         [ExpectedException(typeof(PromocionLogicExcepcion))]
         public void Verificar_Modificacion_Promocion_Null()
         {
-            #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            _logica.ModificarPromocion(0, null);
-            #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", true);
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            _logica.ModificarPromocion(0, null, user);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(PromocionLogicExcepcion))]
+        public void Verificar_Modificacion_Promocion_User_Null()
+        {
+            Promocion promocion = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
+            Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", true);
+            _logica.AddPromocion(promocion, user);
+
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            _logica.ModificarPromocion(0, promocion, null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(PromocionLogicExcepcion))]
+        public void Verificar_Modificacion_Promocion_User_No_Admin()
+        {
+            Promocion promocion = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
+            Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", false);
+            _logica.AddPromocion(promocion, user);
+
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            _logica.ModificarPromocion(0, promocion, user);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
     }

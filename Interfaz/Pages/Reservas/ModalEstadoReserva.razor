@@ -1,0 +1,35 @@
+﻿@using Dominio;
+@attribute [Authorize(Roles = "Admin, User")]
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="text-center">
+        @if (!res.EnEspera && res.Aprobada)
+        {
+
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Reserva Aprobada</h4>
+                <p> La Reserva fue aprobada por un administrador</p>
+            </div>
+        }
+        else if (!res.EnEspera && !res.Aprobada)
+        {
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">Reserva rechazada</h4>
+                <p> Reserva fue rechazada por un administrador</p>
+                <hr>
+                <p class="mb-0">@res.Mensaje</p>
+            </div>
+        }
+        else if (res.EnEspera)
+        {
+            <div class="alert alert-dark" role="alert">
+                <h4 class="alert-heading">Reserva En espera</h4>
+                <p> La Reserva esta pendiente a ser revisada por un administrador</p>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+    [Parameter] public Reserva res { get; set; }
+}

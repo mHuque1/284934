@@ -11,7 +11,7 @@ namespace BusinessLogicTest
 
         private static IRepository<Deposito> _depositos = new DepositoRepository();
         private DepositoLogic _logica = new(_depositos);
-         
+
         [TestInitialize]
         public void Inicializar()
         {
@@ -48,9 +48,9 @@ namespace BusinessLogicTest
             // Arrange
             Usuario user = new("Pedro", "pedro@gmail.com", "Pedro1234!", true);
             // Act
-            #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             _logica.AddDeposito(null, user);
-            #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
         }
 
@@ -62,9 +62,9 @@ namespace BusinessLogicTest
             Deposito depositoA = new('A', 'S', true);
 
             // Act
-            #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             _logica.AddDeposito(depositoA, null);
-            #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
         }
 
@@ -102,9 +102,9 @@ namespace BusinessLogicTest
             Usuario user = new("Pedro", "pedro@gmail.com", "Pedro1234!", true);
 
             // Act
-            #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             _logica.DeleteDeposito(null, user);
-            #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [TestMethod]
@@ -117,9 +117,9 @@ namespace BusinessLogicTest
             _logica.AddDeposito(depositoA, user);
 
             // Act
-            #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             _logica.DeleteDeposito(depositoA, null);
-            #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
 

@@ -4,7 +4,7 @@ namespace Interfaz.Data
 {
     public class Promociones
     {
-        private static PromocionRepository Repositorio = new PromocionRepository();
-        public  PromocionLogic Logica = new PromocionLogic(Repositorio);
+        private static readonly PromocionRepository Repositorio = new();
+        public PromocionLogic Logica = new(Repositorio);
     }
 }

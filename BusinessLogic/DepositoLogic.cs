@@ -53,7 +53,8 @@ namespace BusinessLogic
                 throw new DepositoLogicExcepcion("El user en DeleteDeposito no puede ser null");
             }
 
-            if (user.EsAdmin) {
+            if (user.EsAdmin)
+            {
                 _repository.Delete(depositoA);
             }
             else

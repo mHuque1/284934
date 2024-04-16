@@ -1,9 +1,14 @@
 ﻿@page "/Administrar/Promociones"
+@inject Usuarios UsuarioServicios;
+@inject AuthenticationStateProvider authStateProvider;
+@inject NavigationManager NavigationManager;
 @attribute [Authorize(Roles = "Admin")]
 <PageTitle>Promociones</PageTitle>
 
+@using BlazorServerAuthenticationAndAuthorization.Authentication
 @using Data;
 @using Dominio;
+@using System.Security.Claims
 @inject Promociones promocionesServicio;
 
 <div class="container">
@@ -46,16 +51,47 @@
 @code {
     [CascadingParameter] public IModalService Modal { get; set; } = default!;
     private IList<Promocion> promociones = new List<Promocion>();
-
+    private Usuario user;
     private async Task CargarPromociones()
     {
         promociones = await Task.Run(() => promocionesServicio.Logica.GetPromociones());
         StateHasChanged();
     }
 
+    private async Task<bool> CargarUsuario()
+    {
+        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
+        var authenticationState = await customAuthStateProvider.GetAuthenticationStateAsync();
+        string userEmail = "";
+        await Task.Run(() => userEmail = authenticationState.User.FindFirst(ClaimTypes.Email)?.Value);
+
+        if (string.IsNullOrEmpty(userEmail))
+        {
+            Console.WriteLine("ErrorAuth");
+            return false;
+        }
+        else
+        {
+            await Task.Run(() =>
+            {
+                user = UsuarioServicios.Logica.GetUsuario(userEmail);
+                Console.WriteLine("Usuario: " + userEmail);
+            });
+            return true;
+        }
+    }
+
     protected override async Task OnInitializedAsync()
     {
-        await Task.Run(() => promociones = promocionesServicio.Logica.GetPromociones());
+        if (await CargarUsuario())
+        {
+            await Task.Run(() => promociones = promocionesServicio.Logica.GetPromociones());
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/IniciarSesion", true);
+        }
+        
     }
 
     private async Task Agregar()
@@ -63,6 +99,10 @@
         var messageForm = Modal.Show<ModalAgregarPromocion>("Agregar Promocion");
         var result = await messageForm.Result;
         await CargarPromociones();
+        if (result.Data != null && result.Data.ToString() == "ErrorAuth")
+        {
+            NavigationManager.NavigateTo("/IniciarSesion", true);
+        }
     }
 
     private async Task Borrar(Promocion promo)
@@ -70,6 +110,10 @@
         var parameters = new ModalParameters().Add(nameof(ModalBorrar.promo), promo);
         var messageForm = Modal.Show<ModalBorrar>("Borrar Promocion", parameters);
         var result = await messageForm.Result;
+        if (result.Data != null && result.Data.ToString() == "ErrorAuth")
+        {
+            NavigationManager.NavigateTo("/IniciarSesion", true);
+        }
         await CargarPromociones();
     }
 
@@ -78,6 +122,10 @@
         var parameters = new ModalParameters().Add(nameof(ModalEditarPromocion.promo), promo);
         var messageForm = Modal.Show<ModalEditarPromocion>("Editar Promocion", parameters);
         var result = await messageForm.Result;
+        if (result.Data != null && result.Data.ToString() == "ErrorAuth")
+        {
+            NavigationManager.NavigateTo("/IniciarSesion", true);
+        }
         await CargarPromociones();
     }
 }

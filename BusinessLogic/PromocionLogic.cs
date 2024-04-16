@@ -1,6 +1,6 @@
 ﻿using Dominio;
-using Repositorio;
 using Excepcion;
+using Repositorio;
 
 namespace BusinessLogic
 {
@@ -13,11 +13,21 @@ namespace BusinessLogic
             _repository = promocion;
         }
 
-        public void AddPromocion(Promocion promo)
+        public void AddPromocion(Promocion promo, Usuario user)
         {
-            if(promo == null)
+            if (promo == null)
             {
                 throw new PromocionLogicExcepcion("Una promocion en AddPromocion no puede ser null");
+            }
+
+            if (user == null)
+            {
+                throw new PromocionLogicExcepcion("Una user en AddPromocion no puede ser null");
+            }
+
+            if (!user.EsAdmin)
+            {
+                throw new PromocionLogicExcepcion("Solo un Admin puede agregar una promocion");
             }
 
             promo.Id = contador;
@@ -25,11 +35,19 @@ namespace BusinessLogic
             contador++;
         }
 
-        public void DeletePromocion(int id, Promocion promo)
+        public void DeletePromocion(int id, Promocion promo, Usuario user)
         {
             if (promo == null)
             {
                 throw new PromocionLogicExcepcion("Una promocion en DeletePromocion no puede ser null");
+            }
+            if (user == null)
+            {
+                throw new PromocionLogicExcepcion("Un usuario en DeletePromocion no puede ser null");
+            }
+            if (!user.EsAdmin)
+            {
+                throw new PromocionLogicExcepcion("Solo un Admin puede dar de baja una promocion");
             }
             promo.Id = id;
             _repository.Delete(promo);
@@ -40,12 +58,22 @@ namespace BusinessLogic
             return _repository.Find(p => p.Id == id);
         }
 
-        public void ModificarPromocion(int id, Promocion promo)
+        public void ModificarPromocion(int id, Promocion promo, Usuario user)
         {
             if (promo == null)
             {
                 throw new PromocionLogicExcepcion("Una promocion en ModificarPromocion no puede ser null");
             }
+            if (user == null)
+            {
+                throw new PromocionLogicExcepcion("El usuario en ModificarPromocion no puede ser null");
+            }
+
+            if (!user.EsAdmin)
+            {
+                throw new PromocionLogicExcepcion("Solamente un admin puede modificar una promocion");
+            }
+
             Promocion promocion = promo;
             promocion.Id = id;
             _repository.Update(promocion);

@@ -1,5 +1,10 @@
 ﻿@page "/Depositos"
+@inject Usuarios UsuarioServicios;
+@inject Reservas ReservaServicio;
+@inject AuthenticationStateProvider authStateProvider;
+@inject NavigationManager NavigationManager;
 @attribute [Authorize(Roles = "Admin, User")]
+
 <PageTitle>Depositos</PageTitle>
 
 @using Data;
@@ -68,7 +73,12 @@
     {
         var messageForm = Modal.Show<ModalAgregarDeposito>("Agregar Promocion");
         var result = await messageForm.Result;
+        if(result.Data != null && result.Data.ToString() == "ErrorAuth")
+        {
+            NavigationManager.NavigateTo("/IniciarSesion", true);
+        }
         await CargarDepositos();
+
     }
 
     private async Task Reservar(Deposito depo)
@@ -76,6 +86,10 @@
         var parameters = new ModalParameters().Add(nameof(ModalReservarDeposito.depo), depo);
         var messageForm = Modal.Show<ModalReservarDeposito>("Reservar Deposito", parameters);
         var result = await messageForm.Result;
+        if(result.Data != null && result.Data.ToString() == "ErrorAuth")
+        {
+            NavigationManager.NavigateTo("/IniciarSesion", true);
+        }
         await CargarDepositos();
     }
 
@@ -84,6 +98,10 @@
         var parameters = new ModalParameters().Add(nameof(ModalBorrarDeposito.depo), depo);
         var messageForm = Modal.Show<ModalBorrarDeposito>("Borrar Deposito", parameters);
         var result = await messageForm.Result;
+         if(result.Data != null && result.Data.ToString() == "ErrorAuth")
+        {
+            NavigationManager.NavigateTo("/IniciarSesion", true);
+        }
         await CargarDepositos();
     }
 

@@ -1,6 +1,6 @@
 ﻿using Dominio;
-using Repositorio;
 using Excepcion;
+using Repositorio;
 
 namespace BusinessLogic
 {
@@ -16,7 +16,7 @@ namespace BusinessLogic
         }
         public void AddReserva(Reserva reserva)
         {
-            if(reserva == null)
+            if (reserva == null)
             {
                 throw new ReservaLogicExcepcion("No se puede agregar una reserva null");
             }
@@ -53,7 +53,7 @@ namespace BusinessLogic
 
         public IList<Reserva> GetReservasUsuario(Usuario usuario)
         {
-            if(usuario == null)
+            if (usuario == null)
             {
                 throw new ReservaLogicExcepcion("El usuario en getReservasUsuario no puede ser null.");
             }

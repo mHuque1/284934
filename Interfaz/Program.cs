@@ -1,8 +1,8 @@
-using Interfaz.Data;
 using Blazored.Modal;
+using BlazorServerAuthenticationAndAuthorization.Authentication;
+using Interfaz.Data;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
-using BlazorServerAuthenticationAndAuthorization.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -2,7 +2,6 @@ using BusinessLogic;
 using Dominio;
 using Excepcion;
 using Repositorio;
-using System.Runtime.Intrinsics.X86;
 
 namespace BusinessLogicTest
 {
@@ -105,11 +104,11 @@ namespace BusinessLogicTest
         {
             // Arrange
             Usuario? user1 = null;
-            
+
             //Act
-            #pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8604 // Possible null reference argument.
             _logica.AddUsuario(user1);
-            #pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8604 // Possible null reference argument.
         }
 
         [TestMethod]
@@ -135,9 +134,9 @@ namespace BusinessLogicTest
             _logica.AddUsuario(user1);
 
             // Act
-            #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             _logica.ValidarInicioSesion(null, "holaPedroGomez125!");
-            #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
         }
 
@@ -150,9 +149,9 @@ namespace BusinessLogicTest
             _logica.AddUsuario(user1);
 
             // Act
-            #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             _logica.ValidarInicioSesion("User1@user.com", null);
-            #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
         }
 
@@ -194,9 +193,9 @@ namespace BusinessLogicTest
             _logica.AddUsuario(usuario);
 
             // Act
-            #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             _logica.GetUsuario(null);
-            #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
 
         }

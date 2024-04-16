@@ -66,6 +66,22 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvbW9jaW9uZXNcTW9kYWxFZGl0YXJQcm9tb2Npb24ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/mathi/Desktop/Facultad/284934/Interfaz/Pages/Reservas/AdministrarReservas.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzZXJ2YXNcQWRtaW5pc3RyYXJSZXNlcnZhcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mathi/Desktop/Facultad/284934/Interfaz/Pages/Reservas/ModalEstadoReserva.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzZXJ2YXNcTW9kYWxFc3RhZG9SZXNlcnZhLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mathi/Desktop/Facultad/284934/Interfaz/Pages/Reservas/ModalInfoDeposito.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzZXJ2YXNcTW9kYWxJbmZvRGVwb3NpdG8ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/mathi/Desktop/Facultad/284934/Interfaz/Pages/Reservas/ModalRevisarReserva.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzZXJ2YXNcTW9kYWxSZXZpc2FyUmVzZXJ2YS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/mathi/Desktop/Facultad/284934/Interfaz/Pages/Reservas/ReservasUsuario.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzZXJ2YXNcUmVzZXJ2YXNVc3VhcmlvLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 

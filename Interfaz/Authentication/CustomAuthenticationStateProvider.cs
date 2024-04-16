@@ -8,7 +8,7 @@ namespace BlazorServerAuthenticationAndAuthorization.Authentication
     public class CustomAuthenticationStateProvider : AuthenticationStateProvider
     {
         private readonly ProtectedSessionStorage _sessionStorage;
-        private ClaimsPrincipal _anonymous = new ClaimsPrincipal(new ClaimsIdentity());
+        private readonly ClaimsPrincipal _anonymous = new(new ClaimsIdentity());
 
         public CustomAuthenticationStateProvider(ProtectedSessionStorage sessionStorage)
         {
@@ -25,9 +25,9 @@ namespace BlazorServerAuthenticationAndAuthorization.Authentication
                     return await Task.FromResult(new AuthenticationState(_anonymous));
                 var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, userSession.UserName),
-                    new Claim(ClaimTypes.Email, userSession.Email),
-                    new Claim(ClaimTypes.Role, userSession.Role)
+                    new(ClaimTypes.Name, userSession.UserName),
+                    new(ClaimTypes.Email, userSession.Email),
+                    new(ClaimTypes.Role, userSession.Role)
                 }, "CustomAuth"));
                 return await Task.FromResult(new AuthenticationState(claimsPrincipal));
             }
@@ -46,9 +46,9 @@ namespace BlazorServerAuthenticationAndAuthorization.Authentication
                 await _sessionStorage.SetAsync("UserSession", userSession);
                 claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, userSession.UserName),
-                    new Claim(ClaimTypes.Email, userSession.Email),
-                    new Claim(ClaimTypes.Role, userSession.Role)
+                    new(ClaimTypes.Name, userSession.UserName),
+                    new(ClaimTypes.Email, userSession.Email),
+                    new(ClaimTypes.Role, userSession.Role)
                 }));
             }
             else
