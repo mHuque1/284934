@@ -1,26 +1,38 @@
 ﻿@page "/"
-<AuthorizeView>
-    <Authorized>
-        <h1>Hola, @context.User.Identity.Name!</h1>
-    </Authorized>
-
-    <NotAuthorized>
-        <div class="container">
-            <div class="card">
-                <h1 class="mt-3 text-center">Hola, Invitado!</h1>
-                <div class="card-body">
-                    <p class="mt-3 text-center">Ya tienes un usuario? <a href="/IniciarSesion">Inicia sesión</a></p>
-                    <p class="mt-3 text-center">Tambien puedes registrarte aqui: <a href="/Registro">Registro</a></p>
-                </div>
+@using Data
+@inject Usuarios UsuarioServicios
+@inherits AuthEnforce
+   
+@if(login)
+{
+    <div class="container">
+        <div class="card">
+            <h1 class="mt-3 text-center">Hola, @UsuarioServicios.GetCurrentUser.Nombre!</h1>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="card">
+            <h1 class="mt-3 text-center">Hola, Invitado!</h1>
+            <div class="card-body">
+                <p class="mt-3 text-center">Ya tienes un usuario? <a href="/IniciarSesion">Inicia sesión</a></p>
+                <p class="mt-3 text-center">Tambien puedes registrarte aqui: <a href="/Registro">Registro</a></p>
             </div>
         </div>
+    </div>
+}
+
+       
         
         
-    </NotAuthorized>
-</AuthorizeView>
 <PageTitle>DepoQuick</PageTitle>
 @code{
-    [CascadingParameter]
-    private Task<AuthenticationState> authenticationState {get; set;}
+    private bool login;
 
+    protected override void OnInitialized()
+    {
+        login = UsuarioServicios.IsSignedIn;
+    }
 }

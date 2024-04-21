@@ -1,119 +1,104 @@
 ﻿@page "/Depositos"
+@using Data
+@using Dominio
 @inject Usuarios UsuarioServicios
-@inject AuthenticationStateProvider authStateProvider
-@inject NavigationManager NavigationManager
 @inject Reservas ReservaServicio
-@attribute [Authorize(Roles = "Admin, User")]
+@inject Depositos depositosServicio
+@inject NavigationManager NavigationManager
+@inherits AuthEnforce
 
 <PageTitle>Depositos</PageTitle>
 
-@using BlazorServerAuthenticationAndAuthorization.Authentication
-@using Data
-@using Dominio
-@using System.Security.Claims
-@inject Depositos depositosServicio
 
-<div class="container">
-    <h1>Depositos</h1>
-    <AuthorizeView Roles="Admin">
-        <Authorized>
+
+@if(UsuarioServicios.IsSignedIn)
+{
+    <div class="container">
+        <h1>Depositos</h1>
+        @if (UsuarioServicios.GetCurrentUser.EsAdmin)
+        {
             <button @onclick="Agregar" class="btn btn-success btn-lg">Agregar</button>
-        </Authorized>
-    </AuthorizeView>
+        }
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Area</th>
-                <th>Tamaño</th>
-                <th>Tiene Climatizacion</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (Deposito depo in depositos)
-            {
+
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@depo.ID</td>
-                    <td>@depo.Area</td>
-                    <td>@depo.Tamano</td>
-                    <td>@(depo.TieneClimatizacion ? "Sí" : "No")</td>
-                    <td>
-                        <button @onclick="() => Reservar(depo)" class="btn btn-primary">Reservar</button>
-                        <AuthorizeView Roles="Admin">
-                            <Authorized>
-                                <button @onclick="() => Borrar(depo)" class="btn btn-danger">Eliminar</button>
-                            </Authorized>
-                        </AuthorizeView>
-                    </td>
+                    <th>ID</th>
+                    <th>Area</th>
+                    <th>Tamaño</th>
+                    <th>Tiene Climatizacion</th>
+                    <th>Acciones</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach (Deposito depo in depositos)
+                {
+                    <tr>
+                        <td>@depo.ID</td>
+                        <td>@depo.Area</td>
+                        <td>@TamanoTexto(depo.Tamano)</td>
+                        <td>@(depo.TieneClimatizacion ? "Sí" : "No")</td>
+
+
+                        <td>
+                            <button @onclick="() => Reservar(depo)" class="btn btn-primary">Reservar</button>
+                            @if (UsuarioServicios.GetCurrentUser.EsAdmin)
+                            {
+                                <button @onclick="() => Borrar(depo)" class="btn btn-danger">Eliminar</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+
 
 @code {
     [CascadingParameter] public IModalService Modal { get; set; } = default!;
     private IList<Deposito> depositos = new List<Deposito>();
-    private Usuario user;
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        await CargarUsuario();
-        await CargarDepositos();
+        CargarDepositos();
     }
 
-    private async Task CargarDepositos()
+    private string TamanoTexto(char tamano)
     {
-        depositos = await Task.Run(() => depositosServicio.Logica.GetDepositos());
-    }
-
-    private async Task<bool> CargarUsuario()
-    {
-        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
-        var authenticationState = await customAuthStateProvider.GetAuthenticationStateAsync();
-        string userEmail = authenticationState.User.FindFirst(ClaimTypes.Email)?.Value;
-
-        if (string.IsNullOrEmpty(userEmail))
+        switch (tamano)
         {
-            Console.WriteLine("ErrorAuth");
-            NavigationManager.NavigateTo("/IniciarSesion", true);
-            return false;
+            case 'S':
+                return "Pequeño";
+            case 'M':
+                return "Mediano";
+            case 'L':
+                return "Grande";
+            default:
+                return "Desconocido";
         }
-
-        user = UsuarioServicios.Logica.GetUsuario(userEmail);
-        if (user == null)
-        {
-            Console.WriteLine("null" + userEmail);
-            NavigationManager.NavigateTo("/IniciarSesion", true);
-            return false;
-        }
-
-        return true;
     }
+
+    private void CargarDepositos() => depositos = depositosServicio.ListaDepositos;
+
 
     private async Task Agregar()
     {
-        var messageForm = Modal.Show<ModalAgregarDeposito>("Agregar Promocion");
+        var messageForm = Modal.Show<ModalAgregarDeposito>("Agregar Deposito");
         var result = await messageForm.Result;
-        if (result.Data != null && result.Data.ToString() == "ErrorAuth")
-        {
-            NavigationManager.NavigateTo("/IniciarSesion", true);
-        }
-        await CargarDepositos();
+        CargarDepositos();
     }
 
     private async Task Reservar(Deposito depo)
     {
-        var parameters = new ModalParameters().Add(nameof(ModalReservarDeposito.depo), depo);
+        var parameters = new ModalParameters();
+        parameters.Add(nameof(ModalReservarDeposito.depo), depo);
+        parameters.Add(nameof(ModalReservarDeposito.user), UsuarioServicios.GetCurrentUser);
         var messageForm = Modal.Show<ModalReservarDeposito>("Reservar Deposito", parameters);
         var result = await messageForm.Result;
-        if (result.Data != null && result.Data.ToString() == "ErrorAuth")
-        {
-            NavigationManager.NavigateTo("/IniciarSesion", true);
-        }
-        await CargarDepositos();
+        CargarDepositos();
     }
 
     private async Task Borrar(Deposito depo)
@@ -121,10 +106,6 @@
         var parameters = new ModalParameters().Add(nameof(ModalBorrarDeposito.depo), depo);
         var messageForm = Modal.Show<ModalBorrarDeposito>("Borrar Deposito", parameters);
         var result = await messageForm.Result;
-        if (result.Data != null && result.Data.ToString() == "ErrorAuth")
-        {
-            NavigationManager.NavigateTo("/IniciarSesion", true);
-        }
-        await CargarDepositos();
+        CargarDepositos();
     }
 }

@@ -1,5 +1,4 @@
 using Blazored.Modal;
-using BlazorServerAuthenticationAndAuthorization.Authentication;
 using Interfaz.Data;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
@@ -16,9 +15,6 @@ builder.Services.AddSingleton<Usuarios>();
 builder.Services.AddSingleton<Reservas>();
 builder.Services.AddBlazoredModal();
 builder.Services.AddAuthenticationCore();
-builder.Services.AddAuthenticationCore();
-builder.Services.AddScoped<ProtectedSessionStorage>();
-builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
 
 var app = builder.Build();

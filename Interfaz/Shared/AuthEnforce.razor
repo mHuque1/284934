@@ -1,0 +1,20 @@
+﻿@using Interfaz.Data
+@inject NavigationManager NavigationManager
+@inject Usuarios UsuarioServicios
+
+@code {
+    protected override void OnAfterRender(bool firstRender) => CheckUserAuthentication();
+
+    public void CheckUserAuthentication()
+    {
+        var uri = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+        if (!UsuarioServicios.IsSignedIn && uri != "IniciarSesion" && uri != "Registro")
+        {
+            NavigationManager.NavigateTo("/IniciarSesion");
+        }
+        if (UsuarioServicios.IsSignedIn && (uri == "IniciarSesion" || uri == "Registro"))
+        {
+            NavigationManager.NavigateTo("/");
+        }
+    }
+}

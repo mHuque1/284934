@@ -1,7 +1,6 @@
-﻿@using BlazorServerAuthenticationAndAuthorization.Authentication
-@using Data
+﻿@using Data
 @inherits LayoutComponentBase
-@inject AuthenticationStateProvider authStateProvider;
+@inject Usuarios UsuarioServicios
 @inject NavigationManager NavigationManager;
 <PageTitle>Interfaz</PageTitle>
 
@@ -11,16 +10,19 @@
     </div>
 
     <main>
+        
         <div class="top-row px-4">
-           <AuthorizeView>
-               <Authorized>
-                    <a @onclick="Logout" href="javascript:void(0)">Logout</a>
-               </Authorized>
-               <NotAuthorized>
-                    <a href="/IniciarSesion">Login</a>
-                    <a href="/Registro">Registro</a>
-               </NotAuthorized>
-           </AuthorizeView>
+            @if (Login)
+            {
+                <a @onclick="Logout" href="javascript:void(0)">LogOut</a>
+            }
+            else
+            {
+                <a href="/IniciarSesion">Login</a>
+                <a href="/Registro">Registro</a>
+            }
+                    
+           
         </div>
 
         <article class="content px-4">
@@ -30,10 +32,14 @@
 </div>
 
 @code {
-    private async Task Logout()
+    private bool Login;
+    private void Logout()
     {
-        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
-        await customAuthStateProvider.UpdateAuthenticationState(null);
-        NavigationManager.NavigateTo("/", true);
+        UsuarioServicios.SignOut();
+        NavigationManager.NavigateTo("/IniciarSesion", true);
+    }
+    protected override void OnInitialized()
+    {
+        Login = UsuarioServicios.IsSignedIn;
     }
 }

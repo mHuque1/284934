@@ -1,111 +1,86 @@
 ﻿@page "/Administrar/Promociones"
 @inject Usuarios UsuarioServicios;
-@inject AuthenticationStateProvider authStateProvider;
 @inject NavigationManager NavigationManager;
-@attribute [Authorize(Roles = "Admin")]
+@inherits AuthEnforce
 <PageTitle>Promociones</PageTitle>
 
-@using BlazorServerAuthenticationAndAuthorization.Authentication
 @using Data;
 @using Dominio;
 @using System.Security.Claims
 @inject Promociones promocionesServicio;
 
-<div class="container">
-    <h1>Administrar Promociones</h1>
+@if (UsuarioServicios.IsSignedIn)
+{
+    @if (UsuarioServicios.GetCurrentUser.EsAdmin)
+    {
+        <div class="container">
+            <h1>Administrar Promociones</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Etiqueta</th>
-                <th>Descuento</th>
-                <th>Comienzo</th>
-                <th>Fin</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (Promocion promo in promociones)
-            {
-                <tr>
-                    <td>@promo.Id</td>
-                    <td>@promo.Etiqueta</td>
-                    <td>@string.Concat(promo.Descuento, "%")</td>
-                    <td>@promo.Comienzo</td>
-                    <td>@promo.Fin</td>
-                    <td>
-                        <button @onclick="() => Modificar(promo)" class="btn btn-warning">Editar</button>
-                        <button @onclick="() => Borrar(promo)" class="btn btn-danger">Eliminar</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Etiqueta</th>
+                        <th>Descuento</th>
+                        <th>Comienzo</th>
+                        <th>Fin</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Promocion promo in promociones)
+                    {
+                        <tr>
+                            <td>@promo.Id</td>
+                            <td>@promo.Etiqueta</td>
+                            <td>@string.Concat(promo.Descuento, "%")</td>
+                            <td>@promo.Comienzo</td>
+                            <td>@promo.Fin</td>
+                            <td>
+                                <button @onclick="() => Modificar(promo)" class="btn btn-warning">Editar</button>
+                                <button @onclick="() => Borrar(promo)" class="btn btn-danger">Eliminar</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
-    <button @onclick="Agregar" class="btn btn-success btn-lg">Agregar</button>
-</div>
+            <button @onclick="Agregar" class="btn btn-success btn-lg">Agregar</button>
+        </div>
+    }
+    else
+    {
+        <p role="alert">Pagina No encontrada</p>
+    }
+}
 
 @code {
     [CascadingParameter] public IModalService Modal { get; set; } = default!;
     private IList<Promocion> promociones = new List<Promocion>();
     private Usuario user;
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        if (await CargarUsuario())
-        {
-            await CargarPromociones();
-        }
-        else
-        {
-            NavigationManager.NavigateTo("/IniciarSesion", true);
-        }
+        CargarPromociones();
     }
 
-    private async Task CargarPromociones()
+    private void CargarPromociones()
     {
-        promociones = await Task.Run(() => promocionesServicio.Logica.GetPromociones());
+        promociones = promocionesServicio.listaPromociones;
         StateHasChanged();
     }
 
-    private async Task<bool> CargarUsuario()
-    {
-        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
-        var authenticationState = await customAuthStateProvider.GetAuthenticationStateAsync();
-        string userEmail = "";
-        await Task.Run(() => userEmail = authenticationState.User.FindFirst(ClaimTypes.Email)?.Value);
-
-        if (string.IsNullOrEmpty(userEmail))
-        {
-            Console.WriteLine("ErrorAuth");
-            NavigationManager.NavigateTo("/IniciarSesion", true);
-            return false;
-        }
-        else
-        {
-            await Task.Run(() =>
-            {
-                user = UsuarioServicios.Logica.GetUsuario(userEmail);
-            });
-            if (user == null)
-            {
-                NavigationManager.NavigateTo("/IniciarSesion", true);
-                return false;
-            }
-            return true;
-        }
-    }
+  
 
     private async Task Agregar()
     {
         var messageForm = Modal.Show<ModalAgregarPromocion>("Agregar Promocion");
         var result = await messageForm.Result;
-        await CargarPromociones();
         if (result.Data != null && result.Data.ToString() == "ErrorAuth")
         {
             NavigationManager.NavigateTo("/IniciarSesion", true);
         }
+        CargarPromociones();
     }
 
     private async Task Borrar(Promocion promo)
@@ -117,7 +92,7 @@
         {
             NavigationManager.NavigateTo("/IniciarSesion", true);
         }
-        await CargarPromociones();
+        CargarPromociones();
     }
 
     private async Task Modificar(Promocion promo)
@@ -129,6 +104,6 @@
         {
             NavigationManager.NavigateTo("/IniciarSesion", true);
         }
-        await CargarPromociones();
+        CargarPromociones();
     }
 }

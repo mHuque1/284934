@@ -1,93 +1,64 @@
 ﻿@page "/Reservas"
-@attribute [Authorize(Roles = "Admin, User")]
-@using BlazorServerAuthenticationAndAuthorization.Authentication
 @using Dominio
 @using Data
-@using System.Security.Claims
 @inject Usuarios UsuarioServicios;
 @inject Reservas ReservaServicio;
-@inject AuthenticationStateProvider authStateProvider;
 @inject NavigationManager NavigationManager;
-<div class="container">
-    <h1>Mis Reservas</h1>
+@inherits AuthEnforce
+
+@if(UsuarioServicios.IsSignedIn)
+{
+    <div class="container">
+        <h1>Mis Reservas</h1>
 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Comienzo</th>
-            <th>Fin</th>
-            <th>Costo</th>
-            <th>Deposito</th>
-            <th>Estado</th>
-            
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Reserva reserva in reservas)
-        {
-            <tr>
-                <td>@reserva.ID</td>
-                <td>@reserva.Comienzo.ToString("d")</td>
-                <td>@reserva.Fin.ToString("d")</td>
-                <td>@reserva.Costo.ToString("C")</td>
-                <td><button @onclick="() => VerInfo(reserva.Deposito)" class="btn btn-info">Info deposito</button></td>
-                    <td><button @onclick="() => VerEstadoReserva(reserva)" class="btn btn-secondary">Ver Estado Solicitud</button></td>
-            </tr>
-        }
-    </tbody>
-</table>
-</div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Comienzo</th>
+                    <th>Fin</th>
+                    <th>Costo</th>
+                    <th>Deposito</th>
+                    <th>Estado</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Reserva reserva in reservas)
+                {
+                    <tr>
+                        <td>@reserva.ID</td>
+                        <td>@reserva.Comienzo.ToString("d")</td>
+                        <td>@reserva.Fin.ToString("d")</td>
+                        <td>@reserva.Costo.ToString("C")</td>
+                        <td><button @onclick="() => VerInfo(reserva.Deposito)" class="btn btn-info">Info deposito</button></td>
+                        <td><button @onclick="() => VerEstadoReserva(reserva)" class="btn btn-secondary">Ver Estado Solicitud</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+
 @code {
-
-    [CascadingParameter] private Task<AuthenticationState> authenticationState { get; set; }
-    private IList<Reserva> reservas = new List<Reserva>();
-    private Usuario user;
-    private async Task CargarReservas()
-    {
-        reservas = await Task.Run(() => ReservaServicio.Logica.GetReservasUsuario(user));
-        //StateHasChanged();
-        Console.WriteLine("Reservas: " + reservas.Count);
-    }
-
-    private async Task<bool> CargarUsuario()
-    {
-        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
-        var authenticationState = await customAuthStateProvider.GetAuthenticationStateAsync();
-        string userEmail = "";
-        await Task.Run(() => userEmail = authenticationState.User.FindFirst(ClaimTypes.Email)?.Value);
-
-        if (string.IsNullOrEmpty(userEmail))
-        {
-            Console.WriteLine("ErrorAuth");
-            NavigationManager.NavigateTo("/IniciarSesion", true);
-            return false;
-        }
-        else
-        {
-            await Task.Run(() =>
-            {
-                user = UsuarioServicios.Logica.GetUsuario(userEmail);
-            });
-            if (user == null)
-            {
-                NavigationManager.NavigateTo("/IniciarSesion", true);
-                return false;
-            }
-            return true;
-        }
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        if(await CargarUsuario())
-        {
-            await CargarReservas();
-        }
-    }
-
     [CascadingParameter] public IModalService Modal { get; set; } = default!;
+    private IList<Reserva> reservas = new List<Reserva>();
+    private void CargarReservas() => reservas = ReservaServicio.GetReservasUsuario(UsuarioServicios.GetCurrentUser);
+
+
+
+    protected override void OnInitialized()
+    {
+        if(UsuarioServicios.IsSignedIn)
+        {
+            CargarReservas();
+        }
+        
+    }
+
+   
 
     private async Task VerInfo(Deposito depo)
     {

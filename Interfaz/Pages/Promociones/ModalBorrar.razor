@@ -1,10 +1,7 @@
-﻿@using BlazorServerAuthenticationAndAuthorization.Authentication
-@using Data;
+﻿@using Data;
 @using Dominio;
-@using System.Security.Claims
 @inject Promociones PromocionesServicio
 @inject Usuarios UsuarioServicios
-@inject AuthenticationStateProvider authStateProvider
 
 <div class="container d-flex justify-content-center align-items-center">
     <div class="text-center">
@@ -19,39 +16,8 @@
 @code {
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
     [Parameter] public Promocion promo { get; set; }
-    private static Usuario user;
 
-    private async Task<bool> CargarUsuario()
-    {
-        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
-        var authenticationState = await customAuthStateProvider.GetAuthenticationStateAsync();
-        string userEmail = "";
-        await Task.Run(() => userEmail = authenticationState.User.FindFirst(ClaimTypes.Email)?.Value);
-
-        if (string.IsNullOrEmpty(userEmail))
-        {
-            Console.WriteLine("ErrorAuth");
-            await BlazoredModal.CloseAsync(ModalResult.Cancel("ErrorAuth"));
-            return false;
-        }
-        else
-        {
-            await Task.Run(() =>
-            {
-                user = UsuarioServicios.Logica.GetUsuario(userEmail);
-                Console.WriteLine("Usuario: " + userEmail);
-
-            });
-            if (user == null)
-            {
-                await BlazoredModal.CloseAsync(ModalResult.Cancel("ErrorAuth"));
-                return false;
-            }
-        }
-
-        return true;
-    }
-
+   
     private async Task Cancelar()
     {
         await BlazoredModal.CancelAsync();
@@ -59,13 +25,7 @@
 
     private async Task Confirmar()
     {
-        if (await CargarUsuario())
-        {
-            await Task.Run(() =>
-            {
-                PromocionesServicio.Logica.DeletePromocion(promo.Id, promo, user);
-            });
-            await BlazoredModal.CloseAsync(ModalResult.Ok());
-        }
+        PromocionesServicio.DeletePromocion(promo.Id, promo, UsuarioServicios.GetCurrentUser);
+        await BlazoredModal.CloseAsync(ModalResult.Ok());
     }
 }

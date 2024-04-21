@@ -1,11 +1,10 @@
 ﻿@using System.ComponentModel.DataAnnotations
 @using Dominio
 @using Data
-@using BlazorServerAuthenticationAndAuthorization.Authentication
 @using System.Security.Claims
 @inject AuthenticationStateProvider authStateProvider;
 @inject Promociones promociones
-@inject Depositos depositos
+@inject Depositos DepositoServicios
 @inject Usuarios UsuarioServicios
 @inject NavigationManager NavigationManager;
 
@@ -83,7 +82,6 @@
     private IList<Promocion> promocionesDisponibles = new List<Promocion>();
     private IList<Promocion> promocionesElegidas = new List<Promocion>();
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
-    private static Usuario user;
     private async Task Aceptar()
     {
         var validationContext = new ValidationContext(depositoModel);
@@ -97,11 +95,8 @@
         if (!btnClick)
         {
             btnClick = true;
-            if (await CargarUsuario())
-            {
-                await AgregarDeposito();
-                await BlazoredModal.CloseAsync(ModalResult.Ok());
-            }
+            AgregarDeposito();
+            BlazoredModal.CloseAsync(ModalResult.Ok());
         }
     }
 
@@ -119,38 +114,7 @@
         public bool TieneClimatizacion { get; set; } = false;
     }
 
-
-    private async Task<bool> CargarUsuario()
-    {
-        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
-        var authenticationState = await customAuthStateProvider.GetAuthenticationStateAsync();
-        string userEmail = "";
-        await Task.Run(() => userEmail = authenticationState.User.FindFirst(ClaimTypes.Email)?.Value);
-
-        if (string.IsNullOrEmpty(userEmail))
-        {
-            await BlazoredModal.CloseAsync(ModalResult.Cancel("ErrorAuth"));
-            return false;
-        }
-        else
-        {
-            await Task.Run(() =>
-            {
-                user = UsuarioServicios.Logica.GetUsuario(userEmail);
-
-            });
-            if (user == null)
-            {
-                await BlazoredModal.CloseAsync(ModalResult.Cancel("ErrorAuth"));
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-
-    private async Task AgregarDeposito()
+    private void AgregarDeposito()
     {
         Deposito depo = new
         (
@@ -163,15 +127,16 @@
             depo.AgregarPromocion(promo);
         }
 
-        await Task.Run(() =>
-        {
-            depositos.Logica.AddDeposito(depo, user);
-        });
+        DepositoServicios.AddDeposito(depo, UsuarioServicios.GetCurrentUser);
+
+
+
+
     }
 
     protected override void OnInitialized()
     {
-        promocionesDisponibles = promociones.Logica.GetPromociones();
+        promocionesDisponibles = promociones.listaPromociones;
         promocionesElegidas = new List<Promocion>();
     }
 

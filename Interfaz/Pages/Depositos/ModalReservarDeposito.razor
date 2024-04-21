@@ -1,7 +1,5 @@
-﻿@using BlazorServerAuthenticationAndAuthorization.Authentication
-@using Data
+﻿@using Data
 @using Dominio
-@using System.Security.Claims
 @using System.ComponentModel.DataAnnotations
 
 @inject Depositos depositosServicio
@@ -49,7 +47,7 @@
 @code {
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
     [Parameter] public Deposito depo { get; set; }
-    private Usuario user;
+    [Parameter] public Usuario user { get; set; }
     private double costo = 0;
     private ReservaModelo model = new ReservaModelo();
     private bool click = false;
@@ -60,54 +58,24 @@
         await BlazoredModal.CancelAsync();
     }
 
-    private async Task<bool> CargarUsuario()
-    {
-        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
-        var authenticationState = await customAuthStateProvider.GetAuthenticationStateAsync();
-        string userEmail = authenticationState.User.FindFirst(ClaimTypes.Email)?.Value;
-
-        if (string.IsNullOrEmpty(userEmail))
-        {
-            Console.WriteLine("ErrorAuth");
-            await BlazoredModal.CloseAsync(ModalResult.Cancel("ErrorAuth"));
-            return false;
-        }
-        else
-        {
-            await Task.Run(() => user = UsuarioServicios.Logica.GetUsuario(userEmail));
-            if (user == null)
-            {
-                Console.WriteLine("null" + userEmail);
-                await BlazoredModal.CloseAsync(ModalResult.Cancel("ErrorAuth"));
-                return false;
-            }
-        }
-
-        return true;
-    }
+   
 
     private async Task Confirmar()
     {
         if (!click)
         {
             click = true;
-            if (await CargarUsuario())
-            {
-                Reserva res = new(depo, user, model.Comienzo, model.Fin);
-                reservasServicio.Logica.AddReserva(res);
-                await BlazoredModal.CloseAsync(ModalResult.Ok());
-            }
+            Reserva res = new(depo, user, model.Comienzo, model.Fin);
+            reservasServicio.AddReserva(res);
+            await BlazoredModal.CloseAsync(ModalResult.Ok());
         }
     }
 
     private async Task CalcularCosto()
     {
-        if (await CargarUsuario())
-        {
-            Reserva res = new(depo, user, model.Comienzo, model.Fin);
-            MostrarErrorFecha = model.Comienzo > model.Fin;
-            costo = MostrarErrorFecha ? 0 : res.Costo;
-        }
+        Reserva res = new(depo, user, model.Comienzo, model.Fin);
+        MostrarErrorFecha = model.Comienzo > model.Fin;
+        costo = MostrarErrorFecha ? 0 : res.Costo;
     }
 
     public class ReservaModelo

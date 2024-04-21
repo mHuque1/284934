@@ -1,12 +1,9 @@
-﻿@using BlazorServerAuthenticationAndAuthorization.Authentication
-@using Interfaz.Data
+﻿@using Interfaz.Data
 @using Microsoft.AspNetCore.Components.Web
 @using Dominio
 @using System.ComponentModel.DataAnnotations
-@using System.Security.Claims
 @inject Promociones promociones
 @inject Usuarios UsuarioServicios
-@inject AuthenticationStateProvider authStateProvider
 
 <EditForm Model="@model" OnValidSubmit="Confirmar">
     <DataAnnotationsValidator />
@@ -44,12 +41,10 @@
 </EditForm>
 
 @code {
-    [Parameter]
-    public Promocion promo { get; set; }
+    [Parameter] public Promocion promo { get; set; }
     private PromocionModel model = new PromocionModel();
 
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
-    Usuario user;
     private async Task Aceptar() => await BlazoredModal.CloseAsync(ModalResult.Ok());
     private async Task Cancelar() => await BlazoredModal.CancelAsync();
     private bool btnPresionado = false;
@@ -70,52 +65,14 @@
         if (!btnPresionado)
         {
             btnPresionado = true;
-            await CargarUsuario();
-            await Task.Run(() =>
-            {
-                Promocion promocion = new(model.Etiqueta, model.Descuento, model.Comienzo, model.Fin);
-                promociones.Logica.ModificarPromocion(promocion.Id, promocion, user);
-            });
-
+            Promocion promocion = new(model.Etiqueta, model.Descuento, model.Comienzo, model.Fin);
+            promociones.ModificarPromocion(promo.Id, promocion, UsuarioServicios.GetCurrentUser);
             await Aceptar();
         }
     }
 
-    private async Task<bool> CargarUsuario()
-    {
-        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
-        var authenticationState = await customAuthStateProvider.GetAuthenticationStateAsync();
-        string userEmail = "";
-        await Task.Run(() => userEmail = authenticationState.User.FindFirst(ClaimTypes.Email)?.Value);
-
-        if (string.IsNullOrEmpty(userEmail))
-        {
-            Console.WriteLine("ErrorAuth");
-            await BlazoredModal.CloseAsync(ModalResult.Cancel("ErrorAuth"));
-            return false;
-        }
-        else
-        {
-            await Task.Run(() =>
-            {
-                user = UsuarioServicios.Logica.GetUsuario(userEmail);
-                Console.WriteLine("Usuario: " + userEmail);
-
-            });
-            if (user == null)
-            {
-                await BlazoredModal.CloseAsync(ModalResult.Cancel("ErrorAuth"));
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     public class PromocionModel
     {
-
-
         [Required(ErrorMessage = "El nombre de usuario es obligatorio.")]
         [MaxLength(20, ErrorMessage = "El nombre de usuario no puede tener más de 20 caracteres.")]
         public string Etiqueta { get; set; }

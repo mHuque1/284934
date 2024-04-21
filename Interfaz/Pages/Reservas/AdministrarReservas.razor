@@ -1,101 +1,75 @@
 ﻿@page "/Administrar/Reservas"
-@attribute [Authorize(Roles = "Admin")]
-@using BlazorServerAuthenticationAndAuthorization.Authentication
+@inherits AuthEnforce
 @using Dominio
 @using Data
-@using System.Security.Claims
 @inject Usuarios UsuarioServicios;
 @inject Reservas ReservaServicio;
-@inject AuthenticationStateProvider authStateProvider;
 @inject NavigationManager NavigationManager;
-<div class="container">
-    <h1>Administrar Reservas</h1>
+
+@if(UsuarioServicios.IsSignedIn)
+{
+    @if(UsuarioServicios.GetCurrentUser.EsAdmin)
+    {
+        <div class="container">
+            <h1>Administrar Reservas</h1>
 
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Comienzo</th>
-                <th>Fin</th>
-                <th>Costo</th>
-                <th>Deposito</th>
-                <th>Email</th>
-                <th>Estado</th>
-                <th>Revisar</th>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Comienzo</th>
+                        <th>Fin</th>
+                        <th>Costo</th>
+                        <th>Deposito</th>
+                        <th>Email</th>
+                        <th>Estado</th>
+                        <th>Revisar</th>
 
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (Reserva reserva in reservas)
-            {
-                <tr>
-                    <td>@reserva.ID</td>
-                    <td>@reserva.Comienzo.ToString("d")</td>
-                    <td>@reserva.Fin.ToString("d")</td>
-                    <td>@reserva.Costo.ToString("C")</td>
-                    <td><button @onclick="() => VerInfo(reserva.Deposito)" class="btn btn-info">Info deposito</button></td>
-                    <td>@reserva.Usuario.Email</td>
-                    <td><button @onclick="() => VerEstadoReserva(reserva)" class="btn btn-secondary">Ver Estado Solicitud</button></td>
-                    @if (reserva.EnEspera)
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Reserva reserva in reservas)
                     {
-                        <td><button @onclick="() => RevisarReserva(reserva)" class="btn btn-primary">Aprobar/Rechazar Reserva</button></td>
+                        <tr>
+                            <td>@reserva.ID</td>
+                            <td>@reserva.Comienzo.ToString("d")</td>
+                            <td>@reserva.Fin.ToString("d")</td>
+                            <td>@reserva.Costo.ToString("C")</td>
+                            <td><button @onclick="() => VerInfo(reserva.Deposito)" class="btn btn-info">Info deposito</button></td>
+                            <td>@reserva.Usuario.Email</td>
+                            <td><button @onclick="() => VerEstadoReserva(reserva)" class="btn btn-secondary">Ver Estado Solicitud</button></td>
+                            @if (reserva.EnEspera)
+                            {
+                                <td><button @onclick="() => RevisarReserva(reserva)" class="btn btn-primary">Aprobar/Rechazar Reserva</button></td>
+                            }
+                        </tr>
                     }
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p role="alert">Pagina No encontrada</p>
+    }
+}
+
 @code {
 
-    [CascadingParameter] private Task<AuthenticationState> authenticationState { get; set; }
     private IList<Reserva> reservas = new List<Reserva>();
-    private Usuario user;
-    private async Task CargarReservas()
+
+    private void CargarReservas()
     {
-        reservas = await Task.Run(() => ReservaServicio.Logica.GetReservas());
+        reservas = ReservaServicio.ReservaList;
         StateHasChanged();
     }
 
-    private async Task<bool> CargarUsuario()
+   
+
+    protected override void OnInitialized()
     {
-        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
-        var authenticationState = await customAuthStateProvider.GetAuthenticationStateAsync();
-        string userEmail = "";
-        await Task.Run(() => userEmail = authenticationState.User.FindFirst(ClaimTypes.Email)?.Value);
-
-        if (string.IsNullOrEmpty(userEmail))
-        {
-            Console.WriteLine("ErrorAuth");
-            NavigationManager.NavigateTo("/IniciarSesion", true);
-            return false;
-        }
-        else
-        {
-            await Task.Run(() =>
-            {
-                user = UsuarioServicios.Logica.GetUsuario(userEmail);
-            });
-            if (user == null)
-            {
-                NavigationManager.NavigateTo("/IniciarSesion", true);
-                return false;
-            }
-            return true;
-        }
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-
-        if (await CargarUsuario())
-        {
-            await CargarReservas();
-        } 
-        else
-        {
-            NavigationManager.NavigateTo("/IniciarSesion", true);
-        }
+        CargarReservas();
     }
 
     [CascadingParameter] public IModalService Modal { get; set; } = default!;
@@ -131,6 +105,6 @@
         {
             NavigationManager.NavigateTo("/IniciarSesion", true);
         }
-        await CargarReservas();
+        CargarReservas();
     }
 }

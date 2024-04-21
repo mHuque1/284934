@@ -1,8 +1,5 @@
-﻿@using BlazorServerAuthenticationAndAuthorization.Authentication
-@using Data;
+﻿@using Data;
 @using Dominio;
-@using System.Security.Claims
-@attribute [Authorize(Roles = "Admin, User")]
 
 @inject Reservas reservaServicio
 @inject Usuarios UsuarioServicios
@@ -35,91 +32,34 @@
     [Parameter] public Reserva res { get; set; }
     private bool AprobarReserva { get; set; } = true;
     private string Mensaje { get; set; } = "";
-    private Usuario user;
     private bool MostrarErrorMensaje { get; set; }
 
-    private async Task<bool> CargarUsuario()
-    {
-        var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
-        var authenticationState = await customAuthStateProvider.GetAuthenticationStateAsync();
-        string userEmail = "";
-        await Task.Run(() => userEmail = authenticationState.User.FindFirst(ClaimTypes.Email)?.Value);
 
-        if (string.IsNullOrEmpty(userEmail))
-        {
-            Console.WriteLine("ErrorAuth");
-            await BlazoredModal.CloseAsync(ModalResult.Cancel("ErrorAuth"));
-            return false;
-        }
-        else
-        {
-            await Task.Run(() =>
-            {
-                user = UsuarioServicios.Logica.GetUsuario(userEmail);
-                Console.WriteLine("Usuario: " + userEmail);
 
-            });
-            if (user == null)
-            {
-                await BlazoredModal.CloseAsync(ModalResult.Cancel("ErrorAuth"));
-                return false;
-            }
-        }
+    private void Aprobar() => reservaServicio.AprobarReserva(res,UsuarioServicios.GetCurrentUser);
 
-        return true;
-    }
-
-    private async Task Aprobar()
-    {
-        await Task.Run(() =>
-        {
-            res.Aprobar(user);
-            reservaServicio.Logica.ModificarReserva(res.ID, res);
-        });
-
-    }
-
-    private async Task Rechazar()
-    {
-        await Task.Run(() =>
-        {
-            res.Rechazar(user, Mensaje);
-            reservaServicio.Logica.ModificarReserva(res.ID, res);
-        });
-
-    }
+    private void Rechazar() => reservaServicio.RechazarReserva(res, UsuarioServicios.GetCurrentUser,Mensaje);
 
     private async Task Confirmar()
     {
-        if (await CargarUsuario())
+        if(AprobarReserva) {
+            Aprobar();
+            await BlazoredModal.CloseAsync(ModalResult.Ok());
+        }
+        else
         {
-            
-            
-
-            if (AprobarReserva)
+            if (string.IsNullOrWhiteSpace(Mensaje))
             {
-
-                await Aprobar();
-                await BlazoredModal.CloseAsync(ModalResult.Ok());
+                MostrarErrorMensaje = true;
+                return;
             }
             else
             {
-                if (string.IsNullOrWhiteSpace(Mensaje))
-                {
-                    MostrarErrorMensaje = true;
-                    return;
-                }
-                else
-                {
-                    MostrarErrorMensaje = false;
-                    await Rechazar();
-                    await BlazoredModal.CloseAsync(ModalResult.Ok());
-                }
-                
+                MostrarErrorMensaje = false;
+                Rechazar();
+                await BlazoredModal.CloseAsync(ModalResult.Ok());
             }
-
-            
-        }
+        } 
     }
 }
 
