@@ -97,7 +97,7 @@ namespace DominioTest
         public void Deberia_Tener_Las_Promociones_Agregadas()
         {
             // Arrange
-            var promocion = new Promocion(etiqueta: "Promo", descuento: 10, comienzo: DateTime.Today, fin: DateTime.Today.AddDays(1), 'S');
+            var promocion = new Promocion(etiqueta: "Promo", descuento: 10, comienzo: DateTime.Today, fin: DateTime.Today.AddDays(1));
 
             // Act
             deposito.AgregarPromocion(promocion);
@@ -107,21 +107,10 @@ namespace DominioTest
             Assert.AreEqual(promocion, deposito.Promociones[0]);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(DominioDepositoExcepcion))]
-        public void No_Deberia_Agregar_Las_Promociones_De_Diferente_Tipo()
-        {
-            // Arrange
-            var promocion = new Promocion(etiqueta: "Promo", descuento: 10, comienzo: DateTime.Today, fin: DateTime.Today.AddDays(1), 'M');
-
-            // Act
-            deposito.AgregarPromocion(promocion);
-        }
-
         public void Deberia_Tener_Las_Promociones_Eliminadas()
         {
             // Arrange
-            var promocion = new Promocion(etiqueta: "Promo", descuento: 10, comienzo: DateTime.Today, fin: DateTime.Today.AddDays(1), 'S');
+            var promocion = new Promocion(etiqueta: "Promo", descuento: 10, comienzo: DateTime.Today, fin: DateTime.Today.AddDays(1));
 
 
             // Act

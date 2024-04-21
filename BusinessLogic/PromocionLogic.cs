@@ -79,20 +79,6 @@ namespace BusinessLogic
             _repository.Update(promocion);
         }
 
-        public IList<Promocion> GetPromocionesPorTipo(char tipo)
-        {
-            IList<Promocion> Promociones = _repository.GetAll();
-            IList<Promocion> res = new List<Promocion>();
-            foreach (Promocion promocion in Promociones)
-            {
-                if (promocion.TipoDeposito == tipo)
-                {
-                    res.Add(promocion);
-                }
-            }
-            return res;
-        }
-
         public IList<Promocion> GetPromociones()
         {
             return _repository.GetAll();

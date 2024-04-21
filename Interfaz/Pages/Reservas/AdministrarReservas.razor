@@ -37,7 +37,10 @@
                     <td><button @onclick="() => VerInfo(reserva.Deposito)" class="btn btn-info">Info deposito</button></td>
                     <td>@reserva.Usuario.Email</td>
                     <td><button @onclick="() => VerEstadoReserva(reserva)" class="btn btn-secondary">Ver Estado Solicitud</button></td>
-                    <td><button @onclick="() => RevisarReserva(reserva)" class="btn btn-primary">Aprobar/Rechazar Reserva</button></td>
+                    @if (reserva.EnEspera)
+                    {
+                        <td><button @onclick="() => RevisarReserva(reserva)" class="btn btn-primary">Aprobar/Rechazar Reserva</button></td>
+                    }
                 </tr>
             }
         </tbody>
@@ -64,6 +67,7 @@
         if (string.IsNullOrEmpty(userEmail))
         {
             Console.WriteLine("ErrorAuth");
+            NavigationManager.NavigateTo("/IniciarSesion", true);
             return false;
         }
         else
@@ -71,8 +75,12 @@
             await Task.Run(() =>
             {
                 user = UsuarioServicios.Logica.GetUsuario(userEmail);
-                Console.WriteLine("Usuario: " + userEmail);
             });
+            if (user == null)
+            {
+                NavigationManager.NavigateTo("/IniciarSesion", true);
+                return false;
+            }
             return true;
         }
     }
@@ -123,5 +131,6 @@
         {
             NavigationManager.NavigateTo("/IniciarSesion", true);
         }
+        await CargarReservas();
     }
 }

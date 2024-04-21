@@ -4,9 +4,10 @@
 @using Dominio
 @using Data
 @using System.Security.Claims
-@inject Usuarios UsuarioServicio;
+@inject Usuarios UsuarioServicios;
 @inject Reservas ReservaServicio;
 @inject AuthenticationStateProvider authStateProvider;
+@inject NavigationManager NavigationManager;
 <div class="container">
     <h1>Mis Reservas</h1>
 
@@ -42,31 +43,48 @@
 
     [CascadingParameter] private Task<AuthenticationState> authenticationState { get; set; }
     private IList<Reserva> reservas = new List<Reserva>();
-    private Usuario usuario;
+    private Usuario user;
     private async Task CargarReservas()
     {
-        reservas = await Task.Run(() => ReservaServicio.Logica.GetReservasUsuario(usuario));
+        reservas = await Task.Run(() => ReservaServicio.Logica.GetReservasUsuario(user));
         //StateHasChanged();
         Console.WriteLine("Reservas: " + reservas.Count);
     }
 
-    private async Task CargarUsuario()
+    private async Task<bool> CargarUsuario()
     {
         var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
         var authenticationState = await customAuthStateProvider.GetAuthenticationStateAsync();
         string userEmail = "";
         await Task.Run(() => userEmail = authenticationState.User.FindFirst(ClaimTypes.Email)?.Value);
-        await Task.Run(() =>
-       {
-           usuario = UsuarioServicio.Logica.GetUsuario(userEmail);
-           Console.WriteLine("Usuario: "+userEmail);
-       });
+
+        if (string.IsNullOrEmpty(userEmail))
+        {
+            Console.WriteLine("ErrorAuth");
+            NavigationManager.NavigateTo("/IniciarSesion", true);
+            return false;
+        }
+        else
+        {
+            await Task.Run(() =>
+            {
+                user = UsuarioServicios.Logica.GetUsuario(userEmail);
+            });
+            if (user == null)
+            {
+                NavigationManager.NavigateTo("/IniciarSesion", true);
+                return false;
+            }
+            return true;
+        }
     }
 
     protected override async Task OnInitializedAsync()
     {
-        await CargarUsuario();
-        await CargarReservas();
+        if(await CargarUsuario())
+        {
+            await CargarReservas();
+        }
     }
 
     [CascadingParameter] public IModalService Modal { get; set; } = default!;
@@ -76,6 +94,7 @@
         var parameters = new ModalParameters().Add(nameof(ModalInfoDeposito.depo), depo);
         var messageForm = Modal.Show<ModalInfoDeposito>("Datos del deposito", parameters);
         var result = await messageForm.Result;
+        messageForm.Close();
     }
 
     private async Task VerEstadoReserva(Reserva res)

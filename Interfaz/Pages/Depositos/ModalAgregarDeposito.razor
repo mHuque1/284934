@@ -27,7 +27,7 @@
 
         <div class="form-group">
             <label for="tamañoDeposito">Tamaño del depósito:</label>
-            <select class="form-control" id="tamañoDeposito" @onchange="ActualizarTamañoDeposito">
+            <select class="form-control" id="tamañoDeposito">
                 <option value="">Seleccione un tamaño</option>
                 <option value="S">Pequeño</option>
                 <option value="M">Mediano</option>
@@ -94,17 +94,15 @@
             return;
         }
 
-        if(!btnClick)
+        if (!btnClick)
         {
             btnClick = true;
-            if(await CargarUsuario())
+            if (await CargarUsuario())
             {
                 await AgregarDeposito();
                 await BlazoredModal.CloseAsync(ModalResult.Ok());
             }
-            
         }
-
     }
 
 
@@ -113,28 +111,14 @@
     public class DepositoModel
     {
         [Required(ErrorMessage = "El campo Área del depósito es requerido.")]
-        public String AreaDeposito { get; set; }
+        public String AreaDeposito { get; set; } = "A";
 
         [Required(ErrorMessage = "El campo Tamaño del depósito es requerido.")]
-        public String TamañoDeposito { get; set; }
+        public String TamañoDeposito { get; set; } = "S";
 
-        public bool TieneClimatizacion { get; set; }
+        public bool TieneClimatizacion { get; set; } = false;
     }
 
-    private void ActualizarTamañoDeposito(ChangeEventArgs e)
-    {
-        depositoModel.TamañoDeposito = e.Value.ToString();
-        if (string.IsNullOrEmpty(depositoModel.TamañoDeposito))
-        {
-            promocionesDisponibles = new List<Promocion>();
-            StateHasChanged();
-        }
-        else
-        {
-            TamanoDepositoCambiado();
-        }
-
-    }
 
     private async Task<bool> CargarUsuario()
     {
@@ -145,7 +129,6 @@
 
         if (string.IsNullOrEmpty(userEmail))
         {
-            Console.WriteLine("ErrorAuth");
             await BlazoredModal.CloseAsync(ModalResult.Cancel("ErrorAuth"));
             return false;
         }
@@ -154,10 +137,16 @@
             await Task.Run(() =>
             {
                 user = UsuarioServicios.Logica.GetUsuario(userEmail);
-                Console.WriteLine("Usuario: " + userEmail);
+
             });
-            return true;
+            if (user == null)
+            {
+                await BlazoredModal.CloseAsync(ModalResult.Cancel("ErrorAuth"));
+                return false;
+            }
         }
+
+        return true;
     }
 
 
@@ -180,13 +169,12 @@
         });
     }
 
-    private void TamanoDepositoCambiado()
+    protected override void OnInitialized()
     {
-        char tamano = Convert.ToChar(depositoModel.TamañoDeposito);
-        promocionesDisponibles = promociones.Logica.GetPromocionesPorTipo(tamano);
+        promocionesDisponibles = promociones.Logica.GetPromociones();
         promocionesElegidas = new List<Promocion>();
-        StateHasChanged(); // Forzar el renderizado de la tabla
     }
+
 
     private void ActualizarSeleccion(Promocion promocion, ChangeEventArgs e)
     {

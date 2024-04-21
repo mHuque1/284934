@@ -78,15 +78,8 @@ namespace Dominio
         // Método para agregar una promoción al depósito
         public void AgregarPromocion(Promocion promo)
         {
-            if (promo.TipoDeposito == Tamano)
-            {
-                _promociones.Add(promo);
-            }
-            else
-            {
-                string msg = $"No se puede agregar una promocion de tipo '{promo.TipoDeposito}' a un deposito de tipo '{Tamano}'";
-                throw new DominioDepositoExcepcion(msg);
-            }
+
+            _promociones.Add(promo);
 
         }
 
@@ -96,12 +89,6 @@ namespace Dominio
             _promociones.Remove(promo);
         }
 
-        public object GetPromociones()
-        {
-            throw new NotImplementedException();
-        }
 
-        // Aquí podrían agregarse más métodos relacionados con la funcionalidad del depósito
-        // ...
     }
 }

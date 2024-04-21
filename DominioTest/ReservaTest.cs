@@ -364,7 +364,7 @@ namespace DominioTest
         public void Calculo_Precio_Deposito_Con_Promocion()
         {
             // Arrange
-            Promocion promo = new("promo", 20, DateTime.Today, DateTime.Today.AddDays(5), 'S');
+            Promocion promo = new("promo", 20, DateTime.Today, DateTime.Today.AddDays(5));
             deposito = new Deposito('A', 'S', false);
             deposito.AgregarPromocion(promo);
             reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(5));

@@ -40,7 +40,6 @@ public class PromocionRepository : IRepository<Promocion>
             existingItem.Etiqueta = updatedItem.Etiqueta;
             existingItem.Comienzo = updatedItem.Comienzo;
             existingItem.Fin = updatedItem.Fin;
-            existingItem.TipoDeposito = updatedItem.TipoDeposito;
         }
     }
 }

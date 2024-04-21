@@ -32,7 +32,7 @@ namespace BusinessLogicTest
         public void Verificar_Alta_Promocion()
         {
             // Arrange
-            Promocion promo = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
+            Promocion promo = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(10));
             Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", true);
             // Act
             _logica.AddPromocion(promo, user);
@@ -62,7 +62,7 @@ namespace BusinessLogicTest
         public void No_Deberia_Permitir_Agregar_Reserva_Usuario_Null()
         {
             //Arrange
-            Promocion promo1 = new("promo1", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
+            Promocion promo1 = new("promo1", 10, DateTime.Today, DateTime.Today.AddDays(10));
             //Act
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             _logica.AddPromocion(promo1, null);
@@ -86,9 +86,9 @@ namespace BusinessLogicTest
         {
             // Arrange
             Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", true);
-            Promocion promo1 = new("promo1", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
-            Promocion promo2 = new("promo2", 10, DateTime.Today, DateTime.Today.AddDays(10), 'M');
-            Promocion promo3 = new("promo2", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
+            Promocion promo1 = new("promo1", 10, DateTime.Today, DateTime.Today.AddDays(10));
+            Promocion promo2 = new("promo2", 10, DateTime.Today, DateTime.Today.AddDays(10));
+            Promocion promo3 = new("promo2", 10, DateTime.Today, DateTime.Today.AddDays(10));
             _logica.AddPromocion(promo1, user);
             _logica.AddPromocion(promo2, user);
             _logica.AddPromocion(promo3, user);
@@ -102,26 +102,7 @@ namespace BusinessLogicTest
 
         }
 
-        [TestMethod]
-        public void Verificar_Get_Promociones_Por_Tipo()
-        {
-            // Arrange
-            Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", true);
-            Promocion promo1 = new("promo1", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
-            Promocion promo2 = new("promo2", 10, DateTime.Today, DateTime.Today.AddDays(10), 'M');
-            Promocion promo3 = new("promo2", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
-            _logica.AddPromocion(promo1, user);
-            _logica.AddPromocion(promo2, user);
-            _logica.AddPromocion(promo3, user);
-            // Act
-            IList<Promocion> resultado = _logica.GetPromocionesPorTipo('S');
-
-            // Assert
-            Assert.IsTrue(resultado.Contains(promo1));
-            Assert.IsFalse(resultado.Contains(promo2));
-            Assert.IsTrue(resultado.Contains(promo3));
-
-        }
+      
 
 
 
@@ -143,7 +124,7 @@ namespace BusinessLogicTest
         {
             // Arrange
             Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", true);
-            Promocion promo = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
+            Promocion promo = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(10));
             _logica.AddPromocion(promo, user);
             // Act
             _logica.DeletePromocion(0, promo, user);
@@ -160,7 +141,7 @@ namespace BusinessLogicTest
         {
             // Arrange
             Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", true);
-            Promocion promo = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
+            Promocion promo = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(10));
             _logica.AddPromocion(promo, user);
             // Act
             _logica.DeletePromocion(0, promo, null);
@@ -173,7 +154,7 @@ namespace BusinessLogicTest
         {
             // Arrange
             Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", false);
-            Promocion promo = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
+            Promocion promo = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(10));
             _logica.AddPromocion(promo, user);
             // Act
             _logica.DeletePromocion(0, promo, user);
@@ -185,11 +166,11 @@ namespace BusinessLogicTest
         {
             // Arrange
             Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", true);
-            Promocion promocion = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
+            Promocion promocion = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(10));
             _logica.AddPromocion(promocion, user);
 
             // Act
-            promocion = new Promocion("promooo", 15, DateTime.Today.AddDays(10), DateTime.Today.AddDays(15), 'M');
+            promocion = new Promocion("promooo", 15, DateTime.Today.AddDays(10), DateTime.Today.AddDays(15));
             _logica.ModificarPromocion(0, promocion, user);
             Promocion resultado = _logica.GetPromocion(0);
 
@@ -198,7 +179,6 @@ namespace BusinessLogicTest
             Assert.AreNotEqual(10, resultado.Descuento);
             Assert.AreNotEqual(DateTime.Today, resultado.Comienzo);
             Assert.AreNotEqual(DateTime.Today.AddDays(10), resultado.Fin);
-            Assert.AreNotEqual('S', resultado.TipoDeposito);
         }
 
         [TestMethod]
@@ -215,7 +195,7 @@ namespace BusinessLogicTest
         [ExpectedException(typeof(PromocionLogicExcepcion))]
         public void Verificar_Modificacion_Promocion_User_Null()
         {
-            Promocion promocion = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
+            Promocion promocion = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(10));
             Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", true);
             _logica.AddPromocion(promocion, user);
 
@@ -228,7 +208,7 @@ namespace BusinessLogicTest
         [ExpectedException(typeof(PromocionLogicExcepcion))]
         public void Verificar_Modificacion_Promocion_User_No_Admin()
         {
-            Promocion promocion = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(10), 'S');
+            Promocion promocion = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(10));
             Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", false);
             _logica.AddPromocion(promocion, user);
 

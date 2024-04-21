@@ -36,17 +36,6 @@
             <ValidationMessage For="@(() => model.Fin)" />
         </div>
 
-        <div class="form-group">
-            <label for="tipoDeposito">Tipo de depósito:</label>
-            <select class="form-control" id="tipoDeposito" @bind="model.TipoDeposito">
-                <option value="">Selecciona un tipo</option>
-                <option value="S">Pequeño</option>
-                <option value="M">Mediano</option>
-                <option value="L">Grande</option>
-            </select>
-            <ValidationMessage For="@(() => model.TipoDeposito)" />
-        </div>
-
         <br />
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block">Confirmar</button>
@@ -58,7 +47,7 @@
     [Parameter]
     public Promocion promo { get; set; }
     private PromocionModel model = new PromocionModel();
-    
+
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
     Usuario user;
     private async Task Aceptar() => await BlazoredModal.CloseAsync(ModalResult.Ok());
@@ -72,8 +61,7 @@
                 Etiqueta = promo.Etiqueta,
                 Descuento = promo.Descuento,
                 Comienzo = promo.Comienzo,
-                Fin = promo.Fin,
-                TipoDeposito = promo.TipoDeposito.ToString()
+                Fin = promo.Fin
             };
     }
 
@@ -85,7 +73,7 @@
             await CargarUsuario();
             await Task.Run(() =>
             {
-                Promocion promocion = new(model.Etiqueta, model.Descuento, model.Comienzo, model.Fin, Convert.ToChar(model.TipoDeposito));
+                Promocion promocion = new(model.Etiqueta, model.Descuento, model.Comienzo, model.Fin);
                 promociones.Logica.ModificarPromocion(promocion.Id, promocion, user);
             });
 
@@ -93,22 +81,40 @@
         }
     }
 
-    private async Task CargarUsuario()
+    private async Task<bool> CargarUsuario()
     {
         var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
         var authenticationState = await customAuthStateProvider.GetAuthenticationStateAsync();
         string userEmail = "";
         await Task.Run(() => userEmail = authenticationState.User.FindFirst(ClaimTypes.Email)?.Value);
-        await Task.Run(() =>
+
+        if (string.IsNullOrEmpty(userEmail))
         {
-            user = UsuarioServicios.Logica.GetUsuario(userEmail);
-            Console.WriteLine("Usuario: " + userEmail);
-        });
+            Console.WriteLine("ErrorAuth");
+            await BlazoredModal.CloseAsync(ModalResult.Cancel("ErrorAuth"));
+            return false;
+        }
+        else
+        {
+            await Task.Run(() =>
+            {
+                user = UsuarioServicios.Logica.GetUsuario(userEmail);
+                Console.WriteLine("Usuario: " + userEmail);
+
+            });
+            if (user == null)
+            {
+                await BlazoredModal.CloseAsync(ModalResult.Cancel("ErrorAuth"));
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public class PromocionModel
     {
-        
+
 
         [Required(ErrorMessage = "El nombre de usuario es obligatorio.")]
         [MaxLength(20, ErrorMessage = "El nombre de usuario no puede tener más de 20 caracteres.")]
@@ -125,10 +131,6 @@
         [Required(ErrorMessage = "La fecha de fin es obligatoria.")]
         [DateGreaterOrEqualThanStart(ErrorMessage = "La fecha de fin debe ser mayor o igual que la fecha de comienzo.")]
         public DateTime Fin { get; set; } = DateTime.Today;
-
-        [Required(ErrorMessage = "El tipo de deposito es obligatorio.")]
-        [RegularExpression("^(S|M|L)$", ErrorMessage = "El tipo de depósito debe ser 'S', 'M' o 'L'.")]
-        public String TipoDeposito { get; set; } = "";
     }
 
     public class DateGreaterOrEqualThanToday : ValidationAttribute
@@ -159,3 +161,5 @@
         }
     }
 }
+
+   

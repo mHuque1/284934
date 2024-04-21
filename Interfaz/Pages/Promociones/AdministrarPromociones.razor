@@ -22,7 +22,6 @@
                 <th>Descuento</th>
                 <th>Comienzo</th>
                 <th>Fin</th>
-                <th>Tipo Deposito</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -35,7 +34,6 @@
                     <td>@string.Concat(promo.Descuento, "%")</td>
                     <td>@promo.Comienzo</td>
                     <td>@promo.Fin</td>
-                    <td>@promo.TipoDeposito</td>
                     <td>
                         <button @onclick="() => Modificar(promo)" class="btn btn-warning">Editar</button>
                         <button @onclick="() => Borrar(promo)" class="btn btn-danger">Eliminar</button>
@@ -52,6 +50,19 @@
     [CascadingParameter] public IModalService Modal { get; set; } = default!;
     private IList<Promocion> promociones = new List<Promocion>();
     private Usuario user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (await CargarUsuario())
+        {
+            await CargarPromociones();
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/IniciarSesion", true);
+        }
+    }
+
     private async Task CargarPromociones()
     {
         promociones = await Task.Run(() => promocionesServicio.Logica.GetPromociones());
@@ -68,6 +79,7 @@
         if (string.IsNullOrEmpty(userEmail))
         {
             Console.WriteLine("ErrorAuth");
+            NavigationManager.NavigateTo("/IniciarSesion", true);
             return false;
         }
         else
@@ -75,23 +87,14 @@
             await Task.Run(() =>
             {
                 user = UsuarioServicios.Logica.GetUsuario(userEmail);
-                Console.WriteLine("Usuario: " + userEmail);
             });
+            if (user == null)
+            {
+                NavigationManager.NavigateTo("/IniciarSesion", true);
+                return false;
+            }
             return true;
         }
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (await CargarUsuario())
-        {
-            await Task.Run(() => promociones = promocionesServicio.Logica.GetPromociones());
-        }
-        else
-        {
-            NavigationManager.NavigateTo("/IniciarSesion", true);
-        }
-        
     }
 
     private async Task Agregar()

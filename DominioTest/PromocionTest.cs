@@ -16,8 +16,7 @@ namespace DominioTest
                 etiqueta: "Promocion1",
                 descuento: 10,
                 comienzo: DateTime.Today,
-                fin: DateTime.Today.AddDays(3),
-                tipoDeposito: 'S'
+                fin: DateTime.Today.AddDays(3)
             );
         }
 
@@ -120,35 +119,5 @@ namespace DominioTest
             // Assert
             Assert.IsFalse(resultado);
         }
-
-        public void Deberia_Obtener_Tipo_Deposito()
-        {
-            // Arrange
-            char tamanoEsperado = 'S';
-
-            // Act
-            char tamanoObtenido = promocion.TipoDeposito;
-
-            // Assert
-            Assert.AreEqual(tamanoEsperado, tamanoObtenido);
-        }
-
-        [TestMethod]
-        public void Deberia_Aceptar_Tamanos_Validos()
-        {
-            // Arrange
-            char[] tamanosValidos = { 'S', 'M', 'L' };
-
-            // Act & Assert
-            foreach (char tamano in tamanosValidos)
-            {
-                // No hay necesidad de un Assert aquí, se verifica al final del método
-                promocion.TipoDeposito = tamano;
-            }
-
-            Assert.IsTrue(true); // Si no se lanzó ninguna excepción hasta aquí, la prueba pasa
-        }
-
-
     }
 }

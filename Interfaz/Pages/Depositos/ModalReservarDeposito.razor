@@ -1,6 +1,6 @@
 ﻿@using BlazorServerAuthenticationAndAuthorization.Authentication
-@using Data;
-@using Dominio;
+@using Data
+@using Dominio
 @using System.Security.Claims
 @using System.ComponentModel.DataAnnotations
 
@@ -14,26 +14,28 @@
     <div class="container d-flex justify-content-center align-items-center">
         <div class="text-center">
             <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        <label for="fechaInicio">Fecha de inicio de la Reserva:</label>
-                        <input type="date" class="form-control" id="fechaInicio" @bind="model.Comienzo" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
-                        <ValidationMessage For="@(() => model.Comienzo)" />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="fechaFin">Fecha de Fin de la Reserva:</label>
-                        <input type="date" class="form-control" id="fechaFin" @bind="model.Fin" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
-                        <ValidationMessage For="@(() => model.Fin)" />
-                    </div>
+                <div class="form-group">
+                    <label for="fechaInicio">Fecha de inicio de la Reserva:</label>
+                    <input type="date" class="form-control" id="fechaInicio" @bind="model.Comienzo" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                    <ValidationMessage For="@(() => model.Comienzo)" />
                 </div>
-                <div class="card col">
-                    <div class="container">
-                        <br />
-                        <button @onclick="CalcularCosto" class="btn btn-primary">Calcular Costo</button>
-                        <br />
-                        <h3>Costo: @costo.ToString("C")</h3>
-                    </div>
+
+                <div class="form-group">
+                    <label for="fechaFin">Fecha de Fin de la Reserva:</label>
+                    <input type="date" class="form-control" id="fechaFin" @bind="model.Fin" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                    <ValidationMessage For="@(() => model.Fin)" />
+                </div>
+
+                <div>
+                    <hr />
+                    <br />
+                    <button type="button" @onclick="CalcularCosto" class="btn btn-primary">Calcular Costo</button>
+                    <br />
+                    @if (MostrarErrorFecha)
+                    {
+                        <p class="text-danger">La fecha de inicio no puede ser mayor que la fecha de fin.</p>
+                    }
+                    <h3>Costo: @costo.ToString("C")</h3>
                 </div>
             </div>
         </div>
@@ -50,7 +52,8 @@
     private Usuario user;
     private double costo = 0;
     private ReservaModelo model = new ReservaModelo();
-    private static bool btnClick = false;
+    private bool click = false;
+    private bool MostrarErrorFecha = false;
 
     private async Task Cancelar()
     {
@@ -61,8 +64,7 @@
     {
         var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
         var authenticationState = await customAuthStateProvider.GetAuthenticationStateAsync();
-        string userEmail = "";
-        await Task.Run(() => userEmail = authenticationState.User.FindFirst(ClaimTypes.Email)?.Value);
+        string userEmail = authenticationState.User.FindFirst(ClaimTypes.Email)?.Value;
 
         if (string.IsNullOrEmpty(userEmail))
         {
@@ -72,21 +74,24 @@
         }
         else
         {
-            await Task.Run(() =>
+            await Task.Run(() => user = UsuarioServicios.Logica.GetUsuario(userEmail));
+            if (user == null)
             {
-                user = UsuarioServicios.Logica.GetUsuario(userEmail);
-                Console.WriteLine("Usuario: " + userEmail);
-            });
-            return true;
+                Console.WriteLine("null" + userEmail);
+                await BlazoredModal.CloseAsync(ModalResult.Cancel("ErrorAuth"));
+                return false;
+            }
         }
+
+        return true;
     }
 
     private async Task Confirmar()
     {
-        if (!btnClick)
+        if (!click)
         {
-            btnClick = true;
-            if(await CargarUsuario())
+            click = true;
+            if (await CargarUsuario())
             {
                 Reserva res = new(depo, user, model.Comienzo, model.Fin);
                 reservasServicio.Logica.AddReserva(res);
@@ -97,9 +102,12 @@
 
     private async Task CalcularCosto()
     {
-        await CargarUsuario();
-        Reserva res = new(depo, user, model.Comienzo, model.Fin);
-        costo = res.Costo;
+        if (await CargarUsuario())
+        {
+            Reserva res = new(depo, user, model.Comienzo, model.Fin);
+            MostrarErrorFecha = model.Comienzo > model.Fin;
+            costo = MostrarErrorFecha ? 0 : res.Costo;
+        }
     }
 
     public class ReservaModelo

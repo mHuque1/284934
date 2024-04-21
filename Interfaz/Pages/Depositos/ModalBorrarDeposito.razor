@@ -1,8 +1,8 @@
 ﻿@using BlazorServerAuthenticationAndAuthorization.Authentication
-@using Data;
-@using Dominio;
+@using Data
+@using Dominio
 @using System.Security.Claims
-@inject AuthenticationStateProvider authStateProvider;
+@inject AuthenticationStateProvider authStateProvider
 @inject Promociones promociones
 @inject Depositos depositos
 @inject Usuarios UsuarioServicios
@@ -12,65 +12,53 @@
         <h3>¿Estás seguro de que deseas borrar?</h3>
         <p>@depo.ID</p>
         <p>Esta acción no se puede deshacer.</p>
-        <button class="btn btn-success" @onclick="Confirmar">Confirmar</button>
+        <button class="btn btn-success" @onclick="Confirmar" disabled="@btnClick">Confirmar</button>
         <button class="btn btn-danger" @onclick="Cancelar">Cancelar</button>
     </div>
 </div>
 
 @code {
-    private static bool btnClick = false;
+    private bool btnClick;
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
     [Parameter] public Deposito depo { get; set; }
-    private static Usuario user;
+    private Usuario user;
+
+
     private async Task Cancelar()
     {
         await BlazoredModal.CancelAsync();
+    }
+
+    private async void Confirmar()
+    {
+        if (btnClick) return;
+        btnClick = true;
+
+        if (!await CargarUsuario()) return;
+
+        depositos.Logica.DeleteDeposito(depo, user);
+        await BlazoredModal.CloseAsync(ModalResult.Ok());
     }
 
     private async Task<bool> CargarUsuario()
     {
         var customAuthStateProvider = (CustomAuthenticationStateProvider)authStateProvider;
         var authenticationState = await customAuthStateProvider.GetAuthenticationStateAsync();
-        string userEmail = "";
-        await Task.Run(() => userEmail = authenticationState.User.FindFirst(ClaimTypes.Email)?.Value);
+        var userEmail = authenticationState.User.FindFirst(ClaimTypes.Email)?.Value;
 
         if (string.IsNullOrEmpty(userEmail))
         {
-            Console.WriteLine("ErrorAuth");
             await BlazoredModal.CloseAsync(ModalResult.Cancel("ErrorAuth"));
             return false;
         }
-        else
+
+        user = UsuarioServicios.Logica.GetUsuario(userEmail);
+        if (user == null)
         {
-            await Task.Run(() =>
-            {
-                user = UsuarioServicios.Logica.GetUsuario(userEmail);
-                Console.WriteLine("Usuario: " + userEmail);
-            });
-            return true;
+            await BlazoredModal.CloseAsync(ModalResult.Cancel("ErrorAuth"));
+            return false;
         }
-    }
 
-    private async Task Confirmar()
-    {
-        if(!btnClick)
-        {
-            btnClick = true;
-
-            if(await CargarUsuario())
-            {
-                await Task.Run(() =>
-       {
-       depositos.Logica.DeleteDeposito(depo, user);
-       });
-
-                await BlazoredModal.CloseAsync(ModalResult.Ok());
-            }
-            }
-
-        
-
-
-       
+        return true;
     }
 }

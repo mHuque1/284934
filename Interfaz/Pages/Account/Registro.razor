@@ -52,13 +52,11 @@
     private async Task HandleValidSubmit()
     {
         await Task.Run(() =>
-        {
-            bool esAdmin = !users.Logica.ExisteAdmin();
-            Usuario NewUser = new(model.Username, model.Email, model.Password, esAdmin);
-            users.Logica.AddUsuario(NewUser);
-        });
-       
-
+         {
+             bool esAdmin = !users.Logica.ExisteAdmin();
+             Usuario NewUser = new(model.Username, model.Email, model.Password, esAdmin);
+             users.Logica.AddUsuario(NewUser);
+         });
         NavigationManager.NavigateTo("/IniciarSesion");
     }
 
@@ -69,7 +67,7 @@
         public string Username { get; set; }
 
         [Required(ErrorMessage = "El correo electrónico es obligatorio.")]
-        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", 
+        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
         ErrorMessage = "El correo electrónico no tiene un formato válido.")]
         public string Email { get; set; }
 

@@ -7,7 +7,7 @@ namespace RepositorioTest
     public class PromocionRepositoryTest
     {
         private IRepository<Promocion> _promocion = new PromocionRepository();
-        private readonly Promocion promo = new("asd", 10, DateTime.Today, DateTime.Today.AddDays(5), 'S');
+        private readonly Promocion promo = new("asd", 10, DateTime.Today, DateTime.Today.AddDays(5));
 
         [TestInitialize]
         public void Setup()
@@ -47,7 +47,7 @@ namespace RepositorioTest
             _promocion.Add(promo);
 
             // Act
-            Promocion promocionModificada = new("ddd", 15, DateTime.Today.AddDays(5), DateTime.Today.AddDays(10), 'M') { Id = promo.Id };
+            Promocion promocionModificada = new("ddd", 15, DateTime.Today.AddDays(5), DateTime.Today.AddDays(10)) { Id = promo.Id };
             _promocion.Update(promocionModificada);
             Promocion promocionActualizada = _promocion.Find(d => d.Id == promo.Id);
 
