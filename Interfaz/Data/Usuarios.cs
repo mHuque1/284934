@@ -7,25 +7,28 @@ namespace Interfaz.Data
     public class Usuarios
     {
         private static readonly UsuarioRepository Repositorio = new();
-        private UsuarioLogic Logica = new(Repositorio);
+        private readonly UsuarioLogic Logica = new(Repositorio);
         private Usuario? currentUser;
-         
+
         public Usuario GetCurrentUser { get => currentUser ?? throw new NullReferenceException(); private set => currentUser = value; }
-        public bool SignIn(string email,string pass)
+        public bool SignIn(string email, string pass)
         {
             bool result = false;
 
-            if (Logica.ValidarInicioSesion(email,pass)) {
-            currentUser = Logica.GetUsuario(email);
+            if (Logica.ValidarInicioSesion(email, pass))
+            {
+                currentUser = Logica.GetUsuario(email);
                 result = true;
             }
             return result;
         }
 
-        public bool SignUp(string nombre,string email,string pass)
+        public bool ExisteAdmin {get => Logica.ExisteAdmin();}
+
+        public bool SignUp(string nombre, string email, string pass)
         {
             bool result = false;
-            if(Logica.GetUsuario(email) == null)
+            if (Logica.GetUsuario(email) == null)
             {
                 bool esAdmin = !Logica.ExisteAdmin();
                 Usuario user = new(nombre, email, pass, esAdmin);
@@ -33,11 +36,11 @@ namespace Interfaz.Data
                 result = true;
             }
             return result;
-            
+
         }
 
         public void SignOut() => currentUser = null;
 
-        public bool IsSignedIn { get => currentUser != null;}
+        public bool IsSignedIn { get => currentUser != null; }
     }
 }

@@ -1,5 +1,4 @@
 using Dominio;
-using Excepcion;
 
 namespace DominioTest
 {

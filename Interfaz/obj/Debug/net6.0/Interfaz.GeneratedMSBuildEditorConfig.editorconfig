@@ -38,6 +38,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVwb3NpdG9zXE1vZGFsQm9ycmFyRGVwb3NpdG8ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/mathi/Desktop/Facultad/284934/Interfaz/Pages/Depositos/ModalMostrarPromocionesDeposito.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVwb3NpdG9zXE1vZGFsTW9zdHJhclByb21vY2lvbmVzRGVwb3NpdG8ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/mathi/Desktop/Facultad/284934/Interfaz/Pages/Depositos/ModalReservarDeposito.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVwb3NpdG9zXE1vZGFsUmVzZXJ2YXJEZXBvc2l0by5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 

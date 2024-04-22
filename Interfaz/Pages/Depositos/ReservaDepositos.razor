@@ -20,7 +20,7 @@
             <button @onclick="Agregar" class="btn btn-success btn-lg">Agregar</button>
         }
 
-
+      
         <table class="table">
             <thead>
                 <tr>
@@ -28,6 +28,7 @@
                     <th>Area</th>
                     <th>Tamaño</th>
                     <th>Tiene Climatizacion</th>
+                    <th>Promociones</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -39,7 +40,7 @@
                         <td>@depo.Area</td>
                         <td>@TamanoTexto(depo.Tamano)</td>
                         <td>@(depo.TieneClimatizacion ? "Sí" : "No")</td>
-
+                        <td><button @onclick="() => MostrarPromociones(depo)" class="btn btn-info">Ver Promociones</button></td>
 
                         <td>
                             <button @onclick="() => Reservar(depo)" class="btn btn-primary">Reservar</button>
@@ -89,6 +90,15 @@
         var messageForm = Modal.Show<ModalAgregarDeposito>("Agregar Deposito");
         var result = await messageForm.Result;
         CargarDepositos();
+    }
+
+    private async Task MostrarPromociones(Deposito depo)
+    {
+            var parameters = new ModalParameters();
+            parameters.Add(nameof(ModalMostrarPromocionesDeposito.promociones), depo.Promociones);
+        var messageForm = Modal.Show<ModalMostrarPromocionesDeposito>("Mostra Promociones", parameters);
+            var result = await messageForm.Result;
+            CargarDepositos();
     }
 
     private async Task Reservar(Deposito depo)

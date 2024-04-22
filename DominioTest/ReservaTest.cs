@@ -138,226 +138,41 @@ namespace DominioTest
         }
 
         [TestMethod]
-        public void Calculo_Precio_Deposito_1()
+        [DataRow('S', false, 6, 50.0)] // Size = S, Climtatization = false, Days <7, price = 50
+        [DataRow('M', false, 6, 75.0)] // Size = M, Climtatization = false, Days <7, price = 75
+        [DataRow('L', false, 6, 100.0)] // Size = L, Climtatization = false, Days <7, price = 100
+        [DataRow('S', true, 6, 70.0)] // Size = S, Climtatization = true, Days <7, price = 70
+        [DataRow('M', true, 6, 95.0)] // Size = M, Climtatization = true, Days <7, price = 95
+        [DataRow('L', true, 6, 120.0)] // Size = L, Climtatization = true, Days 7, price = 120
+        [DataRow('S', false, 7, 47.5)] // Size = S, Climtatization = false, Days 7, price = 47.5
+        [DataRow('M', false, 7, 71.25)] // Size = M, Climtatization = false, Days 7, price = 71.25
+        [DataRow('L', false, 7, 95.0)] // Size = L, Climtatization = false, Days 7, price = 95.0
+        [DataRow('S', true, 7, 66.5)] // Size = S, Climtatization = true, Days 7, price = 66.5
+        [DataRow('M', true, 7, 90.25)] // Size = M, Climtatization = true, Days 7, price = 90.25
+        [DataRow('L', true, 7, 114.0)] // Size = L, Climtatization = true, Days 7, price = 114.0
+        [DataRow('S', false, 14, 47.5)] // Size = S, Climtatization = false, Days 14, price = 47.5
+        [DataRow('M', false, 14, 71.25)] // Size = M, Climtatization = false, Days 14, price = 71.25
+        [DataRow('L', false, 14, 95.0)] // Size = L, Climtatization = false, Days 14, price = 95.0
+        [DataRow('S', true, 14, 66.5)] // Size = S, Climtatization = true, Days 14, price = 66.5
+        [DataRow('M', true, 14, 90.25)] // Size = M, Climtatization = true, Days 14, price = 90.25
+        [DataRow('L', true, 14, 114.0)] // Size = L, Climtatization = true, Days 14, price = 114.0
+        [DataRow('S', false, 15, 45.0)] // Size = S, Climtatization = false, Days >14, price = 45
+        [DataRow('M', false, 15, 67.5)] // Size = M, Climtatization = false, Days >14, price = 67.5
+        [DataRow('L', false, 15, 90.0)] // Size = L, Climtatization = false, Days >14, price = 90.0
+        [DataRow('S', true, 15, 63.0)] // Size = S, Climtatization = false, Days >14, price = 63.0
+        [DataRow('M', true, 15, 85.5)] // Size = M, Climtatization = false, Days >14, price = 85.5
+        [DataRow('L', true, 15, 108.0)] // Size = L, Climtatization = false, Days >14, price = 108.0
+        public void Calculo_Precio_Sin_Descuento(char Tamano, bool climatization, int days, double expectedPrice)
         {
             // Arrange
-            deposito = new Deposito('A', 'S', false);
-            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(1));
-            double costoEsperado = 50.0;
+            deposito = new Deposito('A', Tamano, climatization);
+            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(days - 1));
+
+            //Act
+            double actual = reserva.Costo;
 
             // Act & Assert
-            Assert.AreEqual(reserva.Costo, costoEsperado);
-
-        }
-
-        [TestMethod]
-        public void Calculo_Precio_Deposito_2()
-        {
-            // Arrange
-            deposito = new Deposito('A', 'M', false);
-            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(1));
-            double costoEsperado = 75.0;
-
-            // Act & Assert
-            Assert.AreEqual(reserva.Costo, costoEsperado);
-
-        }
-
-        [TestMethod]
-        public void Calculo_Precio_Deposito_3()
-        {
-            // Arrange
-            deposito = new Deposito('A', 'L', false);
-            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(1));
-            double costoEsperado = 100.0;
-
-            // Act & Assert
-            Assert.AreEqual(costoEsperado, reserva.Costo);
-
-        }
-
-        [TestMethod]
-        public void Calculo_Precio_Deposito_Climatizado_1()
-        {
-            // Arrange
-            deposito = new Deposito('A', 'S', true);
-            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(5));
-            double costoEsperado = 70.0;
-
-            // Act & Assert
-            Assert.AreEqual(costoEsperado, reserva.Costo);
-
-        }
-
-        [TestMethod]
-        public void Calculo_Precio_Deposito_Climatizado_2()
-        {
-            // Arrange
-            deposito = new Deposito('A', 'M', true);
-            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(5));
-            double costoEsperado = 95.0;
-
-            // Act & Assert
-            Assert.AreEqual(costoEsperado, reserva.Costo);
-
-        }
-
-        [TestMethod]
-        public void Calculo_Precio_Deposito_Climatizado_3()
-        {
-            // Arrange
-            deposito = new Deposito('A', 'L', true);
-            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(5));
-            double costoEsperado = 120.0;
-
-            // Act & Assert
-            Assert.AreEqual(costoEsperado, reserva.Costo);
-        }
-
-
-        [TestMethod]
-        public void Calculo_Precio_Deposito_Sin_Climatizacion_Una_Semana_1()
-        {
-            // Arrange
-            deposito = new Deposito('A', 'S', false);
-            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(6));
-            double costoEsperado = 47.5;
-
-            // Act & Assert
-            Assert.AreEqual(costoEsperado, reserva.Costo);
-        }
-
-        [TestMethod]
-        public void Calculo_Precio_Deposito_Sin_Climatizacion_Una_Semana_2()
-        {
-            // Arrange
-            deposito = new Deposito('A', 'M', false);
-            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(6));
-            double costoEsperado = 71.25;
-
-            // Act & Assert
-            Assert.AreEqual(costoEsperado, reserva.Costo);
-        }
-
-        [TestMethod]
-        public void Calculo_Precio_Deposito_Sin_Climatizacion_Una_Semana_3()
-        {
-            // Arrange
-            deposito = new Deposito('A', 'L', false);
-            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(6));
-            double costoEsperado = 95.0;
-
-            // Act & Assert
-            Assert.AreEqual(costoEsperado, reserva.Costo);
-        }
-
-        [TestMethod]
-        public void Calculo_Precio_Deposito_Con_Climatizacion_Una_Semana_1()
-        {
-            // Arrange
-            deposito = new Deposito('A', 'S', true);
-            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(6));
-            double costoEsperado = 66.5;
-
-            // Act & Assert
-            Assert.AreEqual(costoEsperado, reserva.Costo);
-        }
-
-        [TestMethod]
-        public void Calculo_Precio_Deposito_Con_Climatizacion_Una_Semana_2()
-        {
-            // Arrange
-            deposito = new Deposito('A', 'M', true);
-            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(6));
-            double costoEsperado = 90.25;
-
-            // Act & Assert
-            Assert.AreEqual(costoEsperado, reserva.Costo);
-        }
-
-        [TestMethod]
-        public void Calculo_Precio_Deposito_Con_Climatizacion_Una_Semana_3()
-        {
-            // Arrange
-            deposito = new Deposito('A', 'L', true);
-            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(6));
-            double costoEsperado = 114.0;
-
-            // Act & Assert
-            Assert.AreEqual(costoEsperado, reserva.Costo);
-        }
-
-        [TestMethod]
-        public void Calculo_Precio_Deposito_Sin_Climatizacion_Tres_Semanas_1()
-        {
-            // Arrange
-            deposito = new Deposito('A', 'S', false);
-            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(20));
-            double costoEsperado = 45;
-
-            // Act & Assert
-            Assert.AreEqual(costoEsperado, reserva.Costo);
-        }
-
-        [TestMethod]
-        public void Calculo_Precio_Deposito_Sin_Climatizacion_Tres_Semanas_2()
-        {
-            // Arrange
-            deposito = new Deposito('A', 'M', false);
-            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(20));
-            double costoEsperado = 67.5;
-
-            // Act & Assert
-            Assert.AreEqual(costoEsperado, reserva.Costo);
-        }
-
-        [TestMethod]
-        public void Calculo_Precio_Deposito_Sin_Climatizacion_Tres_Semanas_3()
-        {
-            // Arrange
-            deposito = new Deposito('A', 'L', false);
-            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(20));
-            double costoEsperado = 90.0;
-
-            // Act & Assert
-            Assert.AreEqual(costoEsperado, reserva.Costo);
-        }
-
-        [TestMethod]
-        public void Calculo_Precio_Deposito_Con_Climatizacion_Tres_Semanas_1()
-        {
-            // Arrange
-            deposito = new Deposito('A', 'S', true);
-            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(20));
-            double costoEsperado = 63.0;
-
-            // Act & Assert
-            Assert.AreEqual(costoEsperado, reserva.Costo);
-        }
-
-
-        [TestMethod]
-        public void Calculo_Precio_Deposito_Con_Climatizacion_Tres_Semanas_2()
-        {
-            // Arrange
-            deposito = new Deposito('A', 'M', true);
-            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(20));
-            double costoEsperado = 85.5;
-
-            // Act & Assert
-            Assert.AreEqual(costoEsperado, reserva.Costo);
-        }
-
-        [TestMethod]
-        public void Calculo_Precio_Deposito_Con_Climatizacion_Tres_Semanas_3()
-        {
-            // Arrange
-            deposito = new Deposito('A', 'L', true);
-            reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(20));
-            double costoEsperado = 108.0;
-
-            // Act & Assert
-            Assert.AreEqual(costoEsperado, reserva.Costo);
+            Assert.AreEqual(expectedPrice, actual);
         }
 
         [TestMethod]

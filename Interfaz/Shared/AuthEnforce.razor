@@ -7,10 +7,23 @@
 
     public void CheckUserAuthentication()
     {
+        if(!UsuarioServicios.ExisteAdmin)
+        {
+            NavigationManager.NavigateTo("/Registro");
+        }
+
         var uri = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
         if (!UsuarioServicios.IsSignedIn && uri != "IniciarSesion" && uri != "Registro")
         {
-            NavigationManager.NavigateTo("/IniciarSesion");
+            if (!UsuarioServicios.ExisteAdmin)
+            {
+                NavigationManager.NavigateTo("/Registro");
+            }
+            else
+            {
+                NavigationManager.NavigateTo("/IniciarSesion");
+            }
+            
         }
         if (UsuarioServicios.IsSignedIn && (uri == "IniciarSesion" || uri == "Registro"))
         {

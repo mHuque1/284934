@@ -1,0 +1,40 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using Dominio
+@using Data
+@inject Depositos DepositoServicios
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Etiqueta</th>
+                <th>Descuento</th>
+                <th>Comienzo</th>
+                <th>Fin</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Promocion promocion in promociones)
+            {
+                @if (promocion.EstaVigente())
+                {
+                    <tr>
+                        <td>@promocion.Etiqueta</td>
+                        <td>@promocion.Descuento%</td>
+                        <td>@promocion.Comienzo.ToString("d")</td>
+                        <td>@promocion.Fin.ToString("d")</td>
+                    </tr>
+                }
+                
+            }
+
+        </tbody>
+    </table>
+</div>
+
+@code {
+    [Parameter] public IList<Promocion> promociones { get; set; }
+    [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
+    
+  
+}

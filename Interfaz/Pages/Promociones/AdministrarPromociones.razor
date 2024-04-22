@@ -33,9 +33,9 @@
                         <tr>
                             <td>@promo.Id</td>
                             <td>@promo.Etiqueta</td>
-                            <td>@string.Concat(promo.Descuento, "%")</td>
-                            <td>@promo.Comienzo</td>
-                            <td>@promo.Fin</td>
+                            <td>@promo.Descuento%</td>
+                            <td>@promo.Comienzo.ToString("d")</td>
+                            <td>@promo.Fin.ToString("d")</td>
                             <td>
                                 <button @onclick="() => Modificar(promo)" class="btn btn-warning">Editar</button>
                                 <button @onclick="() => Borrar(promo)" class="btn btn-danger">Eliminar</button>
@@ -76,10 +76,6 @@
     {
         var messageForm = Modal.Show<ModalAgregarPromocion>("Agregar Promocion");
         var result = await messageForm.Result;
-        if (result.Data != null && result.Data.ToString() == "ErrorAuth")
-        {
-            NavigationManager.NavigateTo("/IniciarSesion", true);
-        }
         CargarPromociones();
     }
 
@@ -88,10 +84,6 @@
         var parameters = new ModalParameters().Add(nameof(ModalBorrar.promo), promo);
         var messageForm = Modal.Show<ModalBorrar>("Borrar Promocion", parameters);
         var result = await messageForm.Result;
-        if (result.Data != null && result.Data.ToString() == "ErrorAuth")
-        {
-            NavigationManager.NavigateTo("/IniciarSesion", true);
-        }
         CargarPromociones();
     }
 
@@ -100,10 +92,6 @@
         var parameters = new ModalParameters().Add(nameof(ModalEditarPromocion.promo), promo);
         var messageForm = Modal.Show<ModalEditarPromocion>("Editar Promocion", parameters);
         var result = await messageForm.Result;
-        if (result.Data != null && result.Data.ToString() == "ErrorAuth")
-        {
-            NavigationManager.NavigateTo("/IniciarSesion", true);
-        }
         CargarPromociones();
     }
 }

@@ -1,5 +1,4 @@
 using Excepcion;
-using System.Reflection;
 
 namespace Dominio;
 
@@ -123,12 +122,12 @@ public class Reserva
 
         // Aplicar promociones vigentes
         double descuentoPromociones = 0;
-        for (int i = 0;i<Deposito.Promociones.Count && descuentoPromociones<1.0;i++)
+        for (int i = 0; i < Deposito.Promociones.Count && descuentoPromociones < 1.0; i++)
         {
             Promocion promo = Deposito.Promociones[i];
-            if ( promo.EstaVigente())
+            if (promo.EstaVigente())
             {
-                descuentoPromociones += (0.01 * promo.Descuento);
+                descuentoPromociones += 0.01 * promo.Descuento;
                 if (descuentoPromociones > 1.0)
                 {
                     descuentoPromociones = 1.0;

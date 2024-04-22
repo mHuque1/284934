@@ -6,9 +6,9 @@ namespace Interfaz.Data
     public class Promociones
     {
         private static readonly PromocionRepository Repositorio = new();
-        private PromocionLogic Logica = new(Repositorio);
+        private readonly PromocionLogic Logica = new(Repositorio);
 
-        public void ModificarPromocion(int id, Promocion promo,Usuario user) => Logica.ModificarPromocion(id,promo,user);
+        public void ModificarPromocion(int id, Promocion promo, Usuario user) => Logica.ModificarPromocion(id, promo, user);
 
         public void DeletePromocion(int id, Promocion promo, Usuario user) => Logica.DeletePromocion(id, promo, user);
 
