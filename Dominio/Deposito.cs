@@ -83,11 +83,6 @@ namespace Dominio
 
         }
 
-        // Método para Borrar una promoción del depósito
-        public void EliminarPromocion(Promocion promo)
-        {
-            _promociones.Remove(promo);
-        }
 
 
     }

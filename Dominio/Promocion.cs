@@ -55,7 +55,7 @@ namespace Dominio
         private static string ValidarEtiqueta(string texto)
         {
             if (string.IsNullOrWhiteSpace(texto))
-                throw new DominioPromocionExcepcion("La etiqueta no ser vacia.");
+                throw new DominioPromocionExcepcion("La etiqueta no puede ser vacia.");
 
             string etiquetaTrimmed = texto.Trim();
             if (etiquetaTrimmed.Length > 20)

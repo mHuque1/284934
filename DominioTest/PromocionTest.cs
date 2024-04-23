@@ -30,6 +30,15 @@ namespace DominioTest
 
         [TestMethod]
         [ExpectedException(typeof(DominioPromocionExcepcion))]
+        public void Etiqueta_No_Deberia_Ser_Vacia()
+        {
+            // Arrange
+            // Act & Assert
+            promocion.Etiqueta = null;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DominioPromocionExcepcion))]
         public void Etiqueta_No_Deberia_Tener_Mas_de_Veinte_Caracteres()
         {
             // Arrange

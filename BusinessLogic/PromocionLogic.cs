@@ -22,7 +22,7 @@ namespace BusinessLogic
 
             if (user == null)
             {
-                throw new PromocionLogicExcepcion("Una user en AddPromocion no puede ser null");
+                throw new PromocionLogicExcepcion("Un user en AddPromocion no puede ser null");
             }
 
             if (!user.EsAdmin)

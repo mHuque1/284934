@@ -70,6 +70,13 @@ namespace DominioTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(DominioUsuarioExcepcion))]
+        public void No_Deberia_Obtener_Contrasena()
+        {
+            usuario = new("Juan Gomez", "JuanGomez@gmail.com", null, true);
+        }
+
+        [TestMethod]
         public void Deberia_Obtener_Contrasena()
         {
             Assert.AreEqual("JuanGomez123!", usuario.Contrasena);
@@ -80,6 +87,13 @@ namespace DominioTest
         public void Contrasena_Deberia_Tener_Minimo_Ocho_Caracteres()
         {
             usuario.Contrasena = "Pass1!";
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DominioUsuarioExcepcion))]
+        public void Contrasena_Deberia_Tener_Un_Digito()
+        {
+            usuario.Contrasena = "Contrasenaaaaa!";
         }
 
         [TestMethod]
@@ -102,22 +116,5 @@ namespace DominioTest
         {
             usuario.Contrasena = "CONTRASENA1!";
         }
-
-        [TestMethod]
-        public void Deberia_Obtener_Las_Reservas_Agregadas()
-        {
-            //Arrange
-            Deposito deposito = new('A', 'S', false);
-            Usuario usuario = new("Pedro", "pedro@gmail.com", "Pedro12345!", false);
-            Reserva reserva = new(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(10));
-
-            //Act
-            usuario.AgregarReserva(reserva);
-
-            //Assert
-            Assert.AreEqual(1, usuario.Reservas.Count);
-            Assert.AreEqual(reserva, usuario.Reservas[0]);
-        }
-
     }
 }

@@ -114,8 +114,14 @@ namespace DominioTest
             // Arrange
             string msg = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus massa diam, pharetra et tempor id, elementum eu est. Maecenas eget ex a lorem auctor aliquam. Nunc fringilla suscipit quam ut tristique. Proin vel orci a augue bibendum pulvinar. Proin eget facilisis lorem, vitae vulputate purus biam.";
             reserva.Rechazar(usuario, msg);
+        }
 
-            // Act
+        [TestMethod]
+        [ExpectedException(typeof(DominioReservaExcepcion))]
+        public void Excepcion_Mensaje_Vacio()
+        {
+            // Arrange
+            string msg = "";
             reserva.Rechazar(usuario, msg);
         }
 
@@ -179,11 +185,13 @@ namespace DominioTest
         public void Calculo_Precio_Deposito_Con_Promocion()
         {
             // Arrange
-            Promocion promo = new("promo", 20, DateTime.Today, DateTime.Today.AddDays(5));
+            Promocion promo = new("promo", 75, DateTime.Today, DateTime.Today.AddDays(5));
+            Promocion promo1 = new("promo", 75, DateTime.Today, DateTime.Today.AddDays(5));
             deposito = new Deposito('A', 'S', false);
             deposito.AgregarPromocion(promo);
+            deposito.AgregarPromocion(promo1);
             reserva = new Reserva(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(5));
-            double costoEsperado = 40.0;
+            double costoEsperado = 0;
 
             // Act & Assert
             Assert.AreEqual(costoEsperado, reserva.Costo);

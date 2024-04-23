@@ -74,7 +74,6 @@ namespace BusinessLogicTest
 
 
         [TestMethod]
-        [ExpectedException(typeof(UsuarioLogicExcepcion))]
         public void No_Deberia_Agregar_Mas_de_Un_Admin()
         {
             // Arrange
@@ -83,11 +82,13 @@ namespace BusinessLogicTest
 
             // Act
             _logica.AddUsuario(admin1);
-            _logica.AddUsuario(admin2);
+            UsuarioLogicExcepcion ex = Assert.ThrowsException<UsuarioLogicExcepcion>(() => _logica.AddUsuario(admin2));
+
+            //Assert
+            Assert.AreEqual("No se permite agregar un administrador cuando ya existe uno", ex.Message);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(UsuarioLogicExcepcion))]
         public void No_Deberia_Permitir_Agregar_Usuario_Con_Igual_Email()
         {
             // Arrange
@@ -95,20 +96,23 @@ namespace BusinessLogicTest
 
             // Act
             _logica.AddUsuario(user1);
-            _logica.AddUsuario(user1);
+            UsuarioLogicExcepcion ex = Assert.ThrowsException<UsuarioLogicExcepcion>(() => _logica.AddUsuario(user1));
+
+            //Assert
+            Assert.AreEqual("Ya existe un usuario con el email ingresado", ex.Message);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(UsuarioLogicExcepcion))]
         public void No_Deberia_Permitir_Agregar_Usuario_Null()
         {
             // Arrange
             Usuario? user1 = null;
 
-            //Act
-#pragma warning disable CS8604 // Possible null reference argument.
-            _logica.AddUsuario(user1);
-#pragma warning restore CS8604 // Possible null reference argument.
+            // Act
+            UsuarioLogicExcepcion ex = Assert.ThrowsException<UsuarioLogicExcepcion>(() => _logica.AddUsuario(user1));
+
+            //Assert
+            Assert.AreEqual("El usuario no puede ser null", ex.Message);
         }
 
         [TestMethod]
@@ -126,7 +130,6 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(UsuarioLogicExcepcion))]
         public void Validar_Email_Null()
         {
             // Arrange
@@ -134,14 +137,14 @@ namespace BusinessLogicTest
             _logica.AddUsuario(user1);
 
             // Act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            _logica.ValidarInicioSesion(null, "holaPedroGomez125!");
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            UsuarioLogicExcepcion ex = Assert.ThrowsException<UsuarioLogicExcepcion>(() => _logica.ValidarInicioSesion(null, "holaPedroGomez125!"));
+
+            //Assert
+            Assert.AreEqual("El email no puede ser null", ex.Message);
 
         }
 
         [TestMethod]
-        [ExpectedException(typeof(UsuarioLogicExcepcion))]
         public void Validar_Contrasena_Null()
         {
             // Arrange
@@ -149,9 +152,10 @@ namespace BusinessLogicTest
             _logica.AddUsuario(user1);
 
             // Act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            _logica.ValidarInicioSesion("User1@user.com", null);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            UsuarioLogicExcepcion ex = Assert.ThrowsException<UsuarioLogicExcepcion>(() => _logica.ValidarInicioSesion("User1@user.com", null));
+
+            //Assert
+            Assert.AreEqual("La contraseña no puede ser null", ex.Message);
 
         }
 
@@ -185,7 +189,6 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(UsuarioLogicExcepcion))]
         public void Validar_Get_Usuario_Null()
         {
             // Arrange
@@ -193,9 +196,10 @@ namespace BusinessLogicTest
             _logica.AddUsuario(usuario);
 
             // Act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            _logica.GetUsuario(null);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            UsuarioLogicExcepcion ex = Assert.ThrowsException<UsuarioLogicExcepcion>(() => _logica.GetUsuario(null));
+
+            //Assert
+            Assert.AreEqual("Se necesita el email para el getUsuario", ex.Message);
 
 
         }

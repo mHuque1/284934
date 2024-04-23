@@ -67,5 +67,24 @@ namespace RepositorioTest
             Assert.AreEqual(DateTime.Today.AddDays(3), reservaActualizada.Comienzo);
             Assert.AreEqual(DateTime.Today.AddDays(6), reservaActualizada.Fin);
         }
+
+        [TestMethod]
+        public void Verifico_Que_Funcione_La_Modificacion_De_Reservas_2()
+        {
+            // Arrange
+            _reservasRepository.Add(_reserva);
+            Deposito nuevoDeposito = new('B', 'S', false) { ID = 2 };
+            Usuario nuevoUsuario = new("Jose", "Jose@gmail.com", "Jose12345!", true);
+            Reserva res = _reserva;
+            res.Rechazar(nuevoUsuario, "hola");
+
+            // Act
+            _reservasRepository.Update(res);
+            Reserva reservaActualizada = _reservasRepository.Find(u => u.ID == _reserva.ID);
+
+            // Assert
+
+            Assert.AreEqual("hola", reservaActualizada.Mensaje);
+        }
     }
 }

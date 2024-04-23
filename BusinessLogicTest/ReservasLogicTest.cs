@@ -8,7 +8,7 @@ namespace BusinessLogicTest
     [TestClass]
     public class ReservasLogicTest
     {
-        private static readonly Deposito deposito = new('A', 'S', false);
+        private static readonly Deposito deposito = new('A', 'S', false) { ID = 0 };
         private static readonly Usuario usuario = new("Pedro Gomez", "pedrogomez@gmail.com", "Pedrogomez1234!", true);
         private readonly Reserva reserva = new(deposito, usuario, DateTime.Today, DateTime.Today.AddDays(10));
         private ReservasRepository _repository = new();
@@ -42,26 +42,62 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ReservaLogicExcepcion))]
         public void No_Deberia_Permitir_Agregar_Reserva_Null()
         {
             // Arrange
             ReservasLogic _reservasLogic = new(_repository);
 
             //Act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            _reservasLogic.AddReserva(null);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            ReservaLogicExcepcion ex = Assert.ThrowsException<ReservaLogicExcepcion>(() => _reservasLogic.AddReserva(null));
+           
+            //Assert
+            Assert.AreEqual("No se puede agregar una reserva null", ex.Message);
         }
 
         [TestMethod]
+        [DataRow(1, 10,1,3)]
+        [DataRow(1, 10, 0, 3)]
+        public void No_Deberia_Permitir_Agregar_Reserva_Fechas_Superpuestas(int dias1,int dias2,int dias3,int dias4)
+        {
+            // Arrange
+            ReservasLogic _reservasLogic = new(_repository);
+            _reservasLogic.AddReserva(new(deposito, usuario, DateTime.Today.AddDays(dias1), DateTime.Today.AddDays(dias2)));
+
+            //Act
+            ReservaLogicExcepcion ex = Assert.ThrowsException<ReservaLogicExcepcion>(() => _reservasLogic.AddReserva(new(deposito, usuario, DateTime.Today.AddDays(dias3), DateTime.Today.AddDays(dias4))));
+            //Assert
+            Assert.AreEqual("La fecha de reserva no se puede superponer con otra reserva", ex.Message);
+        }
+
+        [TestMethod]
+        public void Deberia_Permitir_Agregar_Reserva_Fechas_Superpuestas_Distinto_tipo()
+        {
+            // Arrange
+            ReservasLogic _reservasLogic = new(_repository);
+            Reserva res1 = new(deposito, usuario, DateTime.Today.AddDays(0), DateTime.Today.AddDays(3));
+            _reservasLogic.AddReserva(res1);
+            Deposito deposito1 = new('A', 'M', false) { ID = 45 };
+            Reserva res2 = new(deposito1, usuario, DateTime.Today.AddDays(0), DateTime.Today.AddDays(3));
+            
+            //Act
+            _reservasLogic.AddReserva(res2);
+            IList<Reserva> reservas = _reservasLogic.GetReservas();
+            //Assert
+            Assert.IsTrue(reservas.Contains(res1));
+            Assert.IsTrue(reservas.Contains(res2));
+        }
+
+
+
+        [TestMethod]
+        
         public void Verificar_Get_Reservas_Por_Usuario()
         {
             // Arrange
             Usuario usuario1 = new("Usuario1", "Usuario1@gmail.com", "Usuario1234!", false);
             Usuario usuario2 = new("Usuario2", "Usuario2@gmail.com", "Usuario2234!", false);
             ReservasLogic _reservasLogic = new(_repository);
-            Deposito deposito2 = new('B', 'M', false);
+            Deposito deposito2 = new('B', 'M', false) { ID = 1};
             Reserva reserva1 = new(deposito, usuario1, DateTime.Today, DateTime.Today.AddDays(10));
             Reserva reserva2 = new(deposito2, usuario1, DateTime.Today, DateTime.Today.AddDays(10));
             Reserva reserva3 = new(deposito, usuario2, DateTime.Today, DateTime.Today.AddDays(10));
@@ -82,13 +118,16 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ReservaLogicExcepcion))]
         public void Verificar_Get_Reservas_Por_Usuario_Null()
         {
+            //Arrange
             ReservasLogic _reservasLogic = new(_repository);
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            _reservasLogic.GetReservasUsuario(null);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+
+            //Act
+            ReservaLogicExcepcion ex = Assert.ThrowsException<ReservaLogicExcepcion>(() => _reservasLogic.GetReservasUsuario(null));
+
+            //Assert
+            Assert.AreEqual("El usuario en getReservasUsuario no puede ser null.", ex.Message);
 
         }
 
@@ -139,16 +178,16 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ReservaLogicExcepcion))]
         public void Verificar_Modificacion_Reserva_Null()
         {
             // Arrange
             ReservasLogic _reservasLogic = new(_repository);
+            
+            //Act
+            ReservaLogicExcepcion ex = Assert.ThrowsException<ReservaLogicExcepcion>(() => _reservasLogic.ModificarReserva(0, null));
 
-            // Act
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            _reservasLogic.ModificarReserva(0, null);
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            //Assert
+            Assert.AreEqual("La reserva en ModifcarReserva no puede ser null", ex.Message);
 
         }
     }

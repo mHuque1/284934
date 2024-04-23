@@ -38,7 +38,6 @@ public class UsuarioRepository : IRepository<Usuario>
         {
             existingItem.Nombre = updatedItem.Nombre;
             existingItem.Contrasena = updatedItem.Contrasena;
-            existingItem.Reservas = updatedItem.Reservas;
             existingItem.EsAdmin = updatedItem.EsAdmin;
         }
     }

@@ -14,17 +14,41 @@ namespace BusinessLogic
             _repository = reservas;
 
         }
+
+        public bool UsuarioYaReservoDepositoEnFecha(Reserva reserva)
+        {
+
+            IList<Reserva> list = GetReservasUsuario(reserva.Usuario);
+            foreach (Reserva res in list)
+            {
+                bool MismoTamano = reserva.Deposito.Tamano == res.Deposito.Tamano;
+                bool superpuesto1 = res.Comienzo <= reserva.Comienzo && reserva.Comienzo <= res.Fin;
+                bool superpuesto2 = res.Comienzo <= reserva.Fin && reserva.Fin <= res.Fin;
+                if(MismoTamano && (superpuesto1 || superpuesto2))
+                {
+                    return true;
+                }
+            }
+            return false;
+
+        }
+
         public void AddReserva(Reserva reserva)
         {
             if (reserva == null)
             {
                 throw new ReservaLogicExcepcion("No se puede agregar una reserva null");
             }
+
+            if(UsuarioYaReservoDepositoEnFecha(reserva))
+            {
+                throw new ReservaLogicExcepcion("La fecha de reserva no se puede superponer con otra reserva");
+            }
+            
             reserva.ID = _contadorID;
             _repository.Add(reserva);
             _contadorID++;
         }
-
 
         public void DeleteReserva(int v)
         {

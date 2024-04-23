@@ -10,7 +10,6 @@ namespace Dominio
         private bool _esAdmin;
         private string _email;
         private string _contrasena;
-        private IList<Reserva> _listaReservas;
 
         // Propiedad para el nombre del usuario
         public string Nombre
@@ -41,20 +40,15 @@ namespace Dominio
         }
 
         // Propiedad para las reservas del usuario
-        public IList<Reserva> Reservas
-        {
-            get => _listaReservas;
-            set => _listaReservas = value;
-        }
+ 
 
         // Constructor de la clase Usuario que recibe nombre, correo electrónico y contraseña
         public Usuario(string nombre, string email, string contrasena, bool esAdmin)
         {
-            _nombre = ValidarNombre(nombre);
-            _email = ValidarEmail(email);
-            _contrasena = ValidarContrasena(contrasena);
-            _listaReservas = new List<Reserva>();
-            _esAdmin = esAdmin;
+            Nombre = nombre;
+            Email = email;
+            Contrasena = contrasena;
+            EsAdmin = esAdmin;
         }
 
         // Método estático para validar y limpiar el nombre
@@ -148,13 +142,6 @@ namespace Dominio
         {
             return texto.Any(ch => !char.IsLetterOrDigit(ch));
         }
-
-        // Método para Agregar una reserva al usuario
-        public void AgregarReserva(Reserva reserva)
-        {
-            _listaReservas.Add(reserva);
-        }
-
 
     }
 }

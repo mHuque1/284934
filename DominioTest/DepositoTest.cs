@@ -1,4 +1,5 @@
 using Dominio;
+using Excepcion;
 
 namespace DominioTest
 {
@@ -51,6 +52,16 @@ namespace DominioTest
         }
 
         [TestMethod]
+        public void Deberia_No_Aceptar_Areas_Invalidas()
+        {
+
+            //Act
+            DominioDepositoExcepcion ex = Assert.ThrowsException<DominioDepositoExcepcion>(() => deposito.Area = 'H');
+            //Assert
+            Assert.AreEqual($"El área H no es válida", ex.Message);
+        }
+
+        [TestMethod]
         public void Deberia_Obtener_Tamano()
         {
             // Arrange
@@ -61,6 +72,15 @@ namespace DominioTest
 
             // Assert
             Assert.AreEqual(tamanoEsperado, tamanoObtenido);
+        }
+
+        [TestMethod]
+        public void No_Deberia_Obtener_Tamano()
+        {
+            //Act
+            DominioDepositoExcepcion ex = Assert.ThrowsException<DominioDepositoExcepcion>(() => deposito.Tamano = 'K');
+            //Assert
+            Assert.AreEqual($"El Tamaño K no es válido", ex.Message);
         }
 
         [TestMethod]
@@ -104,21 +124,6 @@ namespace DominioTest
             // Assert
             Assert.AreEqual(1, deposito.Promociones.Count);
             Assert.AreEqual(promocion, deposito.Promociones[0]);
-        }
-
-        public void Deberia_Tener_Las_Promociones_Eliminadas()
-        {
-            // Arrange
-            var promocion = new Promocion(etiqueta: "Promo", descuento: 10, comienzo: DateTime.Today, fin: DateTime.Today.AddDays(1));
-
-
-            // Act
-            deposito.AgregarPromocion(promocion);
-            deposito.EliminarPromocion(promocion);
-            int cantObtenida = deposito.Promociones.Count;
-
-            // Assert
-            Assert.AreEqual(0, cantObtenida);
         }
     }
 }
