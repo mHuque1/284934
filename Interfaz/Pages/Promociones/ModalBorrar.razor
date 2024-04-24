@@ -2,6 +2,7 @@
 @using Dominio;
 @inject Promociones PromocionesServicio
 @inject Usuarios UsuarioServicios
+@inject Depositos DepositoServicios
 
 <div class="container d-flex justify-content-center align-items-center">
     <div class="text-center">
@@ -17,7 +18,7 @@
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
     [Parameter] public Promocion promo { get; set; }
 
-   
+
     private async Task Cancelar()
     {
         await BlazoredModal.CancelAsync();
@@ -26,6 +27,7 @@
     private async Task Confirmar()
     {
         PromocionesServicio.DeletePromocion(promo.Id, promo, UsuarioServicios.GetCurrentUser);
+        DepositoServicios.BorrarPromocionDepositos(promo, UsuarioServicios.GetCurrentUser);
         await BlazoredModal.CloseAsync(ModalResult.Ok());
     }
 }

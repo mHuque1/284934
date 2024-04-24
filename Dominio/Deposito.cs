@@ -83,7 +83,21 @@ namespace Dominio
 
         }
 
+        public void BorrarPromocion(Promocion promocion)
+        {
+            _promociones.Remove(promocion);
+        }
 
-
+        public void ActualizarPromocion(int id,Promocion updatedItem)
+        {
+            Promocion? existingItem = _promociones.FirstOrDefault(d => d.Id == id);
+            if (existingItem != null)
+            {
+                existingItem.Descuento = updatedItem.Descuento;
+                existingItem.Etiqueta = updatedItem.Etiqueta;
+                existingItem.Comienzo = updatedItem.Comienzo;
+                existingItem.Fin = updatedItem.Fin;
+            }
+        }
     }
 }

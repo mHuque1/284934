@@ -12,6 +12,10 @@ namespace Interfaz.Data
 
         public void DeleteDeposito(Deposito depo, Usuario usuario) => Logica.DeleteDeposito(depo, usuario);
 
+        public void BorrarPromocionDepositos(Promocion promo, Usuario usuario) => Logica.BorrarPromocionDepositos(promo,usuario);
+
+        public void ModificarPromocionDepositos(int id,Promocion promo, Usuario usuario) => Logica.ModificarPromocionDepositos(id, promo, usuario);
+
         public IList<Deposito> ListaDepositos { get => Logica.GetDepositos(); }
     }
 }

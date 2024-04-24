@@ -44,7 +44,7 @@
 
                         <td>
                             <button @onclick="() => Reservar(depo)" class="btn btn-primary">Reservar</button>
-                            @if (UsuarioServicios.GetCurrentUser.EsAdmin)
+                            @if (UsuarioServicios.GetCurrentUser.EsAdmin && !ReservaServicio.TieneReserva(depo.ID))
                             {
                                 <button @onclick="() => Borrar(depo)" class="btn btn-danger">Eliminar</button>
                             }

@@ -25,5 +25,6 @@ namespace Interfaz.Data
             reserva.Rechazar(user, msg);
             Logica.ModificarReserva(reserva.ID, reserva);
         }
+        public bool TieneReserva(int id) => Logica.TieneDepositoReservas(id);
     }
 }

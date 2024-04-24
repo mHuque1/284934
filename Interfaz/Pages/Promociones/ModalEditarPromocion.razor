@@ -4,6 +4,7 @@
 @using System.ComponentModel.DataAnnotations
 @inject Promociones promociones
 @inject Usuarios UsuarioServicios
+@inject Depositos DepositoServicios
 
 <EditForm Model="@model" OnValidSubmit="Confirmar">
     <DataAnnotationsValidator />
@@ -67,6 +68,7 @@
             btnPresionado = true;
             Promocion promocion = new(model.Etiqueta, model.Descuento, model.Comienzo, model.Fin);
             promociones.ModificarPromocion(promo.Id, promocion, UsuarioServicios.GetCurrentUser);
+            DepositoServicios.ModificarPromocionDepositos(promo.Id, promocion, UsuarioServicios.GetCurrentUser);
             await Aceptar();
         }
     }

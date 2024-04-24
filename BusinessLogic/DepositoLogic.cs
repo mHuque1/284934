@@ -73,5 +73,48 @@ namespace BusinessLogic
         {
             return _repository.GetAll();
         }
+
+        public void BorrarPromocionDepositos(Promocion promo, Usuario user1)
+        {
+            if (promo == null)
+            {
+                throw new DepositoLogicExcepcion("La promo en BorrarPromocionDepositos no puede ser null");
+            }
+
+            if (user1 == null)
+            {
+                throw new DepositoLogicExcepcion("El user en BorrarPromocionDepositos no puede ser null");
+            }
+
+            if(!user1.EsAdmin)
+            {
+                throw new DepositoLogicExcepcion("Solo un administrador puede borrar promociones");
+            }
+
+            foreach (Deposito depo in _repository.GetAll())
+            {
+                if(depo.Promociones.Contains(promo))
+                {
+                    depo.Promociones.Remove(promo);
+                }
+            }
+        }
+
+        public void ModificarPromocionDepositos(int id,Promocion promo, Usuario user)
+        {
+            if(promo == null)
+            {
+                throw new DepositoLogicExcepcion("La promo en ModificarPromocionDepositos no puede ser null");
+            }
+            if (user == null)
+            {
+                throw new DepositoLogicExcepcion("El usuario en ModificarPromocionDepositos no puede ser null");
+            }
+
+            foreach (Deposito depo in _repository.GetAll())
+            {
+                depo.ActualizarPromocion(id,promo);
+            }
+        }
     }
 }

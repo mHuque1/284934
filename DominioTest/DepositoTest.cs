@@ -125,5 +125,38 @@ namespace DominioTest
             Assert.AreEqual(1, deposito.Promociones.Count);
             Assert.AreEqual(promocion, deposito.Promociones[0]);
         }
+
+        [TestMethod]
+        public void Deberia_Borrar_Promocion()
+        {
+            //Arrange
+            var promocion = new Promocion(etiqueta: "Promo", descuento: 10, comienzo: DateTime.Today, fin: DateTime.Today.AddDays(1));
+            deposito.AgregarPromocion(promocion);
+
+            // Act
+            deposito.BorrarPromocion(promocion);
+
+            //Assert
+            Assert.IsFalse(deposito.Promociones.Contains(promocion));
+        }
+
+        [TestMethod]
+        public void Deberia_Modificar_Promocion()
+        {
+            //Arrange
+            Promocion promocion = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(1)) { Id=0};
+            deposito.AgregarPromocion(promocion);
+            Promocion promocionActualizada = new("asd", 18, DateTime.Today.AddDays(15), DateTime.Today.AddDays(20)) { Id = 0 };
+            
+            //Act
+            deposito.ActualizarPromocion(0,promocionActualizada);
+            Promocion obtenida = deposito.Promociones[0];
+            
+            //Assert
+            Assert.AreEqual("asd",obtenida.Etiqueta);
+            Assert.AreEqual(18,obtenida.Descuento);
+            Assert.AreEqual(DateTime.Today.AddDays(15), obtenida.Comienzo);
+            Assert.AreEqual(DateTime.Today.AddDays(20), obtenida.Fin);
+        }
     }
 }
