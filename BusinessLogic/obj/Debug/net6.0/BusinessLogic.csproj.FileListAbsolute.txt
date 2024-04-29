@@ -79,3 +79,17 @@ C:\Users\mathi\Downloads\284934\BusinessLogic\obj\Debug\net6.0\refint\BusinessLo
 C:\Users\mathi\Downloads\284934\BusinessLogic\obj\Debug\net6.0\BusinessLogic.pdb
 C:\Users\mathi\Downloads\284934\BusinessLogic\obj\Debug\net6.0\BusinessLogic.genruntimeconfig.cache
 C:\Users\mathi\Downloads\284934\BusinessLogic\obj\Debug\net6.0\ref\BusinessLogic.dll
+C:\Users\mathi\Desktop\284934\BusinessLogic\bin\Debug\net6.0\Dominio.deps.json
+C:\Users\mathi\Desktop\284934\BusinessLogic\bin\Debug\net6.0\Dominio.runtimeconfig.json
+C:\Users\mathi\Desktop\284934\BusinessLogic\bin\Debug\net6.0\Dominio.exe
+C:\Users\mathi\Desktop\284934\BusinessLogic\bin\Debug\net6.0\Repositorio.deps.json
+C:\Users\mathi\Desktop\284934\BusinessLogic\bin\Debug\net6.0\Repositorio.runtimeconfig.json
+C:\Users\mathi\Desktop\284934\BusinessLogic\bin\Debug\net6.0\Repositorio.exe
+C:\Users\mathi\Desktop\284934\BusinessLogic\bin\Debug\net6.0\Dominio.dll
+C:\Users\mathi\Desktop\284934\BusinessLogic\bin\Debug\net6.0\Excepcion.dll
+C:\Users\mathi\Desktop\284934\BusinessLogic\bin\Debug\net6.0\Repositorio.dll
+C:\Users\mathi\Desktop\284934\BusinessLogic\bin\Debug\net6.0\Dominio.pdb
+C:\Users\mathi\Desktop\284934\BusinessLogic\bin\Debug\net6.0\Excepcion.pdb
+C:\Users\mathi\Desktop\284934\BusinessLogic\bin\Debug\net6.0\Repositorio.pdb
+C:\Users\mathi\Desktop\284934\BusinessLogic\obj\Debug\net6.0\BusinessLogic.csproj.AssemblyReference.cache
+C:\Users\mathi\Desktop\284934\BusinessLogic\obj\Debug\net6.0\Business.CF5D6E35.Up2Date

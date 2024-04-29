@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "k7VMh1ZFFRVZ/bGs7PaIbndopRR0x2e/HemQWNCzJJ3e/RCMugF/A/5I0Y6t43rLFUN+X1erI8cyGYBDRq4TYQ==",
+  "dgSpecHash": "NTelZQIlshhrrQ3wx+ER5ZZvYgjarx+g/5Zj6NDru9IFYcW0Qgfv4CCl01F9q5XmWpZqfBN+GfOznFHlc6ahrQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\ExcepcionTest\\ExcepcionTest.csproj",
+  "projectFilePath": "C:\\Users\\mathi\\Desktop\\284934\\ExcepcionTest\\ExcepcionTest.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mathi\\.nuget\\packages\\coverlet.collector\\3.1.2\\coverlet.collector.3.1.2.nupkg.sha512",
     "C:\\Users\\mathi\\.nuget\\packages\\microsoft.codecoverage\\17.1.0\\microsoft.codecoverage.17.1.0.nupkg.sha512",

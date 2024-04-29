@@ -87,6 +87,24 @@ namespace BusinessLogicTest
             Assert.IsTrue(reservas.Contains(res2));
         }
 
+        [TestMethod]
+        public void Verificar_Get_Reservas_Activas()
+        {
+            // Arrange
+            Usuario usuario1 = new("Usuario1", "Usuario1@gmail.com", "Usuario1234!", false);
+            ReservasLogic _reservasLogic = new(_repository);
+            Reserva reserva1 = new(deposito, usuario1, DateTime.Today, DateTime.Today.AddDays(10));
+            Reserva reserva2 = new(deposito, usuario1, DateTime.Today.AddDays(-10), DateTime.Today.AddDays(-5));
+            _reservasLogic.AddReserva(reserva1);
+            _reservasLogic.AddReserva(reserva2);
+
+            // Act
+            IList<Reserva> reservas = _reservasLogic.GetReservasActivas();
+
+            // Assert
+            Assert.IsTrue(reservas.Contains(reserva1));
+            Assert.IsFalse(reservas.Contains(reserva2));
+        }
 
 
         [TestMethod]

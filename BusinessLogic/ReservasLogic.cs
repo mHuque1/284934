@@ -108,5 +108,19 @@ namespace BusinessLogic
             }
             return resultado;
         }
+
+        public IList<Reserva> GetReservasActivas()
+        {
+            IList<Reserva> Reservas = _repository.GetAll();
+            IList<Reserva> res = new List<Reserva>();
+            foreach (Reserva reserva in Reservas)
+            {
+                if (reserva.Fin >= DateTime.Today)
+                {
+                    res.Add(reserva);
+                }
+            }
+            return res;
+        }
     }
 }

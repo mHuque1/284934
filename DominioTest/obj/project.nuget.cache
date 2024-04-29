@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "I7nOAqLl0MmewHSmIzAVwypwKNx6gr29gVUt8wkWzQ9Uf67NUlfH2ShgnFNGt5kPcimH2RNs8cWzDRb7TVm+SQ==",
+  "dgSpecHash": "3vimzI5nW5fyALAXYNaDY+0sfNKb+H3Wao51ZghGIpfh6bRn2lvGSt7IgMhFXEitJXU51pxK7528wOYIG8XQlw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\DominioTest\\DominioTest.csproj",
+  "projectFilePath": "C:\\Users\\mathi\\Desktop\\284934\\DominioTest\\DominioTest.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mathi\\.nuget\\packages\\coverlet.collector\\6.0.0\\coverlet.collector.6.0.0.nupkg.sha512",
     "C:\\Users\\mathi\\.nuget\\packages\\microsoft.codecoverage\\17.8.0\\microsoft.codecoverage.17.8.0.nupkg.sha512",

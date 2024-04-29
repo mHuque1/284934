@@ -12,6 +12,8 @@ namespace Interfaz.Data
 
         public IList<Reserva> GetReservasUsuario(Usuario usuario) => Logica.GetReservasUsuario(usuario);
 
+        public IList<Reserva> GetReservasActivas() => Logica.GetReservasActivas();
+
         public void AprobarReserva(Reserva reserva, Usuario user)
         {
             reserva.Aprobar(user);

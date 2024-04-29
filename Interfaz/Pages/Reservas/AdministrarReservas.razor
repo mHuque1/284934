@@ -11,7 +11,7 @@
     @if(UsuarioServicios.GetCurrentUser.EsAdmin)
     {
         <div class="container">
-            <h1>Administrar Reservas</h1>
+            <h1>Administrar Reservas Activas</h1>
 
 
             <table class="table">
@@ -61,7 +61,7 @@
 
     private void CargarReservas()
     {
-        reservas = ReservaServicio.ReservaList;
+        reservas = ReservaServicio.GetReservasActivas();
         StateHasChanged();
     }
 

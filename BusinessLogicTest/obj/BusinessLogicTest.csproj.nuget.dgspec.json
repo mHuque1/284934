@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogicTest\\BusinessLogicTest.csproj": {}
+    "C:\\Users\\mathi\\Desktop\\284934\\BusinessLogicTest\\BusinessLogicTest.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogicTest\\BusinessLogicTest.csproj": {
+    "C:\\Users\\mathi\\Desktop\\284934\\BusinessLogicTest\\BusinessLogicTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogicTest\\BusinessLogicTest.csproj",
+        "projectUniqueName": "C:\\Users\\mathi\\Desktop\\284934\\BusinessLogicTest\\BusinessLogicTest.csproj",
         "projectName": "BusinessLogicTest",
-        "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogicTest\\BusinessLogicTest.csproj",
+        "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\BusinessLogicTest\\BusinessLogicTest.csproj",
         "packagesPath": "C:\\Users\\mathi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogicTest\\obj\\",
+        "outputPath": "C:\\Users\\mathi\\Desktop\\284934\\BusinessLogicTest\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mathi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,17 +28,17 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogic\\BusinessLogic.csproj": {
-                "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogic\\BusinessLogic.csproj"
+              "C:\\Users\\mathi\\Desktop\\284934\\BusinessLogic\\BusinessLogic.csproj": {
+                "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\BusinessLogic\\BusinessLogic.csproj"
               },
-              "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\Dominio.csproj": {
-                "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\Dominio.csproj"
+              "C:\\Users\\mathi\\Desktop\\284934\\Dominio\\Dominio.csproj": {
+                "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\Dominio\\Dominio.csproj"
               },
-              "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj": {
-                "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj"
+              "C:\\Users\\mathi\\Desktop\\284934\\Excepcion\\Excepcion.csproj": {
+                "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\Excepcion\\Excepcion.csproj"
               },
-              "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Repositorio\\Repositorio.csproj": {
-                "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Repositorio\\Repositorio.csproj"
+              "C:\\Users\\mathi\\Desktop\\284934\\Repositorio\\Repositorio.csproj": {
+                "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\Repositorio\\Repositorio.csproj"
               }
             }
           }
@@ -95,14 +95,14 @@
         }
       }
     },
-    "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogic\\BusinessLogic.csproj": {
+    "C:\\Users\\mathi\\Desktop\\284934\\BusinessLogic\\BusinessLogic.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogic\\BusinessLogic.csproj",
+        "projectUniqueName": "C:\\Users\\mathi\\Desktop\\284934\\BusinessLogic\\BusinessLogic.csproj",
         "projectName": "BusinessLogic",
-        "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogic\\BusinessLogic.csproj",
+        "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\BusinessLogic\\BusinessLogic.csproj",
         "packagesPath": "C:\\Users\\mathi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogic\\obj\\",
+        "outputPath": "C:\\Users\\mathi\\Desktop\\284934\\BusinessLogic\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mathi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -119,14 +119,14 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\Dominio.csproj": {
-                "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\Dominio.csproj"
+              "C:\\Users\\mathi\\Desktop\\284934\\Dominio\\Dominio.csproj": {
+                "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\Dominio\\Dominio.csproj"
               },
-              "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj": {
-                "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj"
+              "C:\\Users\\mathi\\Desktop\\284934\\Excepcion\\Excepcion.csproj": {
+                "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\Excepcion\\Excepcion.csproj"
               },
-              "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Repositorio\\Repositorio.csproj": {
-                "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Repositorio\\Repositorio.csproj"
+              "C:\\Users\\mathi\\Desktop\\284934\\Repositorio\\Repositorio.csproj": {
+                "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\Repositorio\\Repositorio.csproj"
               }
             }
           }
@@ -165,14 +165,14 @@
         }
       }
     },
-    "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\Dominio.csproj": {
+    "C:\\Users\\mathi\\Desktop\\284934\\Dominio\\Dominio.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\Dominio.csproj",
+        "projectUniqueName": "C:\\Users\\mathi\\Desktop\\284934\\Dominio\\Dominio.csproj",
         "projectName": "Dominio",
-        "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\Dominio.csproj",
+        "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\Dominio\\Dominio.csproj",
         "packagesPath": "C:\\Users\\mathi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\obj\\",
+        "outputPath": "C:\\Users\\mathi\\Desktop\\284934\\Dominio\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mathi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -189,8 +189,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj": {
-                "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj"
+              "C:\\Users\\mathi\\Desktop\\284934\\Excepcion\\Excepcion.csproj": {
+                "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\Excepcion\\Excepcion.csproj"
               }
             }
           }
@@ -229,14 +229,14 @@
         }
       }
     },
-    "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj": {
+    "C:\\Users\\mathi\\Desktop\\284934\\Excepcion\\Excepcion.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj",
+        "projectUniqueName": "C:\\Users\\mathi\\Desktop\\284934\\Excepcion\\Excepcion.csproj",
         "projectName": "Excepcion",
-        "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj",
+        "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\Excepcion\\Excepcion.csproj",
         "packagesPath": "C:\\Users\\mathi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\obj\\",
+        "outputPath": "C:\\Users\\mathi\\Desktop\\284934\\Excepcion\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mathi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -289,14 +289,14 @@
         }
       }
     },
-    "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Repositorio\\Repositorio.csproj": {
+    "C:\\Users\\mathi\\Desktop\\284934\\Repositorio\\Repositorio.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Repositorio\\Repositorio.csproj",
+        "projectUniqueName": "C:\\Users\\mathi\\Desktop\\284934\\Repositorio\\Repositorio.csproj",
         "projectName": "Repositorio",
-        "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Repositorio\\Repositorio.csproj",
+        "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\Repositorio\\Repositorio.csproj",
         "packagesPath": "C:\\Users\\mathi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Repositorio\\obj\\",
+        "outputPath": "C:\\Users\\mathi\\Desktop\\284934\\Repositorio\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mathi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -313,11 +313,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\Dominio.csproj": {
-                "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\Dominio.csproj"
+              "C:\\Users\\mathi\\Desktop\\284934\\Dominio\\Dominio.csproj": {
+                "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\Dominio\\Dominio.csproj"
               },
-              "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj": {
-                "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj"
+              "C:\\Users\\mathi\\Desktop\\284934\\Excepcion\\Excepcion.csproj": {
+                "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\Excepcion\\Excepcion.csproj"
               }
             }
           }

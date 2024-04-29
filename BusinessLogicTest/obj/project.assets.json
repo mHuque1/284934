@@ -1078,11 +1078,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogicTest\\BusinessLogicTest.csproj",
+      "projectUniqueName": "C:\\Users\\mathi\\Desktop\\284934\\BusinessLogicTest\\BusinessLogicTest.csproj",
       "projectName": "BusinessLogicTest",
-      "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogicTest\\BusinessLogicTest.csproj",
+      "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\BusinessLogicTest\\BusinessLogicTest.csproj",
       "packagesPath": "C:\\Users\\mathi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogicTest\\obj\\",
+      "outputPath": "C:\\Users\\mathi\\Desktop\\284934\\BusinessLogicTest\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\mathi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1099,17 +1099,17 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogic\\BusinessLogic.csproj": {
-              "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\BusinessLogic\\BusinessLogic.csproj"
+            "C:\\Users\\mathi\\Desktop\\284934\\BusinessLogic\\BusinessLogic.csproj": {
+              "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\BusinessLogic\\BusinessLogic.csproj"
             },
-            "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\Dominio.csproj": {
-              "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\Dominio.csproj"
+            "C:\\Users\\mathi\\Desktop\\284934\\Dominio\\Dominio.csproj": {
+              "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\Dominio\\Dominio.csproj"
             },
-            "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj": {
-              "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj"
+            "C:\\Users\\mathi\\Desktop\\284934\\Excepcion\\Excepcion.csproj": {
+              "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\Excepcion\\Excepcion.csproj"
             },
-            "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Repositorio\\Repositorio.csproj": {
-              "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Repositorio\\Repositorio.csproj"
+            "C:\\Users\\mathi\\Desktop\\284934\\Repositorio\\Repositorio.csproj": {
+              "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\Repositorio\\Repositorio.csproj"
             }
           }
         }

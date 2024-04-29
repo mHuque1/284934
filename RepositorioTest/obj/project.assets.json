@@ -1057,11 +1057,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\RepositorioTest\\RepositorioTest.csproj",
+      "projectUniqueName": "C:\\Users\\mathi\\Desktop\\284934\\RepositorioTest\\RepositorioTest.csproj",
       "projectName": "RepositorioTest",
-      "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\RepositorioTest\\RepositorioTest.csproj",
+      "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\RepositorioTest\\RepositorioTest.csproj",
       "packagesPath": "C:\\Users\\mathi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\RepositorioTest\\obj\\",
+      "outputPath": "C:\\Users\\mathi\\Desktop\\284934\\RepositorioTest\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\mathi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1078,14 +1078,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\Dominio.csproj": {
-              "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Dominio\\Dominio.csproj"
+            "C:\\Users\\mathi\\Desktop\\284934\\Dominio\\Dominio.csproj": {
+              "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\Dominio\\Dominio.csproj"
             },
-            "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj": {
-              "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Excepcion\\Excepcion.csproj"
+            "C:\\Users\\mathi\\Desktop\\284934\\Excepcion\\Excepcion.csproj": {
+              "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\Excepcion\\Excepcion.csproj"
             },
-            "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Repositorio\\Repositorio.csproj": {
-              "projectPath": "C:\\Users\\mathi\\Desktop\\Facultad\\284934\\Repositorio\\Repositorio.csproj"
+            "C:\\Users\\mathi\\Desktop\\284934\\Repositorio\\Repositorio.csproj": {
+              "projectPath": "C:\\Users\\mathi\\Desktop\\284934\\Repositorio\\Repositorio.csproj"
             }
           }
         }
