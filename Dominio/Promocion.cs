@@ -6,7 +6,7 @@ namespace Dominio
     {
         private int _id;
         private string _etiqueta;
-        private int _descuento;
+        private double _descuento;
         private DateTime _comienzo;
         private DateTime _fin;
 
@@ -21,7 +21,7 @@ namespace Dominio
         }
 
         // Propiedad para el Descuento
-        public int Descuento
+        public double Descuento
         {
             get => _descuento;
             set => _descuento = ValidarDescuento(value);
@@ -43,7 +43,7 @@ namespace Dominio
 
 
         // Constructor de la clase Usuario que recibe id, etiqueta, descuento, fecha Comienzo, fecha fin y tipoDeposito
-        public Promocion(string etiqueta, int descuento, DateTime comienzo, DateTime fin)
+        public Promocion(string etiqueta, double descuento, DateTime comienzo, DateTime fin)
         {
             Etiqueta = etiqueta;
             Descuento = descuento;
@@ -65,9 +65,9 @@ namespace Dominio
         }
 
         // Método estático para validar el descuento
-        private static int ValidarDescuento(int value)
+        private static double ValidarDescuento(double value)
         {
-            if (value < 5 || value > 75)
+            if (value < 5.0 || value > 75.0)
                 throw new DominioPromocionExcepcion("El porcentaje de descuento debe estar entre 5% y 75%.");
 
             return value;

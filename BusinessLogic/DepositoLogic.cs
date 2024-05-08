@@ -86,23 +86,23 @@ namespace BusinessLogic
                 throw new DepositoLogicExcepcion("El user en BorrarPromocionDepositos no puede ser null");
             }
 
-            if(!user1.EsAdmin)
+            if (!user1.EsAdmin)
             {
                 throw new DepositoLogicExcepcion("Solo un administrador puede borrar promociones");
             }
 
             foreach (Deposito depo in _repository.GetAll())
             {
-                if(depo.Promociones.Contains(promo))
+                if (depo.Promociones.Contains(promo))
                 {
                     depo.Promociones.Remove(promo);
                 }
             }
         }
 
-        public void ModificarPromocionDepositos(int id,Promocion promo, Usuario user)
+        public void ModificarPromocionDepositos(int id, Promocion promo, Usuario user)
         {
-            if(promo == null)
+            if (promo == null)
             {
                 throw new DepositoLogicExcepcion("La promo en ModificarPromocionDepositos no puede ser null");
             }
@@ -113,7 +113,7 @@ namespace BusinessLogic
 
             foreach (Deposito depo in _repository.GetAll())
             {
-                depo.ActualizarPromocion(id,promo);
+                depo.ActualizarPromocion(id, promo);
             }
         }
     }

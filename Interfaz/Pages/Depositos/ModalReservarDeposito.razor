@@ -38,7 +38,16 @@
             </div>
         </div>
     </div>
+
+    <!-- Mensaje de error -->
+    @if (MostrarMensajeError)
+    {
+        <div class="alert alert-danger" role="alert">
+            El usuario ya tiene reservado un deposito del mismo tamaño en estas fechas
+        </div>
+    }
     <hr />
+
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Confirmar</button>
     </div>
@@ -52,13 +61,13 @@
     private ReservaModelo model = new ReservaModelo();
     private bool click = false;
     private bool MostrarErrorFecha = false;
-
+    private bool MostrarMensajeError = false;
     private async Task Cancelar()
     {
         await BlazoredModal.CancelAsync();
     }
 
-   
+
 
     private async Task Confirmar()
     {
@@ -66,8 +75,18 @@
         {
             click = true;
             Reserva res = new(depo, user, model.Comienzo, model.Fin);
-            reservasServicio.AddReserva(res);
-            await BlazoredModal.CloseAsync(ModalResult.Ok());
+            if (!reservasServicio.UsuarioYaReservoDepositoEnFecha(res))
+            {
+                MostrarMensajeError = false;
+                reservasServicio.AddReserva(res);
+                await BlazoredModal.CloseAsync(ModalResult.Ok());
+            }
+            else
+            {
+                click = false;
+                MostrarMensajeError = true;
+            }
+
         }
     }
 

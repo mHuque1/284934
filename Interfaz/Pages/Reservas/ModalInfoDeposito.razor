@@ -6,31 +6,6 @@
         <p><strong>Área del depósito:</strong> @depo.Area</p>
         <p><strong>Tamaño del depósito:</strong> @TamanoTexto(depo.Tamano)</p>
         <p><strong>Tiene climatización:</strong> @(depo.TieneClimatizacion ? "Si" : "No")</p>
-        <hr />
-        <h3>Promociones del Deposito</h3>
-        <table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Etiqueta</th>
-            <th>Comienzo</th>
-            <th>Fin</th>
-            <th>Descuento</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Promocion promo in depo.Promociones)
-        {
-            <tr>
-                <td>@promo.Id</td>
-                <td>@promo.Etiqueta</td>
-                <td>@promo.Comienzo.ToString("d")</td>
-                <td>@promo.Fin.ToString("d")</td>
-                <td>@promo.Descuento%</td>
-            </tr>
-        }
-    </tbody>
-</table>
     </div>
 </div>
 

@@ -109,7 +109,7 @@ namespace BusinessLogicTest
 
             //Assert
             Assert.AreEqual("El deposito en DeleteDeposito no puede ser null", ex.Message);
-            
+
         }
 
         [TestMethod]
@@ -137,7 +137,7 @@ namespace BusinessLogicTest
             Usuario user1 = new("Pedro", "pedro@gmail.com", "Pedro1234!", false);
             // Act
             DepositoLogicExcepcion ex = Assert.ThrowsException<DepositoLogicExcepcion>(() => _logica.DeleteDeposito(depositoA, user1));
-            
+
             //Assert
             Assert.AreEqual("La baja de depósitos solamente puede ser efectuada por el Administrador", ex.Message);
         }
@@ -169,19 +169,19 @@ namespace BusinessLogicTest
             // Arrange
             Deposito depositoA = new('A', 'S', true);
             Deposito depositoB = new('B', 'S', true);
-            Promocion promo = new("promo",30,DateTime.Today,DateTime.Today);
+            Promocion promo = new("promo", 30, DateTime.Today, DateTime.Today);
             depositoA.AgregarPromocion(promo);
             depositoB.AgregarPromocion(promo);
             Usuario user = new("Pedro", "pedro@gmail.com", "Pedro1234!", true);
             _logica.AddDeposito(depositoA, user);
-            _logica.AddDeposito(depositoB,user);
+            _logica.AddDeposito(depositoB, user);
 
             //Act
-            _logica.BorrarPromocionDepositos(promo,user);
+            _logica.BorrarPromocionDepositos(promo, user);
             IList<Deposito> depositos = _logica.GetDepositos();
 
             //Assert
-            foreach(Deposito deposito in depositos)
+            foreach (Deposito deposito in depositos)
             {
                 Assert.IsFalse(deposito.Promociones.Contains(promo));
             }
@@ -195,7 +195,7 @@ namespace BusinessLogicTest
             Promocion promo = new("promo", 30, DateTime.Today, DateTime.Today);
             Usuario user1 = new("Pedro", "pedro@gmail.com", "Pedro1234!", false);
             //Act
-            _logica.BorrarPromocionDepositos(promo,user1);
+            _logica.BorrarPromocionDepositos(promo, user1);
         }
         [TestMethod]
         public void Verificar_BorrarPromocionDepositos_Usuario_Null()
@@ -204,7 +204,7 @@ namespace BusinessLogicTest
             Promocion promo = new("promo", 30, DateTime.Today, DateTime.Today);
             Usuario user1 = new("Pedro", "pedro@gmail.com", "Pedro1234!", false);
             //Act
-            
+
 
             // Act
             DepositoLogicExcepcion ex = Assert.ThrowsException<DepositoLogicExcepcion>(() => _logica.BorrarPromocionDepositos(promo, null));
@@ -234,7 +234,7 @@ namespace BusinessLogicTest
         [TestMethod]
         public void Verificar_ModificarPromocionDepositos()
         {
-            Promocion promo = new("promo",30, DateTime.Today, DateTime.Today) { Id = 1};
+            Promocion promo = new("promo", 30, DateTime.Today, DateTime.Today) { Id = 1 };
             Deposito depo1 = new('A', 'S', false);
             Deposito depo2 = new('A', 'S', false);
             depo1.AgregarPromocion(promo);
@@ -244,7 +244,7 @@ namespace BusinessLogicTest
             _logica.AddDeposito(depo2, user);
             Promocion promo1 = new("asd", 33, DateTime.Today, DateTime.Today) { Id = 1 };
             //Act
-            _logica.ModificarPromocionDepositos(1,promo1,user);
+            _logica.ModificarPromocionDepositos(1, promo1, user);
             Promocion obtenido1 = _logica.GetDeposito(0).Promociones[0];
             Promocion obtenido2 = _logica.GetDeposito(1).Promociones[0];
 

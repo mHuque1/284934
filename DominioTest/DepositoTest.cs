@@ -144,17 +144,17 @@ namespace DominioTest
         public void Deberia_Modificar_Promocion()
         {
             //Arrange
-            Promocion promocion = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(1)) { Id=0};
+            Promocion promocion = new("promo", 10, DateTime.Today, DateTime.Today.AddDays(1)) { Id = 0 };
             deposito.AgregarPromocion(promocion);
             Promocion promocionActualizada = new("asd", 18, DateTime.Today.AddDays(15), DateTime.Today.AddDays(20)) { Id = 0 };
-            
+
             //Act
-            deposito.ActualizarPromocion(0,promocionActualizada);
+            deposito.ActualizarPromocion(0, promocionActualizada);
             Promocion obtenida = deposito.Promociones[0];
-            
+
             //Assert
-            Assert.AreEqual("asd",obtenida.Etiqueta);
-            Assert.AreEqual(18,obtenida.Descuento);
+            Assert.AreEqual("asd", obtenida.Etiqueta);
+            Assert.AreEqual(18, obtenida.Descuento);
             Assert.AreEqual(DateTime.Today.AddDays(15), obtenida.Comienzo);
             Assert.AreEqual(DateTime.Today.AddDays(20), obtenida.Fin);
         }

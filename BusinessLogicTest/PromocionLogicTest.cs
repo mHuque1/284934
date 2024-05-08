@@ -2,7 +2,6 @@
 using Dominio;
 using Excepcion;
 using Repositorio;
-using System.Runtime.Intrinsics.X86;
 
 
 namespace BusinessLogicTest
@@ -75,7 +74,7 @@ namespace BusinessLogicTest
             Promocion promo1 = new("promo1", 10, DateTime.Today, DateTime.Today.AddDays(10));
             Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", false);
             //Act
-            
+
             PromocionLogicExcepcion ex = Assert.ThrowsException<PromocionLogicExcepcion>(() => _logica.AddPromocion(promo1, user));
             Assert.AreEqual("Solo un Admin puede agregar una promocion", ex.Message);
         }
@@ -110,10 +109,10 @@ namespace BusinessLogicTest
         {
             // Arrange
             Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", true);
-            
+
             // Act
             PromocionLogicExcepcion ex = Assert.ThrowsException<PromocionLogicExcepcion>(() => _logica.DeletePromocion(0, null, user));
-            
+
             //Assert
             Assert.AreEqual("Una promocion en DeletePromocion no puede ser null", ex.Message);
 
@@ -148,7 +147,7 @@ namespace BusinessLogicTest
 
             //Assert
             Assert.AreEqual("Un usuario en DeletePromocion no puede ser null", ex.Message);
-            
+
 
         }
 
@@ -162,7 +161,7 @@ namespace BusinessLogicTest
             _logica.AddPromocion(promo, user);
             Usuario user1 = new("nombre", "asd@gmail.com", "ASDasd123!", false);
             // Act
-            
+
             PromocionLogicExcepcion ex = Assert.ThrowsException<PromocionLogicExcepcion>(() => _logica.DeletePromocion(0, promo, user1));
             Assert.AreEqual("Solo un Admin puede dar de baja una promocion", ex.Message);
 
@@ -215,7 +214,7 @@ namespace BusinessLogicTest
             Usuario user = new("nombre", "asd@gmail.com", "ASDasd123!", true);
             _logica.AddPromocion(promocion, user);
             Usuario user1 = new("nombre", "asd@gmail.com", "ASDasd123!", false);
-            PromocionLogicExcepcion ex = Assert.ThrowsException<PromocionLogicExcepcion>(() => _logica.ModificarPromocion(0,promocion, user1));
+            PromocionLogicExcepcion ex = Assert.ThrowsException<PromocionLogicExcepcion>(() => _logica.ModificarPromocion(0, promocion, user1));
             Assert.AreEqual("Solamente un admin puede modificar una promocion", ex.Message);
         }
 

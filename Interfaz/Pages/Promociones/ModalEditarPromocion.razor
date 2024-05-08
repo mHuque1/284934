@@ -18,7 +18,7 @@
 
         <div class="form-group">
             <label for="descuento">Descuento de la promoción (%):</label>
-            <input type="number" class="form-control" id="descuento" @bind="model.Descuento" />
+            <input type="number" step=".01" class="form-control" id="descuento" @bind="model.Descuento" />
             <ValidationMessage For="@(() => model.Descuento)" />
         </div>
 
@@ -34,6 +34,14 @@
             <ValidationMessage For="@(() => model.Fin)" />
         </div>
 
+        <!-- Mensaje de error -->
+        @if (ErrorEditarDeposito)
+        {
+            <div class="alert alert-danger" role="alert">
+                Error al editar el depósito.
+            </div>
+        }
+
         <br />
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block">Confirmar</button>
@@ -44,7 +52,7 @@
 @code {
     [Parameter] public Promocion promo { get; set; }
     private PromocionModel model = new PromocionModel();
-
+    private bool ErrorEditarDeposito = false;
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
     private async Task Aceptar() => await BlazoredModal.CloseAsync(ModalResult.Ok());
     private async Task Cancelar() => await BlazoredModal.CancelAsync();
@@ -66,10 +74,22 @@
         if (!btnPresionado)
         {
             btnPresionado = true;
-            Promocion promocion = new(model.Etiqueta, model.Descuento, model.Comienzo, model.Fin);
-            promociones.ModificarPromocion(promo.Id, promocion, UsuarioServicios.GetCurrentUser);
-            DepositoServicios.ModificarPromocionDepositos(promo.Id, promocion, UsuarioServicios.GetCurrentUser);
-            await Aceptar();
+            try
+            {
+                Promocion promocion = new(model.Etiqueta, model.Descuento, model.Comienzo, model.Fin);
+                promociones.ModificarPromocion(promo.Id, promocion, UsuarioServicios.GetCurrentUser);
+                DepositoServicios.ModificarPromocionDepositos(promo.Id, promocion, UsuarioServicios.GetCurrentUser);
+                await Aceptar();
+                ErrorEditarDeposito = false;
+            }
+            catch (Exception ex)
+            {
+                ErrorEditarDeposito = true;
+                Console.WriteLine(ex.ToString());
+                btnPresionado = false;
+            }
+
+            
         }
     }
 
@@ -80,8 +100,8 @@
         public string Etiqueta { get; set; }
 
         [Required(ErrorMessage = "El Descuento es obligatorio.")]
-        [Range(5, 75, ErrorMessage = "El Descuento debe estar entre 5 y 75.")]
-        public int Descuento { get; set; } = 0;
+        [Range(5.0, 75.0, ErrorMessage = "El Descuento debe estar entre 5 y 75.")]
+        public double Descuento { get; set; } = 0;
 
         [Required(ErrorMessage = "La fecha de comienzo es obligatoria.")]
         [DateGreaterOrEqualThanToday(ErrorMessage = "La fecha de comienzo debe ser mayor o igual que el día actual.")]

@@ -51,6 +51,7 @@ namespace Dominio
             Area = area;
             Tamano = tamano;
             TieneClimatizacion = tieneClimatizacion;
+
         }
 
         // Método para validar el área
@@ -88,7 +89,7 @@ namespace Dominio
             _promociones.Remove(promocion);
         }
 
-        public void ActualizarPromocion(int id,Promocion updatedItem)
+        public void ActualizarPromocion(int id, Promocion updatedItem)
         {
             Promocion? existingItem = _promociones.FirstOrDefault(d => d.Id == id);
             if (existingItem != null)

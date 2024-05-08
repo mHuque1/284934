@@ -26,7 +26,7 @@
 
         <div class="form-group">
             <label for="tamañoDeposito">Tamaño del depósito:</label>
-            <select class="form-control" id="tamañoDeposito">
+            <select class="form-control" id="tamañoDeposito" @bind="@depositoModel.TamañoDeposito">
                 <option value="">Seleccione un tamaño</option>
                 <option value="S">Pequeño</option>
                 <option value="M">Mediano</option>
@@ -42,9 +42,9 @@
                 <label for="climatizacion">Si</label>
             </div>
         </div>
-
+        <hr />
         <div class="form-group">
-            <label>Promociones:</label>
+            <h3>Promociones:</h3>
             <table class="table">
                 <thead>
                     <tr>
@@ -69,6 +69,14 @@
             </table>
         </div>
 
+        <!-- Mensaje de error -->
+        @if (ErrorAgregarDeposito)
+        {
+            <div class="alert alert-danger" role="alert">
+                Error al agregar el depósito.
+            </div>
+        }
+
         <br />
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Confirmar</button>
@@ -77,6 +85,7 @@
 </div>
 
 @code {
+    private bool ErrorAgregarDeposito = false;
     private bool btnClick = false;
     private DepositoModel depositoModel = new DepositoModel();
     private IList<Promocion> promocionesDisponibles = new List<Promocion>();
@@ -95,8 +104,21 @@
         if (!btnClick)
         {
             btnClick = true;
-            AgregarDeposito();
-            BlazoredModal.CloseAsync(ModalResult.Ok());
+            char area = char.Parse(depositoModel.AreaDeposito);
+            char tamano = char.Parse(depositoModel.TamañoDeposito);
+            bool climatizacion = depositoModel.TieneClimatizacion;
+            Usuario user = UsuarioServicios.GetCurrentUser;
+            if (DepositoServicios.AddDeposito(area, tamano, climatizacion, promocionesElegidas, user))
+            {
+                ErrorAgregarDeposito = false;
+                BlazoredModal.CloseAsync(ModalResult.Ok());
+                
+            }
+            else
+            {
+                ErrorAgregarDeposito = true;
+                btnClick = false;
+            }
         }
     }
 
@@ -106,10 +128,10 @@
     public class DepositoModel
     {
         [Required(ErrorMessage = "El campo Área del depósito es requerido.")]
-        public String AreaDeposito { get; set; } = "A";
+        public String AreaDeposito { get; set; } = "";
 
         [Required(ErrorMessage = "El campo Tamaño del depósito es requerido.")]
-        public String TamañoDeposito { get; set; } = "S";
+        public String TamañoDeposito { get; set; } = "";
 
         public bool TieneClimatizacion { get; set; } = false;
     }
@@ -127,7 +149,7 @@
             depo.AgregarPromocion(promo);
         }
 
-        DepositoServicios.AddDeposito(depo, UsuarioServicios.GetCurrentUser);
+        
 
 
 

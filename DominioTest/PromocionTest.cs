@@ -72,11 +72,11 @@ namespace DominioTest
         public void Descuento_Puede_Ser_Cinco()
         {
             // Arrange
-            int esperado = 5;
+            double esperado = 5.0;
 
             // Act
             promocion.Descuento = esperado;
-            int obtenido = promocion.Descuento;
+            double obtenido = promocion.Descuento;
 
             // Assert
             Assert.AreEqual(esperado, obtenido);
@@ -95,11 +95,11 @@ namespace DominioTest
         public void Descuento_Puede_Ser_Setenta_Y_Cinco()
         {
             // Arrange
-            int esperado = 75;
+            double esperado = 75.0;
 
             // Act
             promocion.Descuento = esperado;
-            int obtenido = promocion.Descuento;
+            double obtenido = promocion.Descuento;
 
             // Assert
             Assert.AreEqual(esperado, obtenido);

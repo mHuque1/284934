@@ -40,7 +40,7 @@ namespace Dominio
         }
 
         // Propiedad para las reservas del usuario
- 
+
 
         // Constructor de la clase Usuario que recibe nombre, correo electrónico y contraseña
         public Usuario(string nombre, string email, string contrasena, bool esAdmin)

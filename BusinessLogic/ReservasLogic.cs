@@ -24,7 +24,7 @@ namespace BusinessLogic
                 bool MismoTamano = reserva.Deposito.Tamano == res.Deposito.Tamano;
                 bool superpuesto1 = res.Comienzo <= reserva.Comienzo && reserva.Comienzo <= res.Fin;
                 bool superpuesto2 = res.Comienzo <= reserva.Fin && reserva.Fin <= res.Fin;
-                if(MismoTamano && (superpuesto1 || superpuesto2))
+                if (MismoTamano && (superpuesto1 || superpuesto2))
                 {
                     return true;
                 }
@@ -40,11 +40,11 @@ namespace BusinessLogic
                 throw new ReservaLogicExcepcion("No se puede agregar una reserva null");
             }
 
-            if(UsuarioYaReservoDepositoEnFecha(reserva))
+            if (UsuarioYaReservoDepositoEnFecha(reserva))
             {
                 throw new ReservaLogicExcepcion("La fecha de reserva no se puede superponer con otra reserva");
             }
-            
+
             reserva.ID = _contadorID;
             _repository.Add(reserva);
             _contadorID++;

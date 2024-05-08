@@ -16,7 +16,7 @@
 
         <div class="form-group">
             <label for="descuento">Descuento de la promoción (%):</label>
-            <input type="number" class="form-control" id="descuento" @bind="model.Descuento" />
+            <input type="number" class="form-control" id="descuento" @bind="model.Descuento" step=".01" />
             <ValidationMessage For="@(() => model.Descuento)" />
         </div>
 
@@ -32,6 +32,14 @@
             <ValidationMessage For="@(() => model.Fin)" />
         </div>
 
+        <!-- Mensaje de error -->
+        @if (errorAgregarPromocion)
+        {
+            <div class="alert alert-danger" role="alert">
+                Error al agregar la promocion.
+            </div>
+        }
+
         <br />
         <div class="form-group">
             <button type="submit" class="btn btn-primary btn-block">Confirmar</button>
@@ -40,6 +48,7 @@
 </EditForm>
 
 @code {
+    private bool errorAgregarPromocion = false;
     private PromocionModel model = new PromocionModel();
     [CascadingParameter] BlazoredModalInstance BlazoredModal { get; set; } = default!;
     Usuario user;
@@ -52,21 +61,32 @@
         if (!btnPresionado)
         {
             btnPresionado = true;
-            Promocion promocion = new(model.Etiqueta, model.Descuento, model.Comienzo, model.Fin);
-            promociones.AddPromocion(promocion, UsuarioServicios.GetCurrentUser);
-            await Aceptar();
+            try {
+                Promocion promocion = new(model.Etiqueta, model.Descuento, model.Comienzo, model.Fin);
+                promociones.AddPromocion(promocion, UsuarioServicios.GetCurrentUser);
+                await Aceptar();
+                errorAgregarPromocion = false;
+            }
+            catch (Exception ex)
+            {
+                errorAgregarPromocion = true;
+                Console.WriteLine(ex.ToString());
+                btnPresionado = false;
+            }
+
+
         }
     }
 
     public class PromocionModel
     {
-        [Required(ErrorMessage = "El nombre de usuario es obligatorio.")]
-        [MaxLength(20, ErrorMessage = "El nombre de usuario no puede tener más de 20 caracteres.")]
+        [Required(ErrorMessage = "La Etiqueta es obligatoria.")]
+        [MaxLength(20, ErrorMessage = "La Etiqueta de Promocion no puede tener más de 20 caracteres.")]
         public string Etiqueta { get; set; } = "";
 
         [Required(ErrorMessage = "El Descuento es obligatorio.")]
-        [Range(5, 75, ErrorMessage = "El Descuento debe estar entre 5 y 75.")]
-        public int Descuento { get; set; } = 0;
+        [Range(5.0, 75.0, ErrorMessage = "El Descuento debe estar entre 5 y 75.")]
+        public double Descuento { get; set; } = 0.0;
 
         [Required(ErrorMessage = "La fecha de comienzo es obligatoria.")]
         [DateGreaterOrEqualThanToday(ErrorMessage = "La fecha de comienzo debe ser mayor o igual que el día actual.")]

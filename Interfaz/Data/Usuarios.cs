@@ -23,7 +23,7 @@ namespace Interfaz.Data
             return result;
         }
 
-        public bool ExisteAdmin {get => Logica.ExisteAdmin();}
+        public bool ExisteAdmin { get => Logica.ExisteAdmin(); }
 
         public bool SignUp(string nombre, string email, string pass)
         {
