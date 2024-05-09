@@ -1,0 +1,12 @@
+C:\Users\mathi\Desktop\284934\Excepcion\bin\Release\net6.0\Excepcion.deps.json
+C:\Users\mathi\Desktop\284934\Excepcion\bin\Release\net6.0\Excepcion.dll
+C:\Users\mathi\Desktop\284934\Excepcion\bin\Release\net6.0\Excepcion.pdb
+C:\Users\mathi\Desktop\284934\Excepcion\obj\Release\net6.0\Excepcion.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mathi\Desktop\284934\Excepcion\obj\Release\net6.0\Excepcion.AssemblyInfoInputs.cache
+C:\Users\mathi\Desktop\284934\Excepcion\obj\Release\net6.0\Excepcion.AssemblyInfo.cs
+C:\Users\mathi\Desktop\284934\Excepcion\obj\Release\net6.0\Excepcion.csproj.CoreCompileInputs.cache
+C:\Users\mathi\Desktop\284934\Excepcion\obj\Release\net6.0\Excepcion.sourcelink.json
+C:\Users\mathi\Desktop\284934\Excepcion\obj\Release\net6.0\Excepcion.dll
+C:\Users\mathi\Desktop\284934\Excepcion\obj\Release\net6.0\refint\Excepcion.dll
+C:\Users\mathi\Desktop\284934\Excepcion\obj\Release\net6.0\Excepcion.pdb
+C:\Users\mathi\Desktop\284934\Excepcion\obj\Release\net6.0\ref\Excepcion.dll
